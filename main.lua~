@@ -9,11 +9,9 @@ game = {
 }
 temp_map = {}
 obj_map = {}
-
+player = nil
 
 require("actor")
-
-player = create_actor(game, 1, false)
 
 function love.load()
 	for y=1, game.tilecount do
@@ -40,9 +38,6 @@ end
 
 function love.mousepressed(x, y, button)
 	if button == "l" then
-		if game.mode == 100 then
-			game.mode = 1
-		end
 		if x >=0 and x <=100 and y >= love.graphics.getHeight()/10 
 			and y <= love.graphics.getHeight()/10*9 then
 			game.player_loc_x = game.player_loc_x -1
@@ -103,7 +98,24 @@ function setcolorbyChar(char)
 		return 255,0,0,255
 	end
 end
-
+function love.draw_border()
+	characters_x = love.graphics.getWidth() / 8
+	characters_y = love.graphics.getHeight()/ 14
+	love.graphics.setColor(255,255,255,255)
+	love.graphics.print("+", 0, 0)
+	love.graphics.print("+", love.graphics.getWidth()-8, 0)
+	love.graphics.print("+", 0, love.graphics.getHeight()-14)
+	
+	for y=1, characters_y do
+		love.graphics.print("|", 0,y*14)
+		love.graphics.print("|", love.graphics.getWidth()-8, y*14)
+	end
+	for x=1, characters_x do
+		love.graphics.print("-", x*8,0)
+		love.graphics.print("-", x*8,love.graphics.getHeight()-14)
+		love.graphics.print("-", x*8, 28)
+	end
+end
 function love.draw_cam_viewable()
 	local px = game.player_loc_x
 	local py = game.player_loc_y
@@ -130,9 +142,10 @@ function love.draw_cam_viewable()
 			end
 		end
 	end
-	draw_border(200,200,200,255)
-	love.graphics.setColor(255, 255, 255, 255)
-	love.graphics.print(player.name..": "..py+dy.."X"..px+dx..temp_map[py][px], 10,14)
+	--love.graphics.setColor(255,255,255,255)
+	--love.graphics.print("@", draw_center_x-4,draw_center_y-7 )
+	love.draw_border()
+	love.graphics.print(temp_map[py][px]..py+dy.."X"..px+dx, 10,10)
 end
 function love.draw()
 	if game.mode == 1 then --game

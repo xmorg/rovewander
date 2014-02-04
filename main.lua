@@ -1,11 +1,11 @@
 game = { 
 	mode = 1,
-	tilecount = 80, 
+	tilecount = 30, 
 	drawcount = 50,
-	draw_x = 0, --starts drawing at 0,0
-	draw_y = 0,
-	player_loc_x = 40,
-	player_loc_y = 20
+	draw_x = 80, --where to start drawing the map
+	draw_y = 40,
+	player_loc_x = 15,
+	player_loc_y = 15
 }
 
 game_map = {}
@@ -15,28 +15,19 @@ obj_map = {}
 require("actor")
 require("primatives")
 
+math.randomseed(os.time())
+
 player = create_actor(game, 1, false)
 
 
-function create_inn_map()
-		for y=1, game.tilecount do
-			x_temp_map = {}
-			x_obj_map = {}
-			table.insert(game_map, x_temp_map)
-			table.insert(obj_map, x_obj_map)
-			for x=1, game.tilecount  do
-				if x > 10 and x < 80 and y > 5 and y < 40 then
-					table.insert(game_map[y], "=")
-				else
-					table.insert(game_map[y], "#")
-				end
-			end--endfor x
-		end--endfor 
-end
+
 
 function love.load()
-	create_inn_map(game_map)
-	create_inn_map(obj_map)-- = create_inn_items()
+	--create_inn_map(game.tilecount)
+	--create_forest_map()
+	--create_inn_map()-- = create_inn_items()
+	--create_dungeon_map(100)
+	create_town_map()
 	player = create_actor(game, 1, true)
 end
 
@@ -71,22 +62,30 @@ function love.keypressed( key, isrepeat )
 	end
 	if key == "escape" then
 		love.event.quit()
+	elseif key == "c" then
+		if game.mode == 99 then
+			game.mode = 1
+		else game.mode = 99 end
 	elseif key == "left" then
-		if px > 3 and game_map[py][px-1] ~= "t" and game_map[py][px-1] ~= "#" then
+		if px > 2 and game_map[py][px-1] ~= "t" and game_map[py][px-1] ~= "#" then
 			game.player_loc_x = game.player_loc_x -1
+			game.draw_x=game.draw_x+1*8
 		end
 	elseif key == "right" then
 		if game_map[py][px+1] ~= "t" and game_map[py][px+1] ~= "#" then
 			game.player_loc_x = game.player_loc_x +1
+			game.draw_x=game.draw_x-1*8
 		end
 	elseif key == "up" then
-		if py > 3 and game_map[py-1][px] ~= "t" and game_map[py-1][px] ~= "#" then
+		if py > 2 and game_map[py-1][px] ~= "t" and game_map[py-1][px] ~= "#" then
 			game.player_loc_y = game.player_loc_y -1
+			game.draw_y=game.draw_y+1*14
 		end
 	elseif key == "down" then
 		if game_map[py+1][px] ~= "t" and game_map[py+1][px] ~= "#" then
 			--game.draw_y = game.draw_y -1
 			game.player_loc_y = game.player_loc_y +1
+			game.draw_y=game.draw_y-1*14
 		end
 	end
 	
@@ -105,6 +104,8 @@ function setcolorbyChar(char)
 		return 100, 100, 15,255
 	elseif char=="#" then
 		return 70,70,70,255
+	elseif char=="+" then
+		return 60,60,60,255
 	else
 		return 255,0,0,255
 	end
@@ -120,19 +121,17 @@ function love.draw_cam_viewable()
 
 	sx = px*8
 	sy = py*14
-	for y=1 , game.drawcount do --50
-		for x=1 , game.drawcount*2 do --50
+	for y=1 , game.tilecount do --50
+		for x=1 , game.tilecount do --50
 			love.graphics.setColor(setcolorbyChar(game_map[y][x]))
 			if y == game.player_loc_y and x == game.player_loc_x then
 				love.graphics.setColor(255,255,255,255)
 				love.graphics.print("@", x*8-4+dx,y*14+dy )
-			elseif x*8 <= 16 and y*14 <= 28 then
-				t = 0
+			--elseif x*8 <= 16 and y*14 <= 28 then
+			--	t = 0
 			elseif game_map[y][x] == "#" then
 				love.graphics.setColor(setcolorbyChar(game_map[y][x]))
 				love.graphics.rectangle("fill", x*8+dx, y*14+dy, 8, 14)
-				--love.graphics.setColor(0,0,0,255)
-				--love.graphics.print("+", x*8+dx, y*14+dy )
 			else
 				love.graphics.print(game_map[y][x],x*8 +dx, y*14+dy)
 			end
@@ -140,12 +139,15 @@ function love.draw_cam_viewable()
 	end
 	draw_border(200,200,200,255)
 	love.graphics.setColor(255, 255, 255, 255)
-	love.graphics.print(player.name..": "..py+dy.."X"..px+dx..game_map[py][px], 10,14)
+	love.graphics.print(player.name..": "..player.health.."("..player.max_health..")", 10,14)
+	love.graphics.print(px.."X"..py..game_map[py][px], 742,14)
 end
 function love.draw()
 	if game.mode == 1 then --game
 		love.draw_cam_viewable()
 	elseif game.mode == 100 then --chargen
 		draw_chargen(player)
+	elseif game.mode == 99 then
+		draw_char_info(player)
 	end
 end

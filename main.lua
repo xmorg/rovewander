@@ -5,15 +5,31 @@ game = {
 	draw_x = 80, --where to start drawing the map
 	draw_y = 40,
 	player_loc_x = 15,
-	player_loc_y = 15
+	player_loc_y = 15,
+	current_message = "Sample Message"
 }
 
 game_map = {}
 obj_map = {}
-
+worldmap = {
+	{"X","X","X","X","X","X","X","X","X","X","X","X"},
+	{"X","X","X","X","X","X","X","X","X","X","X","X"},
+	{"X","X","X","X","X","X","X","X","X","X","X","X"},
+	{"X","X","X","X","X","X","X","X","X","X","X","X"},
+	{"X","X","X","X","X","X","X","X","X","X","X","X"},
+	{"X","X","X","X","X","X","X","X","X","X","X","X"},
+	{"X","X","X","X","X","X","X","X","X","X","X","X"},
+	{"X","X","X","X","X","X","X","X","X","X","X","X"},
+	{"X","X","X","X","X","X","X","X","X","X","X","X"},
+	{"X","X","X","X","X","X","X","X","X","X","X","X"},
+	{"X","X","X","X","X","X","X","X","X","X","X","X"},
+	{"X","X","X","X","X","X","X","X","X","X","X","X"}
+}
 
 require("actor")
 require("primatives")
+require("world")
+require("message")
 
 math.randomseed(os.time())
 
@@ -23,17 +39,37 @@ player = create_actor(game, 1, false)
 
 
 function love.load()
-	--create_inn_map(game.tilecount)
-	--create_forest_map()
+	start_loc = math.random(1, 4)
+	if start_loc == 1 then
+		create_inn_map(game.tilecount)
+		game.current_message = inn_origin_messages1[math.random(1,table.getn(inn_origin_messages1))].. " " ..get_inn_name()
+		worldmap[6][6] = "i"
+	elseif start_loc == 2 then
+		create_forest_map()
+		worldmap[6][6] = "f"
+		game.current_message = inn_origin_messages1[math.random(1,table.getn(inn_origin_messages1))].. " " ..get_town_name()
+	elseif start_loc == 3 then
+		create_dungeon_map(100)
+		worldmap[6][6] = "d"
+		game.current_message = dungeon_origin_message1[math.random(1,table.getn(dungeon_origin_message1))].. " " ..get_dungeon_name()
+	elseif start_loc == 4 then
+		create_town_map()
+		worldmap[6][6] = "t"
+		game.current_message = inn_origin_messages1[math.random(1,table.getn(inn_origin_messages1))].. " " ..get_town_name()
+	end
+	--game.current_message = inn_origin_messages1[math.random(1,table.getn(inn_origin_messages1))].. " " ..get_inn_name()
+	--game.mode = 97
 	--create_inn_map()-- = create_inn_items()
-	--create_dungeon_map(100)
-	create_town_map()
 	player = create_actor(game, 1, true)
 end
 
 function love.mousepressed(x, y, button)
 	if button == "l" then
 		if game.mode == 100 then
+			if player.edited == 1 then
+				game.mode = 97
+			end
+		elseif game.mode == 97 then
 			game.mode = 1
 		end
 		if x >=0 and x <=100 and y >= love.graphics.getHeight()/10 
@@ -62,6 +98,10 @@ function love.keypressed( key, isrepeat )
 	end
 	if key == "escape" then
 		love.event.quit()
+	elseif key == "w" then
+		if game.mode == 98 then
+			game.mode = 1
+		else game.mode = 98 end
 	elseif key == "c" then
 		if game.mode == 99 then
 			game.mode = 1
@@ -98,8 +138,12 @@ function setcolorbyChar(char)
 		return 0,200,0,255
 	elseif char=="t" then
 		return 0,255,0,255
+	elseif char=="~" then
+		return 0,0,math.random(240,255),255
 	elseif char=="." then
 		return 100, 80, 15,255
+	elseif char=="Y" then
+		return 255, 255, 0, 255
 	elseif char=="=" then
 		return 100, 100, 15,255
 	elseif char=="#" then
@@ -149,5 +193,10 @@ function love.draw()
 		draw_chargen(player)
 	elseif game.mode == 99 then
 		draw_char_info(player)
+	elseif game.mode == 98 then
+		draw_worldmap()
+	elseif game.mode == 97 then
+		love.draw_cam_viewable()
+		draw_messagebox()
 	end
 end

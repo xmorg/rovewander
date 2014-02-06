@@ -77,6 +77,100 @@ function create_dungeon_map(size)
 	end
 end
 
+function place_walls(wtype, thick, lx, ly, lw, lh)
+	--wtype not used (wall type? like brick stone, palasade
+	--bsize wall thickness
+	--blength (default full map (length of walls)
+	--orientation (top, bottom left right)
+	door_loc = math.random(2,thick-1)
+	door_pos = math.random(2, thick-1)
+	for y=1, lh do
+		for x=1, lw do
+			game_map[ly+y][lx+x]= "#"
+		end
+	end
+	for y=2, lh-1 do
+		for x=2, lw-1 do
+			game_map[ly+y][lx+x]= "+"
+		end
+	end
+end
+function place_garden(gtype, bsize, lx, ly)
+	for y=1, bsize do
+		for x=1, bsize do
+				game_map[ly+y][lx+x]= "Y"
+		end
+	end
+end
+function place_water(gtype, bsize, lx, ly)
+	for y=1, bsize do
+		for x=1, bsize do
+			waterrand = math.random(1,3)
+			--if x==1 and waterrand == 1 then
+			game_map[ly+y][lx+x]= "~"
+		end
+	end
+end
+function place_building(btype, bsize, lx, ly)
+	door_loc = math.random(2,bsize-1)
+	door_pos = math.random(1, 4)
+	for y=1, bsize do
+		for x=1, bsize do
+				game_map[ly+y][lx+x]= "#"
+		end
+	end
+	for y=2, bsize-1 do
+		for x=2, bsize-1 do
+			game_map[ly+y][lx+x]= "+"
+		end
+	end
+	if door_pos == 1 then game_map[ly+1][lx+door_loc] = "+"
+	elseif door_pos == 2 then game_map[ly+door_loc][lx+1] = "+"
+	elseif door_pos == 3 then game_map[ly+bsize][lx+door_loc] = "+"
+	elseif door_pos == 4 then game_map[ly+door_loc][lx+bsize] = "+"
+	end	
+end
+
+function create_town_map(walls)--walls boolean
+	game.tilecount = 100
+	for y=1, game.tilecount do
+		x_temp_map = {}
+		x_obj_map = {}
+		table.insert(game_map, x_temp_map)
+		table.insert(obj_map, x_obj_map)
+		for x=1, game.tilecount  do
+			--treerand = math.random(1,20)
+			--if treerand == 1 then
+			--	game_map[y][x] = "t"
+			treerand = math.random(1,70)
+			if x > 1 and x < game.tilecount and y > 1 and y < game.tilecount then
+				if treerand == 1 then
+					table.insert(game_map[y], "t")
+				elseif treerand > 14 then
+					table.insert(game_map[y], ".")
+				else
+					table.insert(game_map[y], ",")
+				end
+			elseif x == game.tilecount/2 and y == 1 then
+				table.insert(game_map[y], "D")
+			else
+				table.insert(game_map[y], "#")
+			end--endif
+		end--endfor x
+	end--endfor
+	buildingcount = math.random(3, 20)
+	for x=1,buildingcount do
+		place_garden(0, math.random(5,10), math.random(3, game.tilecount-11), math.random(3, game.tilecount-11))
+	end
+	for x=1,buildingcount do
+		place_building(0, math.random(5,10), math.random(3, game.tilecount-11), math.random(3, game.tilecount-11))
+	end
+	place_walls(nil, 1, 1, 1, game.tilecount, 5)
+	place_walls(nil, 1, 1, 1, 5, game.tilecount-1)
+	place_walls(nil, game.tilecount-5, 1, 1,  game.tilecount-1,5)
+	place_walls(nil, 1, game.tilecount-5, 1, 5, game.tilecount-1)
+end
+
 function create_forest_map()
 	game.tilecount = 100
 	for y=1, game.tilecount do
@@ -89,54 +183,27 @@ function create_forest_map()
 			if treerand == 1 then
 				game_map[y][x] = "t"
 			elseif x > 1 and x < game.tilecount and y > 1 and y < game.tilecount then
-				table.insert(game_map[y], ",")
+				if treerand > 14 then
+					table.insert(game_map[y], ".")
+				else
+					table.insert(game_map[y], ",")
+				end
 			elseif x == game.tilecount/2 and y == 1 then
+				table.insert(game_map[y], "D")
+			elseif x == 1 and y == game.tilecount/2 then
+				table.insert(game_map[y], "D")
+			elseif x == game.tilecount and y == game.tilecount/2 then
+				table.insert(game_map[y], "D")
+			elseif x == game.tilecount/2 and y == game.tilecount then
 				table.insert(game_map[y], "D")
 			else
 				table.insert(game_map[y], "t")
 			end--endif
 		end--endfor x
 	end--endfor
-end
-
-function place_building(btype, bsize, lx, ly)
-	for y=1, bsize do
-		for x=1, bsize do
-			game_map[ly+y][lx+x]= "#"
-		end
-	end
-	
-	for y=2, bsize-1 do
-		for x=2, bsize-1 do
-			game_map[ly+y][lx+x]= "+"
-		end
+	watercount = math.random(1, 20)
+	for x=1,watercount do
+		place_water(0, math.random(5,10), math.random(3, game.tilecount-11), math.random(3, game.tilecount-11))
 	end
 end
-
-function create_town_map()
-	game.tilecount = 100
-	for y=1, game.tilecount do
-		x_temp_map = {}
-		x_obj_map = {}
-		table.insert(game_map, x_temp_map)
-		table.insert(obj_map, x_obj_map)
-		for x=1, game.tilecount  do
-			--treerand = math.random(1,20)
-			--if treerand == 1 then
-			--	game_map[y][x] = "t"
-			if x > 1 and x < game.tilecount and y > 1 and y < game.tilecount then
-				table.insert(game_map[y], ",")
-			elseif x == game.tilecount/2 and y == 1 then
-				table.insert(game_map[y], "D")
-			else
-				table.insert(game_map[y], "#")
-			end--endif
-		end--endfor x
-	end--endfor
-	buildingcount = math.random(3, 20)
-	for x=1,buildingcount do
-		place_building(0, math.random(5,10), math.random(3, game.tilecount-11), math.random(3, game.tilecount-11))
-	end
-end
-
 

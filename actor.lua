@@ -169,6 +169,7 @@ end
 function update_actor_chargen(a, key, mouse_B, mouse_x, mouse_y) --updates based on mouse/key press
 	if key == "r" then  --randomize actor
 		randomize_actor(a)
+		a.edited = 1
 	elseif key == "return" then --set editing name flag
 		if a.editing_name == 0 then
 			a.editing_name = 1
@@ -207,6 +208,7 @@ function create_actor(game, level,chargen) --create a random actor
 			maxhealth = 1,
 			background = "None",
 			editing_name = 0,
+			edited       = 0, -- have we rolled yet?
 			current_stat = 1,
 			max_stat = 6
 		}
@@ -229,6 +231,8 @@ function draw_char_info(actor)
 	display_actor_stats(actor, false)--false, not editable, true, editable
 end
 function draw_chargen(actor) --stock actor has been generated
+	instruction_line = love.graphics.getHeight()-40
 	draw_border(255,255,255,255)--require("primatives")
 	display_actor_stats(actor, false)--false, not editable, true, editable
+	love.graphics.print("Press 'r' to randomize stats, press (enter) to enter a customer name.", 20, instruction_line)
 end

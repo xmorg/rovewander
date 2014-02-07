@@ -54,7 +54,25 @@ function get_inn_name()
 	end
 	return inn_name
 end
-	
+function load_newzone(direction, x, y)
+	if direction == "north" then
+		if y-1 > 1 and worldmap[y-1][x] == "X" then
+			generate_random_zone(x, y-1) --create a new map
+		end
+	elseif direction == "east" then
+		if x+1 < table.getn(worldmap)-1 and worldmap[y][x+1] == "X" then
+			generate_random_zone(x+1, y) --create a new map
+		end
+	elseif direction == "south" then
+		if y+1 <table.getn(worldmap)-1  and worldmap[y+1][x] == "X" then
+			generate_random_zone(x, y+1) --create a new map
+		end
+	elseif direction == "west" then
+		if x-1 > 1 and worldmap[y][x-1] == "X" then
+			generate_random_zone(x-1, y) --create a new map
+		end
+	end
+end
 function draw_worldmap()
 	dx = 20
 	dy = 20

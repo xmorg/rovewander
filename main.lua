@@ -6,6 +6,8 @@ game = {
 	draw_y = 40,
 	player_loc_x = 15,
 	player_loc_y = 15,
+	player_world_x = 0,
+	player_world_y = 0,
 	current_message = "Sample Message"
 }
 
@@ -37,29 +39,33 @@ player = create_actor(game, 1, false)
 
 
 
-
-function love.load()
-	start_loc = math.random(1, 4)
+function generate_random_zone(x,y)
+	start_loc = math.random(1,4)
+	wm_start = table.getn(worldmap)/2
 	if start_loc == 1 then
 		create_inn_map(game.tilecount)
 		game.current_message = inn_origin_messages1[math.random(1,table.getn(inn_origin_messages1))].. " " ..get_inn_name()
-		worldmap[6][6] = "i"
+		worldmap[y][x] = "i"
 	elseif start_loc == 2 then
-		create_forest_map()
-		worldmap[6][6] = "f"
+		create_forest_map(math.random(1,10))
+		worldmap[y][x] = "f"
 		game.current_message = inn_origin_messages1[math.random(1,table.getn(inn_origin_messages1))].. " " ..get_town_name()
 	elseif start_loc == 3 then
-		create_dungeon_map(100)
-		worldmap[6][6] = "d"
+		--create_dungeon_map(100)
+		create_dungeon_topside()
+		worldmap[y][x] = "d"
 		game.current_message = dungeon_origin_message1[math.random(1,table.getn(dungeon_origin_message1))].. " " ..get_dungeon_name()
 	elseif start_loc == 4 then
 		create_town_map()
-		worldmap[6][6] = "t"
+		worldmap[y][x] = "t"
 		game.current_message = inn_origin_messages1[math.random(1,table.getn(inn_origin_messages1))].. " " ..get_town_name()
 	end
-	--game.current_message = inn_origin_messages1[math.random(1,table.getn(inn_origin_messages1))].. " " ..get_inn_name()
-	--game.mode = 97
-	--create_inn_map()-- = create_inn_items()
+end
+function love.load()
+	wm_start = table.getn(worldmap)/2
+	generate_random_zone(wm_start, wm_start)
+	game.player_world_x = wm_start --start loc on world map
+	game.player_world_y = wm_start
 	player = create_actor(game, 1, true)
 end
 
@@ -106,23 +112,56 @@ function love.keypressed( key, isrepeat )
 		if game.mode == 99 then
 			game.mode = 1
 		else game.mode = 99 end
+	elseif key == "." or key == ">" then
+		if worldmap[game.player_world_y][game.player_world_x] == "d" then
+			create_dungeon_map(100)
+			game_map[game.player_loc_y][game.player_loc_y] = "<"
+		end
+	elseif key == "," or key == "<" then
+		if worldmap[game.player_world_y][game.player_world_x] == "d" then
+			--find the saved map for that world. (you need to save it first!)
+		end
 	elseif key == "left" then
-		if px > 2 and game_map[py][px-1] ~= "t" and game_map[py][px-1] ~= "#" then
+		if game_map[py][px-1] == "D" then
+			load_newzone("west", game.player_world_x, game.player_world_y)
+			game.player_world_x = game.player_world_x-1
+			game.player_loc_x = table.getn(game_map)-2
+			game.draw_x = game.draw_x- (table.getn(game_map)-2)*8
+		end
+		if px > 2 and game_map[py][px-1] ~= "t" and game_map[py][px-1] ~= "#" and game_map[py][px-1] ~= "l" then
 			game.player_loc_x = game.player_loc_x -1
 			game.draw_x=game.draw_x+1*8
 		end
 	elseif key == "right" then
-		if game_map[py][px+1] ~= "t" and game_map[py][px+1] ~= "#" then
+		if game_map[py][px+1] == "D" then
+			load_newzone("east", game.player_world_x, game.player_world_y)
+			game.player_world_x = game.player_world_x+1
+			game.player_loc_x = 2
+			game.draw_x = game.draw_x+ (table.getn(game_map)-2)*8
+		end
+		if game_map[py][px+1] ~= "t" and game_map[py][px+1] ~= "#" and game_map[py][px+1] ~= "l" then
 			game.player_loc_x = game.player_loc_x +1
 			game.draw_x=game.draw_x-1*8
 		end
 	elseif key == "up" then
-		if py > 2 and game_map[py-1][px] ~= "t" and game_map[py-1][px] ~= "#" then
+		if game_map[py-1][px] == "D" then
+			load_newzone("north", game.player_world_x, game.player_world_y)
+			game.player_world_y = game.player_world_y-1
+			game.player_loc_y = table.getn(game_map)-2
+			game.draw_y = game.draw_y- (table.getn(game_map)-2)*14
+		end
+		if py > 2 and game_map[py-1][px] ~= "t" and game_map[py-1][px] ~= "#" and game_map[py-1][px] ~= "l" then
 			game.player_loc_y = game.player_loc_y -1
 			game.draw_y=game.draw_y+1*14
 		end
 	elseif key == "down" then
-		if game_map[py+1][px] ~= "t" and game_map[py+1][px] ~= "#" then
+		if game_map[py+1][px] == "D" then
+			load_newzone("south", game.player_world_x, game.player_world_y)
+			game.player_world_y = game.player_world_y+1
+			game.player_loc_y = 2
+			game.draw_y = game.draw_y + (table.getn(game_map)-2)*14
+		end
+		if game_map[py+1][px] ~= "t" and game_map[py+1][px] ~= "#"  and game_map[py+1][px] ~= "l" then
 			--game.draw_y = game.draw_y -1
 			game.player_loc_y = game.player_loc_y +1
 			game.draw_y=game.draw_y-1*14
@@ -138,6 +177,8 @@ function setcolorbyChar(char)
 		return 0,200,0,255
 	elseif char=="t" then
 		return 0,255,0,255
+	elseif char=="l" then
+		return 80,80,0,255
 	elseif char=="~" then
 		return 0,0,math.random(240,255),255
 	elseif char=="." then
@@ -146,6 +187,8 @@ function setcolorbyChar(char)
 		return 255, 255, 0, 255
 	elseif char=="=" then
 		return 100, 100, 15,255
+	elseif char==">" or char=="<" then
+		return 255, 255, 255, 255
 	elseif char=="#" then
 		return 70,70,70,255
 	elseif char=="+" then

@@ -25,6 +25,101 @@ dungeon_suffix = {"Barrow", "Dungeon", "Castle", "Fort", "Warrens", "Labarynth",
 dungeon_prefix = {"Ruins of", "Graves of", "Dispicable place of", "Cursed mound of"}
 town_ext_suffix = {"Court", "Vale", "Commons", "Ford", "Crossing", "Mesa", "Redding", "Dwellings", "City"}
 
+function table.show(t, name, indent)
+   local cart     -- a container
+   local autoref  -- for self references
+
+   --[[ counts the number of elements in a table
+   local function tablecount(t)
+      local n = 0
+      for _, _ in pairs(t) do n = n+1 end
+      return n
+   end
+   ]]
+   -- (RiciLake) returns true if the table is empty
+   local function isemptytable(t) return next(t) == nil end
+
+   local function basicSerialize (o)
+      local so = tostring(o)
+      if type(o) == "function" then
+         local info = debug.getinfo(o, "S")
+         -- info.name is nil because o is not a calling level
+         if info.what == "C" then
+            return string.format("%q", so .. ", C function")
+         else 
+            -- the information is defined through lines
+            return string.format("%q", so .. ", defined in (" ..
+                info.linedefined .. "-" .. info.lastlinedefined ..
+                ")" .. info.source)
+         end
+      elseif type(o) == "number" or type(o) == "boolean" then
+         return so
+      else
+         return string.format("%q", so)
+      end
+   end
+
+   local function addtocart (value, name, indent, saved, field)
+      indent = indent or ""
+      saved = saved or {}
+      field = field or name
+
+      cart = cart .. indent .. field
+
+      if type(value) ~= "table" then
+         cart = cart .. " = " .. basicSerialize(value) .. ";\n"
+      else
+         if saved[value] then
+            cart = cart .. " = {}; -- " .. saved[value] 
+                        .. " (self reference)\n"
+            autoref = autoref ..  name .. " = " .. saved[value] .. ";\n"
+         else
+            saved[value] = name
+            --if tablecount(value) == 0 then
+            if isemptytable(value) then
+               cart = cart .. " = {};\n"
+            else
+               cart = cart .. " = {\n"
+               for k, v in pairs(value) do
+                  k = basicSerialize(k)
+                  local fname = string.format("%s[%s]", name, k)
+                  field = string.format("[%s]", k)
+                  -- three spaces between levels
+                  addtocart(v, fname, indent .. "   ", saved, field)
+               end
+               cart = cart .. indent .. "};\n"
+            end
+         end
+      end
+   end
+
+   name = name or "__unnamed__"
+   if type(t) ~= "table" then
+      return name .. " = " .. basicSerialize(t)
+   end
+   cart, autoref = "", ""
+   addtocart(t, name, indent)
+   return cart .. autoref
+end
+
+function love_crude_save()
+	love.filesystem.write( "worldmap.lua", table.show(worldmap, "worldmap")) 
+end
+function love_save_zone(name)
+	love.filesystem.write( name..".lua", table.show(game_map, "game_map"))
+end
+function new_world_map(size)
+	worldmap = {}
+	for y=1, size do
+		local temp_table = {}
+		table.insert(worldmap, temp_table)
+		for x=1, size do
+			local ttable={"X", "", ""}
+			table.insert(worldmap[y],ttable)
+		end
+	end
+end
+
 function get_town_name()
 	add_ext = math.random(1,2)
 	town_name = town_prefix[math.random(1,table.getn(town_prefix))]
@@ -56,20 +151,33 @@ function get_inn_name()
 end
 function load_newzone(direction, x, y)
 	if direction == "north" then
-		if y-1 > 1 and worldmap[y-1][x] == "X" then
+		if y-1 > 1 and worldmap[y-1][x][1] == "X" then
 			generate_random_zone(x, y-1) --create a new map
+		else
+			--load the map from file
+			chunk = love.filesystem.load( worldmap[y-1][x][2]..".lua" )
+			chunk()
 		end
 	elseif direction == "east" then
-		if x+1 < table.getn(worldmap)-1 and worldmap[y][x+1] == "X" then
+		if x+1 < table.getn(worldmap)-1 and worldmap[y][x+1][1] == "X" then
 			generate_random_zone(x+1, y) --create a new map
+		else
+			chunk = love.filesystem.load( worldmap[y][x+1][2]..".lua" )
+			chunk()
 		end
 	elseif direction == "south" then
-		if y+1 <table.getn(worldmap)-1  and worldmap[y+1][x] == "X" then
+		if y+1 < table.getn(worldmap)-1  and worldmap[y+1][x][1] == "X" then
 			generate_random_zone(x, y+1) --create a new map
+		else
+			chunk = love.filesystem.load( worldmap[y+1][x][2]..".lua" )
+			chunk()
 		end
 	elseif direction == "west" then
-		if x-1 > 1 and worldmap[y][x-1] == "X" then
+		if x-1 > 1 and worldmap[y][x-1][1] == "X" then
 			generate_random_zone(x-1, y) --create a new map
+		else
+			chunk = love.filesystem.load( worldmap[y][x-1][2]..".lua" )
+			chunk()
 		end
 	end
 end
@@ -78,9 +186,12 @@ function draw_worldmap()
 	dy = 20
 	draw_border(255,255,255,255)--require("primatives")
 	love.graphics.setColor(255,255,255,255)
-	for y=1, 12 do
-		for x=1,12 do
-			love.graphics.print(worldmap[y][x],x*8 +dx, y*14+dy)
+	for y=1, 11 do
+		for x=1,11 do
+			t = worldmap[y][x][1]
+			--love.filesystem.write( "whatsthat.lua", table.show(t, "t")) 
+			love.graphics.print(t,x*8 +dx, y*14+dy)
 		end
 	end
+	love.graphics.print(worldmap[game.player_world_y][game.player_world_x][2], 400, 100)
 end

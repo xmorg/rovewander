@@ -19,26 +19,6 @@ function draw_table(gmap, chairs, x,y)
 	gmap[y+2][x+1] = "h"
 end
 
-function create_inn_map()
-	game_map = {}
-	for y=1, game.tilecount do
-		x_temp_map = {}
-		x_obj_map = {}
-		table.insert(game_map, x_temp_map)
-		table.insert(obj_map, x_obj_map)
-		for x=1, game.tilecount  do
-			if x > 1 and x < game.tilecount and y > 1 and y < game.tilecount then
-				table.insert(game_map[y], "=")
-			elseif x == game.tilecount/2 and y == 1 then
-				table.insert(game_map[y], "D")
-			else
-				table.insert(game_map[y], "#")
-			end--endif
-		end--endfor x
-	end--endfor
-	draw_table(game_map, 4, 5,5)
-end
-
 function put_dungeon_wall(vh, loc)
 	if vh == 1 then --vert
 		for y=1, game.tilecount do
@@ -202,6 +182,27 @@ function create_forest_map(deadness)--1-10 1 being green 10 being brown
 	end
 end
 
+function create_inn_map()
+	game_map = {}
+	create_forest_map(1)
+	for y=20, 40 do
+		x_temp_map = {}
+		x_obj_map = {}
+		--table.insert(game_map, x_temp_map)
+		--table.insert(obj_map, x_obj_map)
+		for x=20, 40  do
+			if x > 20 and x < 40 and y > 20 and y < 40 then
+				game_map[y][x] = "="
+			elseif (x == 30 or x==29 or x==31) and y == 20 then
+				game_map[y][x] =  "="
+			else
+				game_map[y][x] =  "#"
+			end--endif
+		end--endfor x
+	end--endfor
+	draw_table(game_map, 4, 5,5)
+end
+
 function create_dungeon_topside()
 	create_forest_map(9) --first create the dead forrest map?
 	--next create a building in the middle of the forest
@@ -230,5 +231,7 @@ function create_dungeon_map(size)
 	for y=1, 18 do
 		put_dungeon_wall(math.random(1,2), math.random(2,game.tilecount))
 	end
+	--save the file in t{char, topsidename, underside name
+	worldmap[y][x][3] = get_dungeon_name().." Lv1"
 end
 

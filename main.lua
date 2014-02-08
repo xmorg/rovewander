@@ -13,20 +13,21 @@ game = {
 
 game_map = {}
 obj_map = {}
-worldmap = {
-	{"X","X","X","X","X","X","X","X","X","X","X","X"},
-	{"X","X","X","X","X","X","X","X","X","X","X","X"},
-	{"X","X","X","X","X","X","X","X","X","X","X","X"},
-	{"X","X","X","X","X","X","X","X","X","X","X","X"},
-	{"X","X","X","X","X","X","X","X","X","X","X","X"},
-	{"X","X","X","X","X","X","X","X","X","X","X","X"},
-	{"X","X","X","X","X","X","X","X","X","X","X","X"},
-	{"X","X","X","X","X","X","X","X","X","X","X","X"},
-	{"X","X","X","X","X","X","X","X","X","X","X","X"},
-	{"X","X","X","X","X","X","X","X","X","X","X","X"},
-	{"X","X","X","X","X","X","X","X","X","X","X","X"},
-	{"X","X","X","X","X","X","X","X","X","X","X","X"}
-}
+worldmap = {}
+--worldmap = {
+--	{"X","X","X","X","X","X","X","X","X","X","X","X"},
+--	{"X","X","X","X","X","X","X","X","X","X","X","X"},
+--	{"X","X","X","X","X","X","X","X","X","X","X","X"},
+--	{"X","X","X","X","X","X","X","X","X","X","X","X"},
+--	{"X","X","X","X","X","X","X","X","X","X","X","X"},
+--	{"X","X","X","X","X","X","X","X","X","X","X","X"},
+--	{"X","X","X","X","X","X","X","X","X","X","X","X"},
+--	{"X","X","X","X","X","X","X","X","X","X","X","X"},
+--	{"X","X","X","X","X","X","X","X","X","X","X","X"},
+--	{"X","X","X","X","X","X","X","X","X","X","X","X"},
+--	{"X","X","X","X","X","X","X","X","X","X","X","X"},
+--	{"X","X","X","X","X","X","X","X","X","X","X","X"}
+--}
 
 require("actor")
 require("primatives")
@@ -44,24 +45,30 @@ function generate_random_zone(x,y)
 	wm_start = table.getn(worldmap)/2
 	if start_loc == 1 then
 		create_inn_map(game.tilecount)
-		game.current_message = inn_origin_messages1[math.random(1,table.getn(inn_origin_messages1))].. " " ..get_inn_name()
-		worldmap[y][x] = "i"
+		worldmap[y][x][1] = "i"
+		worldmap[y][x][2] = get_inn_name()
+		game.current_message = inn_origin_messages1[math.random(1,table.getn(inn_origin_messages1))].. " " ..worldmap[y][x][2]
 	elseif start_loc == 2 then
 		create_forest_map(math.random(1,10))
-		worldmap[y][x] = "f"
-		game.current_message = inn_origin_messages1[math.random(1,table.getn(inn_origin_messages1))].. " " ..get_town_name()
+		worldmap[y][x][1] = "f"
+		worldmap[y][x][2] = get_town_name()
+		game.current_message = inn_origin_messages1[math.random(1,table.getn(inn_origin_messages1))].. " " ..worldmap[y][x][2]
 	elseif start_loc == 3 then
-		--create_dungeon_map(100)
 		create_dungeon_topside()
-		worldmap[y][x] = "d"
-		game.current_message = dungeon_origin_message1[math.random(1,table.getn(dungeon_origin_message1))].. " " ..get_dungeon_name()
+		worldmap[y][x][1] = "d"
+		worldmap[y][x][2] = get_dungeon_name()
+		game.current_message = dungeon_origin_message1[math.random(1,table.getn(dungeon_origin_message1))].. " " ..worldmap[y][x][2]
 	elseif start_loc == 4 then
 		create_town_map()
-		worldmap[y][x] = "t"
-		game.current_message = inn_origin_messages1[math.random(1,table.getn(inn_origin_messages1))].. " " ..get_town_name()
+		worldmap[y][x][1] = "t"
+		worldmap[y][x][2] = get_town_name()
+		game.current_message = inn_origin_messages1[math.random(1,table.getn(inn_origin_messages1))].. " " ..worldmap[y][x][2]
 	end
+	--love_crude_save()
+	love_save_zone(worldmap[y][x][2])
 end
 function love.load()
+	new_world_map(12) --creates new world map
 	wm_start = table.getn(worldmap)/2
 	generate_random_zone(wm_start, wm_start)
 	game.player_world_x = wm_start --start loc on world map
@@ -73,6 +80,8 @@ function love.mousepressed(x, y, button)
 	if button == "l" then
 		if game.mode == 100 then
 			if player.edited == 1 then
+				--save player data
+				love.filesystem.write( "player.lua", table.show(player, "player")) 
 				game.mode = 97
 			end
 		elseif game.mode == 97 then
@@ -104,6 +113,21 @@ function love.keypressed( key, isrepeat )
 	end
 	if key == "escape" then
 		love.event.quit()
+	elseif key == "l" and game.mode == 1 then
+		chunk = love.filesystem.load( "game.lua" )
+		chunk()--bug check for these files first!
+		chunk = love.filesystem.load( "player.lua" )
+		chunk()--bug check for these files first!
+		chunk = love.filesystem.load( "worldmap.lua" )
+		chunk()--bug check for these files first!
+		chunk = love.filesystem.load( worldmap[game.player_world_y][game.player_world_x][2]..".lua")
+		--chunk = love.filesystem.load( worldmap[y-1][x][2]..".lua" )
+		chunk()
+	elseif key == "s" and game.mode == 1 then
+		--save game(assume zone files are already saved
+		love.filesystem.write( "game.lua", table.show(game, "game")) --save game
+		love.filesystem.write( "player.lua", table.show(player, "player")) --save player
+		love.filesystem.write( "worldmap.lua", table.show(worldmap, "worldmap"))--save worldmap
 	elseif key == "w" then
 		if game.mode == 98 then
 			game.mode = 1
@@ -113,9 +137,13 @@ function love.keypressed( key, isrepeat )
 			game.mode = 1
 		else game.mode = 99 end
 	elseif key == "." or key == ">" then
-		if worldmap[game.player_world_y][game.player_world_x] == "d" then
-			create_dungeon_map(100)
-			game_map[game.player_loc_y][game.player_loc_y] = "<"
+		if worldmap[game.player_world_y][game.player_world_x][1] == "d" then
+			if worldmap[game.player_world_y][game.player_world_x][3] == "" then
+				create_dungeon_map(100)
+				game_map[game.player_loc_y][game.player_loc_y] = "<"
+			else
+				chunk = love.filesystem.load( worldmap[game.player_world_y][game.player_world_x][3].." Lv1"..".lua")
+				chunk()				
 		end
 	elseif key == "," or key == "<" then
 		if worldmap[game.player_world_y][game.player_world_x] == "d" then

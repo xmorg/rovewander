@@ -103,6 +103,7 @@ function love.mousepressed(x, y, button)
 		end--endif
 	end--endif
 end
+
 function love.keypressed( key, isrepeat )
 	local px = game.player_loc_x
 	local py = game.player_loc_y
@@ -143,7 +144,8 @@ function love.keypressed( key, isrepeat )
 				game_map[game.player_loc_y][game.player_loc_y] = "<"
 			else
 				chunk = love.filesystem.load( worldmap[game.player_world_y][game.player_world_x][3].." Lv1"..".lua")
-				chunk()				
+				chunk()
+			end				
 		end
 	elseif key == "," or key == "<" then
 		if worldmap[game.player_world_y][game.player_world_x] == "d" then

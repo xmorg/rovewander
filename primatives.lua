@@ -129,10 +129,10 @@ function create_town_map(walls)--walls boolean
 	for x=1,buildingcount do
 		place_building(0, math.random(5,10), math.random(3, game.tilecount-11), math.random(3, game.tilecount-11))
 	end
-	place_walls(nil, 1, 1, 1, game.tilecount, 5)
-	place_walls(nil, 1, 1, 1, 5, game.tilecount-1)
-	place_walls(nil, game.tilecount-5, 1, 1,  game.tilecount-1,5)
-	place_walls(nil, 1, game.tilecount-5, 1, 5, game.tilecount-1)
+	place_walls(1, 5, 1, 1, game.tilecount, 5)
+	place_walls(1, 5, 1, 1, 5, game.tilecount-1)
+	place_walls(1, game.tilecount-5, 1, 1,  game.tilecount-1,5)
+	place_walls(1, 5, game.tilecount-5, 1, 5, game.tilecount-1)
 	for y=2, 7 do --ensure exit is not blocked by walls
 		game_map[y][game.tilecount/2] = "+"
 		game_map[y][game.tilecount/2+1] = "+"

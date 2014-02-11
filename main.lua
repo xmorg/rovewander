@@ -33,6 +33,7 @@ require("actor")
 require("primatives")
 require("world")
 require("message")
+require("items")
 
 math.randomseed(os.time())
 
@@ -137,6 +138,10 @@ function love.keypressed( key, isrepeat )
 		if game.mode == 99 then
 			game.mode = 1
 		else game.mode = 99 end
+	elseif key == "i" then
+		if game.mode == 96 then
+			game.mode = 1
+		else game.mode = 96 end
 	elseif key == "." or key == ">" then
 		if worldmap[game.player_world_y][game.player_world_x][1] == "d" then
 			if worldmap[game.player_world_y][game.player_world_x][3] == "" then
@@ -148,9 +153,13 @@ function love.keypressed( key, isrepeat )
 			end				
 		end
 	elseif key == "," or key == "<" then
-		if worldmap[game.player_world_y][game.player_world_x] == "d" then
-			--find the saved map for that world. (you need to save it first!)
-		end
+		if worldmap[game.player_world_y][game.player_world_x][2] == "" then
+				--create_dungeon_map(100)
+				game_map[game.player_loc_y][game.player_loc_y] = "<"
+			else
+				chunk = love.filesystem.load( worldmap[game.player_world_y][game.player_world_x][2]..".lua")
+				chunk()
+			end
 	elseif key == "left" then
 		if game_map[py][px-1] == "D" then
 			load_newzone("west", game.player_world_x, game.player_world_y)
@@ -271,5 +280,7 @@ function love.draw()
 	elseif game.mode == 97 then
 		love.draw_cam_viewable()
 		draw_messagebox()
+	elseif game.mode == 96 then
+		draw_inventory()
 	end
 end

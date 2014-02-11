@@ -1,8 +1,12 @@
 rovewander
 ==========
-
 A roguelike in love
 
-Got a @ to move thruogh a field of "," and "t"
+I randomly generated character and background.  Each world, and zone in the world is randomly generated. Each zone file is saved for later, and can be revistied.
 
-Issues dont know the actors x/y pos in relation to the screen.
+current zone types
+=====================
+Inn - Stop by, share story, mug and bed
+Town - Towns are centers of living and trade
+Forrest - out in the great outdoors.
+Dungeon - dark and creepy

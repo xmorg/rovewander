@@ -232,6 +232,6 @@ function create_dungeon_map(size)
 		put_dungeon_wall(math.random(1,2), math.random(2,game.tilecount))
 	end
 	--save the file in t{char, topsidename, underside name
-	worldmap[y][x][3] = get_dungeon_name().." Lv1"
+	worldmap[game.player_world_y][game.player_world_x][3] = get_dungeon_name().." Lv1"--nil value
 end
 

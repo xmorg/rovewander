@@ -8,26 +8,14 @@ game = {
 	player_loc_y = 15,
 	player_world_x = 0,
 	player_world_y = 0,
-	current_message = "Sample Message"
+	current_message = "Sample Message",
+	time_day=0, time_hour=6, time_minute=0
 }
 
 game_map = {}
 obj_map = {}
 worldmap = {}
---worldmap = {
---	{"X","X","X","X","X","X","X","X","X","X","X","X"},
---	{"X","X","X","X","X","X","X","X","X","X","X","X"},
---	{"X","X","X","X","X","X","X","X","X","X","X","X"},
---	{"X","X","X","X","X","X","X","X","X","X","X","X"},
---	{"X","X","X","X","X","X","X","X","X","X","X","X"},
---	{"X","X","X","X","X","X","X","X","X","X","X","X"},
---	{"X","X","X","X","X","X","X","X","X","X","X","X"},
---	{"X","X","X","X","X","X","X","X","X","X","X","X"},
---	{"X","X","X","X","X","X","X","X","X","X","X","X"},
---	{"X","X","X","X","X","X","X","X","X","X","X","X"},
---	{"X","X","X","X","X","X","X","X","X","X","X","X"},
---	{"X","X","X","X","X","X","X","X","X","X","X","X"}
---}
+fogofwar = {}
 
 require("actor")
 require("primatives")
@@ -38,9 +26,26 @@ require("items")
 math.randomseed(os.time())
 
 player = create_actor(game, 1, false)
+player_inventory = {}
 
-
-
+function increase_gametime() --time_day=0, time_hour=0, time_minute=0
+	game.time_minute = game.time_minute+1
+	if game.time_minute >= 60 then
+		game.time_minute=0
+		game.time_hour= game.time_hour+1
+		if game.time_hour >=24 then
+			game.time_hour=0
+			game.time_day=game.time_day+1
+		end
+	end
+end
+function is_night() --checks to see if its day or night.
+	if game.time_hour >= 21 and game.time_hour <= 4 then
+		return true
+	else 
+		return false
+	end
+end
 function generate_random_zone(x,y)
 	start_loc = math.random(1,4)
 	wm_start = table.getn(worldmap)/2
@@ -166,10 +171,12 @@ function love.keypressed( key, isrepeat )
 			game.player_world_x = game.player_world_x-1
 			game.player_loc_x = table.getn(game_map)-2
 			game.draw_x = game.draw_x- (table.getn(game_map)-2)*8
+			increase_gametime()
 		end
 		if px > 2 and game_map[py][px-1] ~= "t" and game_map[py][px-1] ~= "#" and game_map[py][px-1] ~= "l" then
 			game.player_loc_x = game.player_loc_x -1
 			game.draw_x=game.draw_x+1*8
+			increase_gametime()
 		end
 	elseif key == "right" then
 		if game_map[py][px+1] == "D" then
@@ -177,10 +184,12 @@ function love.keypressed( key, isrepeat )
 			game.player_world_x = game.player_world_x+1
 			game.player_loc_x = 2
 			game.draw_x = game.draw_x+ (table.getn(game_map)-2)*8
+			increase_gametime()
 		end
 		if game_map[py][px+1] ~= "t" and game_map[py][px+1] ~= "#" and game_map[py][px+1] ~= "l" then
 			game.player_loc_x = game.player_loc_x +1
 			game.draw_x=game.draw_x-1*8
+			increase_gametime()
 		end
 	elseif key == "up" then
 		if game_map[py-1][px] == "D" then
@@ -188,10 +197,12 @@ function love.keypressed( key, isrepeat )
 			game.player_world_y = game.player_world_y-1
 			game.player_loc_y = table.getn(game_map)-2
 			game.draw_y = game.draw_y- (table.getn(game_map)-2)*14
+			increase_gametime()
 		end
 		if py > 2 and game_map[py-1][px] ~= "t" and game_map[py-1][px] ~= "#" and game_map[py-1][px] ~= "l" then
 			game.player_loc_y = game.player_loc_y -1
 			game.draw_y=game.draw_y+1*14
+			increase_gametime()
 		end
 	elseif key == "down" then
 		if game_map[py+1][px] == "D" then
@@ -199,16 +210,38 @@ function love.keypressed( key, isrepeat )
 			game.player_world_y = game.player_world_y+1
 			game.player_loc_y = 2
 			game.draw_y = game.draw_y + (table.getn(game_map)-2)*14
+			increase_gametime()
 		end
 		if game_map[py+1][px] ~= "t" and game_map[py+1][px] ~= "#"  and game_map[py+1][px] ~= "l" then
 			--game.draw_y = game.draw_y -1
 			game.player_loc_y = game.player_loc_y +1
 			game.draw_y=game.draw_y-1*14
+			increase_gametime()
 		end
 	end
 	
 end
 function love.update()
+	local barrier_y = 0
+	local barrior_x = 0
+	local fnight = 0
+	if is_night() == true then
+		 fnight = 0
+	else
+		 fnight = 10
+	end
+	for y= -5-fnight, 5+fnight do
+		for x= -5-fnight,5+fnight do
+			if game.player_loc_y+y > 0 and game.player_loc_x+x > 0 
+				and game.player_loc_y+y < game.tilecount+1 
+					and game.player_loc_x+x < game.tilecount+1 then
+					--if game_map[game.player_loc_y+y][game.player_loc_x+x]
+					--can currently see through walls :(
+					--what about daytime?
+					fogofwar[game.player_loc_y+y][game.player_loc_x+x] = 1
+			end
+		end
+	end
 end
 
 function setcolorbyChar(char)
@@ -244,12 +277,15 @@ function love.draw_cam_viewable()
 	local dx = game.draw_x
 	local draw_center_x = love.graphics.getWidth()/2
 	local draw_center_y = love.graphics.getHeight()/2
-
 	sx = px*8
 	sy = py*14
 	for y=1 , game.tilecount do --50
 		for x=1 , game.tilecount do --50
-			love.graphics.setColor(setcolorbyChar(game_map[y][x]))
+			if fogofwar[y][x] == 0 then
+				love.graphics.setColor(0,0,0,140)
+			else
+				love.graphics.setColor(setcolorbyChar(game_map[y][x]))
+			end
 			if y == game.player_loc_y and x == game.player_loc_x then
 				love.graphics.setColor(255,255,255,255)
 				love.graphics.print("@", x*8-4+dx,y*14+dy )
@@ -266,7 +302,8 @@ function love.draw_cam_viewable()
 	draw_border(200,200,200,255)
 	love.graphics.setColor(255, 255, 255, 255)
 	love.graphics.print(player.name..": "..player.health.."("..player.max_health..")", 10,14)
-	love.graphics.print(px.."X"..py..game_map[py][px], 742,14)
+	love.graphics.print("Time: ".. game.time_day..":"..game.time_hour..":"..game.time_minute.. "   " ..px.."X"..py..game_map[py][px], 642,14)
+	--time_day=0, time_hour=0, time_minute=0
 end
 function love.draw()
 	if game.mode == 1 then --game

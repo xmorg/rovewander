@@ -138,6 +138,7 @@ function create_town_map(walls)--walls boolean
 		game_map[y][game.tilecount/2+1] = "+"
 		game_map[game.tilecount-y][game.tilecount/2] = "+"
 	end
+	create_fog_of_war(game.tilecount)
 end
 
 function create_forest_map(deadness)--1-10 1 being green 10 being brown
@@ -180,6 +181,7 @@ function create_forest_map(deadness)--1-10 1 being green 10 being brown
 	for x=1,watercount do
 		place_water(0, math.random(5,10), math.random(3, game.tilecount-11), math.random(3, game.tilecount-11))
 	end
+	create_fog_of_war(game.tilecount)
 end
 
 function create_inn_map()
@@ -201,6 +203,7 @@ function create_inn_map()
 		end--endfor x
 	end--endfor
 	draw_table(game_map, 4, 5,5)
+	create_fog_of_war(game.tilecount)
 end
 
 function create_dungeon_topside()
@@ -209,10 +212,23 @@ function create_dungeon_topside()
 	dungeon_loc = math.random(1, table.getn(game_map)- 10 )
 	place_building(0, 8, dungeon_loc, dungeon_loc)
 	game_map[dungeon_loc+3][dungeon_loc+3] = ">"
+	create_fog_of_war(game.tilecount)
+end
+function create_fog_of_war(size)
+	fogofwar = {}
+	--game.tilecount = size --already done
+	for y=1, game.tilecount do
+		x_temp_map = {}
+		table.insert(fogofwar, x_temp_map)
+		for x=1, game.tilecount  do
+			table.insert(fogofwar[y], 0) --0=hidden, 1=seen
+		end
+	end
 end
 function create_dungeon_map(size)
 	game_map = {}
 	game.tilecount = size
+	create_fog_of_war(size)
 	for y=1, game.tilecount do
 		x_temp_map = {}
 		x_obj_map = {}
@@ -232,6 +248,8 @@ function create_dungeon_map(size)
 		put_dungeon_wall(math.random(1,2), math.random(2,game.tilecount))
 	end
 	--save the file in t{char, topsidename, underside name
+	--prototype local ttable={"X", {"Name", "Lore"}, {"Name", "Lore"}}
+	--prototype worldmap[game.player_world_y][game.player_world_x][3][1] = get_dungeon_name().." Lv1"
 	worldmap[game.player_world_y][game.player_world_x][3] = get_dungeon_name().." Lv1"--nil value
 end
 

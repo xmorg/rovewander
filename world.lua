@@ -115,6 +115,7 @@ function new_world_map(size)
 		table.insert(worldmap, temp_table)
 		for x=1, size do
 			local ttable={"X", "", ""}
+			--prototype local ttable={"X", {"Name", "Lore"}, {"Name", "Lore"}}
 			table.insert(worldmap[y],ttable)
 		end
 	end
@@ -176,6 +177,7 @@ function load_newzone(direction, x, y)
 		if x-1 > 1 and worldmap[y][x-1][1] == "X" then
 			generate_random_zone(x-1, y) --create a new map
 		else
+			--prototype chunk = love.filesystem.load( worldmap[y][x-1][2][1]..".lua" )
 			chunk = love.filesystem.load( worldmap[y][x-1][2]..".lua" )
 			chunk()
 		end
@@ -188,10 +190,18 @@ function draw_worldmap()
 	love.graphics.setColor(255,255,255,255)
 	for y=1, 11 do
 		for x=1,11 do
+			--prototype t = worldmap[y][x][1][1]
 			t = worldmap[y][x][1]
+			if t == "f" then love.graphics.setColor(0,200,0,255)
+			elseif t == "t" then love.graphics.setColor(200,200,0,255)
+			elseif t == "d" then love.graphics.setColor(200,0,0,255)
+			elseif t == "i" then love.graphics.setColor(200,200,0,255)
+			elseif t == "X" then love.graphics.setColor(0,0,0,255) end
 			--love.filesystem.write( "whatsthat.lua", table.show(t, "t")) 
 			love.graphics.print(t,x*8 +dx, y*14+dy)
 		end
 	end
+	--prototype local ttable={"X", {"Name", "Lore"}, {"Name", "Lore"}}
+	--prototype love.graphics.print(worldmap[game.player_world_y][game.player_world_x][2][1]
 	love.graphics.print(worldmap[game.player_world_y][game.player_world_x][2], 400, 100)
 end

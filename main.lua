@@ -242,6 +242,8 @@ function love.update()
 			end
 		end
 	end
+	player.loc_y = game.player_loc_y
+	player.loc_x = game.player_loc_x
 end
 
 function setcolorbyChar(char)

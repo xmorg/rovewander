@@ -144,7 +144,8 @@ function r_gen_background(a, rand_race)
 		.. "."
 	return bg
 end
-function randomize_actor(a)
+
+function randomize_actor(a, race)
 	local sylables = math.random(1,3)
 	local rand_race = math.random(1,table.getn(playable_race_names))
 	a.name = crude_names_front[math.random(1,table.getn(crude_names_front))]
@@ -152,7 +153,11 @@ function randomize_actor(a)
 		a.name = a.name..crude_names_back[math.random(1,table.getn(crude_names_back))]
 	end
 	
-	a.a_type = playable_race_names[rand_race][1]
+	if race==nil then
+		a.a_type = playable_race_names[rand_race][1]
+	else
+		a.a_type = race
+	end
 	a.strength = math.random(1,5)
 	a.agility = math.random(1,5)
 	a.intel   = math.random(1,5)
@@ -163,12 +168,16 @@ function randomize_actor(a)
 	a.max_health = math.floor( (a.strength+a.stamina)/2+a.stamina)
 	a.health = a.max_health
 	a.background = r_gen_background(a, rand_race) -- generate a random background.
+	a.inventory = {}
+	table.insert(a.inventory,new_starting_weapon(7) )
+	table.insert(a.inventory,new_starting_armor(3) )
+	table.insert(a.inventory,new_starting_helm(3) )
 	return a
 end
 
 function update_actor_chargen(a, key, mouse_B, mouse_x, mouse_y) --updates based on mouse/key press
 	if key == "r" then  --randomize actor
-		randomize_actor(a)
+		randomize_actor(a, nil)
 		a.edited = 1
 	elseif key == "return" then --set editing name flag
 		if a.editing_name == 0 then
@@ -193,8 +202,7 @@ function update_actor_chargen(a, key, mouse_B, mouse_x, mouse_y) --updates based
 end
 
 function create_actor(game, level,chargen) --create a random actor
-	if chargen == false then
-		a = {
+	a = {
 			name = "random",
 			a_type = "human",
 			sex = math.random(0,1), --0 female, 1 male
@@ -210,19 +218,14 @@ function create_actor(game, level,chargen) --create a random actor
 			editing_name = 0,
 			edited       = 0, -- have we rolled yet?
 			current_stat = 1,
-			max_stat = 6
+			max_stat = 6,
+			loc_x = 0,
+			loc_y = 0
 		}
-		if level > 1 then
-			for x = 1, level do
-				a.strength = math.random(0,3)
-				a.agility =  math.random(0,3)
-				a.intel   =  math.random(0,3)
-				a.stamina =  math.random(0,3)
-				a.luck    =  math.random(0,3)
-				end
-		else -- chargen
-			game.mode = 100
-		end--endelse
+	if chargen == false then --randomize the actor
+		a = randomize_actor(a, nil)
+	else -- chargen == true
+		game.mode = 100
 	end--endif
 	return a --return the actor to the "pointer" hehe.
 end
@@ -235,4 +238,19 @@ function draw_chargen(actor) --stock actor has been generated
 	draw_border(255,255,255,255)--require("primatives")
 	display_actor_stats(actor, false)--false, not editable, true, editable
 	love.graphics.print("Press 'r' to randomize stats, press (enter) to enter a customer name.", 20, instruction_line)
+end
+
+function create_town_pop(town, race)
+	local population = math.random(5,25)
+	actor_list = {}
+	for x=1, population do
+		a = create_actor(game, 1, false)
+		a = randomzie_actor(a, race)
+		a.loc_x = math.random(5, game.tilecount-5)
+		a.loc_y = math.random(5, game.tilecount-5)
+		table.insert(actor_list, a)
+	end
+	--save the file, townname_script.lua
+	love.filesystem.write( town.."_script.lua", table.show(actor_list, "actor_list"))--save worldmap
+	return actor_list
 end

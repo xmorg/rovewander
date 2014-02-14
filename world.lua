@@ -19,24 +19,18 @@ town_prefix = {"Up", "Green", "Red", "Smith", "Dark", "River", "Hill", "Ox",
 "Hart", "Mass", "Non","Knight","Kings","Dukes","Beggars"
 }
 town_suffix = {"wich", "ford", "herd", "son", "river","ton", "towne", "gail", "wark", "ham",
-	"worth","haven","drownings","side","mission"
+	"worth","haven","drownings","side","mission", "wood", "rock", "snow"
 }
-dungeon_suffix = {"Barrow", "Dungeon", "Castle", "Fort", "Warrens", "Labarynth", "Dirge", "Catacombs", "Coven", "Maze", "Cove"}
-dungeon_prefix = {"Ruins of", "Graves of", "Dispicable place of", "Cursed mound of"}
+forest_suffix = {"Vale", "Forest", "Woods", "Wood", "Glenn", "Furrows", "Tree", "Woodlands"}
+dungeon_suffix = {"Barrow", "Dungeon", "Castle", "Fort", "Warrens", "Labarynth", 
+	"Depths", "Dirge", "Catacombs", "Coven", "Maze", "Cove"}
+dungeon_prefix = {"Ruins of", "Graves of", "Dispicable place of", 
+	"Depths of", "Fortress of", "Cursed mound of"}
 town_ext_suffix = {"Court", "Vale", "Commons", "Ford", "Crossing", "Mesa", "Redding", "Dwellings", "City"}
 
 function table.show(t, name, indent)
    local cart     -- a container
    local autoref  -- for self references
-
-   --[[ counts the number of elements in a table
-   local function tablecount(t)
-      local n = 0
-      for _, _ in pairs(t) do n = n+1 end
-      return n
-   end
-   ]]
-   -- (RiciLake) returns true if the table is empty
    local function isemptytable(t) return next(t) == nil end
 
    local function basicSerialize (o)
@@ -130,6 +124,11 @@ function get_town_name()
 	end
 	return town_name
 end
+function get_forest_name()
+	findex = math.random(1, table.getn(forest_suffix))
+	f = get_town_name() .. " " .. forest_suffix[findex]
+	return f
+end
 function get_dungeon_name()
 	d_name = ""
 	add_pref = math.random(1,3)
@@ -195,13 +194,12 @@ function draw_worldmap()
 			if t == "f" then love.graphics.setColor(0,200,0,255)
 			elseif t == "t" then love.graphics.setColor(200,200,0,255)
 			elseif t == "d" then love.graphics.setColor(200,0,0,255)
+			elseif t == "~" then love.graphics.setColor(0,0,255,255)
 			elseif t == "i" then love.graphics.setColor(200,200,0,255)
 			elseif t == "X" then love.graphics.setColor(0,0,0,255) end
 			--love.filesystem.write( "whatsthat.lua", table.show(t, "t")) 
 			love.graphics.print(t,x*8 +dx, y*14+dy)
 		end
 	end
-	--prototype local ttable={"X", {"Name", "Lore"}, {"Name", "Lore"}}
-	--prototype love.graphics.print(worldmap[game.player_world_y][game.player_world_x][2][1]
 	love.graphics.print(worldmap[game.player_world_y][game.player_world_x][2], 400, 100)
 end

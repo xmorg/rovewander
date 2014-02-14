@@ -240,17 +240,34 @@ function draw_chargen(actor) --stock actor has been generated
 	love.graphics.print("Press 'r' to randomize stats, press (enter) to enter a customer name.", 20, instruction_line)
 end
 
-function create_town_pop(town, race)
-	local population = math.random(5,25)
+function create_actor_list(town_name, race)
+	local population = 0
+	population = math.random(5,25)
 	actor_list = {}
 	for x=1, population do
 		a = create_actor(game, 1, false)
-		a = randomzie_actor(a, race)
+		a = randomize_actor(a, race)
 		a.loc_x = math.random(5, game.tilecount-5)
 		a.loc_y = math.random(5, game.tilecount-5)
 		table.insert(actor_list, a)
-	end
-	--save the file, townname_script.lua
-	love.filesystem.write( town.."_script.lua", table.show(actor_list, "actor_list"))--save worldmap
+	end  --save the file, townname_script.lua	
+	love.filesystem.write( town_name.."_script.lua", table.show(actor_list, "actor_list"))--save worldmap
 	return actor_list
+end
+
+function load_actor_to_map(actor_list)
+	--go through a list and put '@' in
+	--note this function assumes that that the tilecount is not less that actor locations if so
+	--then index out of range errors will occour
+	npc_map = {}
+	for y=1, game.tilecount do
+		x_temp_map = {}
+		table.insert(npc_map, x_temp_map)
+		for x=1, game.tilecount  do
+			table.insert(npc_map[y], 0)
+		end
+	end
+	for i,v in ipairs(actor_list) do
+		npc_map[actor_list[i].loc_y][actor_list[i].loc_x] = actor_list[i]
+	end
 end

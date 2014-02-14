@@ -184,6 +184,31 @@ function create_forest_map(deadness)--1-10 1 being green 10 being brown
 	create_fog_of_war(game.tilecount)
 end
 
+function create_sea_map()--1-10 1 being green 10 being brown
+	game_map = {}
+	game.tilecount = 100
+	for y=1, game.tilecount do
+		x_temp_map = {}
+		x_obj_map = {}
+		table.insert(game_map, x_temp_map)
+		table.insert(obj_map, x_obj_map)
+		for x=1, game.tilecount  do
+			if x == game.tilecount/2 and y == 1 then
+				table.insert(game_map[y], "D")
+			elseif x == 1 and y == game.tilecount/2 then
+				table.insert(game_map[y], "D")
+			elseif x == game.tilecount and y == game.tilecount/2 then
+				table.insert(game_map[y], "D")
+			elseif x == game.tilecount/2 and y == game.tilecount then
+				table.insert(game_map[y], "D")
+			else
+				table.insert(game_map[y], "~")
+			end--endif
+		end--endfor x
+	end--endfor
+	create_fog_of_war(game.tilecount)
+end
+
 function create_inn_map()
 	game_map = {}
 	create_forest_map(1)

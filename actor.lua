@@ -188,6 +188,24 @@ function update_actor_chargen(a, key, mouse_B, mouse_x, mouse_y) --updates based
 		a.sex = 0
 	elseif key == "m" and a.editing_name == 0 then
 		a.sex = 1
+		--strength = 1, --5
+		--agility =  1, --6
+		--intel   =  1, --7
+		--stamina =  1, --8
+		--luck    =  1, --9
+		--charisma = 1, --10
+	elseif key == "s" and a.editing_name == 0 then
+		a.current_stat = 5
+	elseif key == "a" and a.editing_name == 0 then
+		a.current_stat = 6
+	elseif key == "i" and a.editing_name == 0 then
+		a.current_stat = 7
+	elseif key == "t" and a.editing_name == 0 then
+		a.current_stat = 8
+	elseif key == "l" and a.editing_name == 0 then
+		a.current_stat = 9
+	elseif key == "c" and a.editing_name == 0 then
+		a.current_stat = 10
 	elseif a.editing_name == 1 then
 		if key ~= "rshift" and key ~= "lshift" then
 			if key=="backspace" then
@@ -207,22 +225,23 @@ function create_actor(game, level,chargen) --create a random actor
 	a = {
 			name = "random",
 			a_type = "human",
+			level = 0,
 			sex = math.random(0,1), --0 female, 1 male
-			strength = 1,
-			agility =  1,
-			intel   =  1,
-			stamina =  1,
-			luck    =  1,
-			charisma = 1,
+			strength = 1, --5
+			agility =  1, --6
+			intel   =  1, --7
+			stamina =  1, --8
+			luck    =  1, --9
+			charisma = 1, --10
 			health = 1,
 			maxhealth = 1,
 			background = "None",
-			editing_name = 0,
+			editing_name = 0, -- are we typing his name?
 			edited       = 0, -- have we rolled yet?
-			current_stat = 1,
+			current_stat = 5,  -- selected stat to edit.
 			max_stat = 6,
 			loc_x = 0,
-			loc_y = 0
+			loc_y = 0,
 		}
 	if chargen == false then --randomize the actor
 		a = randomize_actor(a, nil)

@@ -201,9 +201,16 @@ function update_actor_chargen(a, key, mouse_B, mouse_x, mouse_y) --updates based
 	elseif key == "c" and a.editing_name == 0 then
 		a.current_stat = 10  --charisma = 1, --10
 	elseif key == "-" and a.editing_name == 0 then
-		if a[a.current_stat] > 0 then
-			a.bonus_points = a.bonus_points+1
-			a[a.current_stat] = a[a.current_stat] -1
+		if a.current_stat == 5 then
+			if a.strength > 1 then
+				a.bonus_points = a.bonus_points+1
+				a.strength = a.strength -1
+			end
+		elseif a.current_stat == 6 then
+			if a.agility > 1 then
+				a.bonus_points = a.bonus_points+1
+				a.agility = a.agility -1
+			end
 		end
 	elseif key == "+" and a.editing_name == 0 then
 		if a.bonus_points > 0 then

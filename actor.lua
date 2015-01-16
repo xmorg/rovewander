@@ -231,6 +231,7 @@ function update_actor_chargen(a, key, mouse_B, mouse_x, mouse_y) --updates based
 				a.bonus_points = a.bonus_points+1
 				a.charisma = a.charisma -1
 			end
+		end
 	elseif key == "+" and a.editing_name == 0 then
 		if a.bonus_points > 0 then
 			if a.current_state == 5 then

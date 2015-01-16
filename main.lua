@@ -1,5 +1,5 @@
 game = { 
-	mode = 1,
+	mode = "chargen",
 	tilecount = 30, 
 	drawcount = 50,
 	draw_x = 80, --where to start drawing the map
@@ -98,15 +98,15 @@ function love.load()
 end
 
 function love.mousepressed(x, y, button)
-	if button == "l" then
-		if game.mode == 100 then
+	if button == "l" then --left button?
+		if game.mode == "chargen" then
 			if player.edited == 1 then
 				--save player data
 				love.filesystem.write( "player.lua", table.show(player, "player")) 
-				game.mode = 97
+				game.mode = "message box" --97
 			end
-		elseif game.mode == 97 then
-			game.mode = 1
+		elseif game.mode == "message box" then --97
+			game.mode = "ingame"
 		end
 		if x >=0 and x <=100 and y >= love.graphics.getHeight()/10 
 			and y <= love.graphics.getHeight()/10*9 then
@@ -130,7 +130,7 @@ function love.keypressed( key, isrepeat )
 	local py = game.player_loc_y
 	local dy = game.draw_y
 	local dx = game.draw_x
-	if game.mode == 100 then
+	if game.mode == "chargen" then
 		update_actor_chargen(player, key, nil, nil, nil) 
 	end
 	if key == "escape" then
@@ -149,7 +149,7 @@ function love.keypressed( key, isrepeat )
 		--cant quaff yet!
 		game.current_message = "Can't Quaff yet!"
 		game.mode = 97
-	elseif key == "l" and game.mode == 1 then
+	elseif key == "l" and game.mode == "ingame" then
 		chunk = love.filesystem.load( "game.lua" )
 		chunk()--bug check for these files first!
 		chunk = love.filesystem.load( "player.lua" )
@@ -159,28 +159,28 @@ function love.keypressed( key, isrepeat )
 		chunk = love.filesystem.load( worldmap[game.player_world_y][game.player_world_x][2]..".lua")
 		--chunk = love.filesystem.load( worldmap[y-1][x][2]..".lua" )
 		chunk()
-	elseif key == "k" and game.mode == 1 then
-		game.mode = 95 -- look mode
+	elseif key == "k" and game.mode == "ingame" then
+		game.mode = "look mode" -- look mode
 		game.look_x = game.player_loc_x
 		game.look_y = game.player_loc_y
-	elseif key == "s" and game.mode == 1 then
+	elseif key == "s" and game.mode == "ingame" then
 		--save game(assume zone files are already saved
 		love.filesystem.write( "game.lua", table.show(game, "game")) --save game
 		love.filesystem.write( "player.lua", table.show(player, "player")) --save player
 		love.filesystem.write( "worldmap.lua", table.show(worldmap, "worldmap"))--save worldmap
 	elseif key == "w" then
-		if game.mode == 98 then
-			game.mode = 1
-		else game.mode = 98 end --world map mode
+		if game.mode == "world map" then
+			game.mode = "ingame"
+		else game.mode = "world map" end --world map mode
 	elseif key == "c" then
-		if game.mode == 99 then
-			game.mode = 1
-		else game.mode = 99 end --character sheet mode
-	elseif key == "i" then
-		if game.mode == 96 then
-			game.mode = 1
-		else game.mode = 96 end -- inventory mode
-	elseif key == "." or key == ">" then
+		if game.mode == "character sheet" then
+			game.mode = "ingame"
+		else game.mode = "character sheet" end --character sheet mode
+	elseif key == "i" and game.mode == "ingame" then 
+			game.mode = "inventory sheet"
+	elseif key == "i" and game.mode == "inventory sheet" then
+			game.mode = "ingame"
+	elseif (key == "." or key == ">") and game.mode == "ingame" then
 		if worldmap[game.player_world_y][game.player_world_x][1] == "d" then
 			if worldmap[game.player_world_y][game.player_world_x][3] == "" then
 				create_dungeon_map(100)
@@ -190,7 +190,7 @@ function love.keypressed( key, isrepeat )
 				chunk()
 			end				
 		end
-	elseif key == "," or key == "<" then
+	elseif (key == "," or key == "<") and game.mode == "ingame" then
 		if worldmap[game.player_world_y][game.player_world_x][2] == "" then
 				--create_dungeon_map(100)
 				game_map[game.player_loc_y][game.player_loc_y] = "<"
@@ -198,8 +198,8 @@ function love.keypressed( key, isrepeat )
 				chunk = love.filesystem.load( worldmap[game.player_world_y][game.player_world_x][2]..".lua")
 				chunk()
 			end
-	elseif key == "left" then
-		if game.mode == 95 then
+	elseif key == "left" and game.mode == "ingame" then
+		if game.mode == "look mode" then
 			game.look_x = game.look_x -1
 		else
 			if game_map[py][px-1] == "D" then
@@ -215,8 +215,8 @@ function love.keypressed( key, isrepeat )
 				increase_gametime()
 			end
 		end
-	elseif key == "right" then
-		if game.mode == 95 then
+	elseif key == "right" and game.mode == "ingame" then
+		if game.mode == "look mode" then
 			game.look_x = game.look_x +1
 		else
 			if game_map[py][px+1] == "D" then
@@ -232,8 +232,8 @@ function love.keypressed( key, isrepeat )
 				increase_gametime()
 			end
 		end
-	elseif key == "up" then
-		if game.mode == 95 then
+	elseif key == "up" and game.mode == "ingame" then
+		if game.mode == "look mode" then
 			game.look_y = game.look_y -1
 		else
 			if game_map[py-1][px] == "D" then
@@ -249,8 +249,8 @@ function love.keypressed( key, isrepeat )
 				increase_gametime()
 			end
 		end
-	elseif key == "down" then
-		if game.mode == 95 then
+	elseif key == "down" and game.mode == "ingame" then
+		if game.mode == "look mode" then
 			game.look_y = game.look_y +1
 		else
 			if game_map[py+1][px] == "D" then
@@ -378,7 +378,7 @@ function love.draw_cam_viewable()
 			else
 				love.graphics.print(game_map[y][x],x*8 +dx, y*14+dy)
 			end
-			if game.mode == 95 and y == game.look_y and x == game.look_x then --lookmode
+			if game.mode == "look mode" and y == game.look_y and x == game.look_x then --lookmode
 				love.graphics.print("_", x*8-4+dx,y*14+dy )
 				--print what you see
 				show_look_data(game_map[y][x], x, y)
@@ -393,20 +393,20 @@ function love.draw_cam_viewable()
 	--time_day=0, time_hour=0, time_minute=0
 end
 function love.draw()
-	if game.mode == 1 then --game
+	if game.mode == "ingame" then --game
 		love.draw_cam_viewable()
-	elseif game.mode == 100 then --chargen
+	elseif game.mode == "chargen" then --chargen 100
 		draw_chargen(player)
-	elseif game.mode == 99 then  --character status
+	elseif game.mode == "character sheet" then  --character status
 		draw_char_info(player)
-	elseif game.mode == 98 then --world map
+	elseif game.mode == "world map" then --world map
 		draw_worldmap()
-	elseif game.mode == 97 then --message box
+	elseif game.mode == "message box" then --message box 97
 		love.draw_cam_viewable()
 		draw_messagebox()
-	elseif game.mode == 96 then --inventory
+	elseif game.mode == "inventory sheet" then --inventory 96
 		draw_inventory()
-	elseif game.mode == 95 then --look mode
+	elseif game.mode == "look mode" then --look mode 95
 		love.draw_cam_viewable()
 		--love.graphics.print("_", x*8-4+dx,y*14+dy )
 	end

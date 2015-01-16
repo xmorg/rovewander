@@ -188,24 +188,18 @@ function update_actor_chargen(a, key, mouse_B, mouse_x, mouse_y) --updates based
 		a.sex = 0
 	elseif key == "m" and a.editing_name == 0 then
 		a.sex = 1
-		--strength = 1, --5
-		--agility =  1, --6
-		--intel   =  1, --7
-		--stamina =  1, --8
-		--luck    =  1, --9
-		--charisma = 1, --10
 	elseif key == "s" and a.editing_name == 0 then
-		a.current_stat = 5
+		a.current_stat = 5 --strength = 1, --5
 	elseif key == "a" and a.editing_name == 0 then
-		a.current_stat = 6
+		a.current_stat = 6 --agility =  1, --6
 	elseif key == "i" and a.editing_name == 0 then
-		a.current_stat = 7
+		a.current_stat = 7 --intel   =  1, --7
 	elseif key == "t" and a.editing_name == 0 then
-		a.current_stat = 8
+		a.current_stat = 8 --stamina =  1, --8
 	elseif key == "l" and a.editing_name == 0 then
-		a.current_stat = 9
+		a.current_stat = 9 --luck    =  1, --9
 	elseif key == "c" and a.editing_name == 0 then
-		a.current_stat = 10
+		a.current_stat = 10  --charisma = 1, --10
 	elseif a.editing_name == 1 then
 		if key ~= "rshift" and key ~= "lshift" then
 			if key=="backspace" then

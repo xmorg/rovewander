@@ -225,7 +225,7 @@ function create_actor(game, level,chargen) --create a random actor
 	if chargen == false then --randomize the actor
 		a = randomize_actor(a, nil)
 	else -- chargen == true
-		game.mode = 100
+		game.mode = "chargen" --100
 	end--endif
 	return a --return the actor to the "pointer" hehe.
 end

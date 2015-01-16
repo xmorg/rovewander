@@ -184,6 +184,10 @@ function update_actor_chargen(a, key, mouse_B, mouse_x, mouse_y) --updates based
 		a.name = ""
 	elseif (key == "enter" or key == "return") and a.editing_name == 1 then
 		a.editing_name = 0
+	elseif key == "f" and a.editing_name == 0 then
+		a.sex = 0
+	elseif key == "m" and a.editing_name == 0 then
+		a.sex = 1
 	elseif a.editing_name == 1 then
 		if key ~= "rshift" and key ~= "lshift" then
 			if key=="backspace" then

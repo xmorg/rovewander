@@ -211,11 +211,47 @@ function update_actor_chargen(a, key, mouse_B, mouse_x, mouse_y) --updates based
 				a.bonus_points = a.bonus_points+1
 				a.agility = a.agility -1
 			end
-		end
+		elseif a.current_stat == 7 then
+			if a.intel > 1 then
+				a.bonus_points = a.bonus_points+1
+				a.intel = a.intel -1
+			end
+		elseif a.current_stat == 8 then
+			if a.stamina > 1 then
+				a.bonus_points = a.bonus_points+1
+				a.stamina = a.stamina -1
+			end
+		elseif a.current_stat == 9 then
+			if a.luck > 1 then
+				a.bonus_points = a.bonus_points+1
+				a.luck = a.luck -1
+			end
+		elseif a.current_stat == 10 then
+			if a.charisma > 1 then
+				a.bonus_points = a.bonus_points+1
+				a.charisma = a.charisma -1
+			end
 	elseif key == "+" and a.editing_name == 0 then
 		if a.bonus_points > 0 then
-			a.bonus_points = a.bonus_points-1
-			a[a.current_stat] = a[a.current_stat] +1
+			if a.current_state == 5
+				a.bonus_points = a.bonus_points-1
+				a.strength = a.strength +1
+			elseif a.current_state == 6
+				a.bonus_points = a.bonus_points-1
+				a.agility = a.agility +1
+			elseif a.current_state == 7
+				a.bonus_points = a.bonus_points-1
+				a.intel = a.intel +1
+			elseif a.current_state == 8
+				a.bonus_points = a.bonus_points-1
+				a.stamina = a.stamina +1
+			elseif a.current_state == 9
+				a.bonus_points = a.bonus_points-1
+				a.luck = a.luck +1
+			elseif a.current_state == 10
+				a.bonus_points = a.bonus_points-1
+				a.charisma = a.charisma +1
+			end
 		end
 	elseif a.editing_name == 1 then
 		if key ~= "rshift" and key ~= "lshift" then

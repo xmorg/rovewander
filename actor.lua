@@ -182,7 +182,7 @@ function update_actor_chargen(a, key, mouse_B, mouse_x, mouse_y) --updates based
 	elseif key == "n" and a.editing_name == 0 then --set editing name flag
 		a.editing_name = 1
 		a.name = ""
-	elseif key == "enter" and a.editing_name == 1 then
+	elseif (key == "enter" or key == "return") and a.editing_name == 1 then
 		a.editing_name = 0
 	elseif a.editing_name == 1 then
 		if key ~= "rshift" and key ~= "lshift" then

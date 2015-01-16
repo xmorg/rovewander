@@ -200,6 +200,16 @@ function update_actor_chargen(a, key, mouse_B, mouse_x, mouse_y) --updates based
 		a.current_stat = 9 --luck    =  1, --9
 	elseif key == "c" and a.editing_name == 0 then
 		a.current_stat = 10  --charisma = 1, --10
+	elseif key == "-" and a.editing_name == 0 then
+		if a[a.current_stat] > 0 then
+			a.bonus_points = a.bonus_points+1
+			a[a.current_stat] = a[a.current_stat] -1
+		end
+	elseif key == "+" and a.editing_name == 0 then
+		if a.bonus_points > 0 then
+			a.bonus_points = a.bonus_points-1
+			a[a.current_stat] = a[a.current_stat] +1
+		end
 	elseif a.editing_name == 1 then
 		if key ~= "rshift" and key ~= "lshift" then
 			if key=="backspace" then
@@ -233,6 +243,7 @@ function create_actor(game, level,chargen) --create a random actor
 			editing_name = 0, -- are we typing his name?
 			edited       = 0, -- have we rolled yet?
 			current_stat = 5,  -- selected stat to edit.
+			bonus_points = 0,
 			max_stat = 6,
 			loc_x = 0,
 			loc_y = 0,

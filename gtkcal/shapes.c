@@ -91,13 +91,16 @@ void clear_surface (void)
 }
 
 /* Create a new surface of the appropriate size to store our scribbles */
-gboolean configure_event_cb (GtkWidget  *widget,
-                    GdkEventConfigure *event,
-                    gpointer           data)
+
+ #include <gdk/gdk.h>
+gboolean configure_event_cb (GtkWidget  *widget, GdkEventConfigure *event, gpointer data)
 {
   int header_spacing;
   int box_width, box_height;
   int i, x, y;
+  GdkScreen *screen =  gdk_screen_get_default();
+  GtkWindow *w = gtk_widget_get_root_window(widget);
+  
   cairo_t *cr; cr = cairo_create (surface);
   if (surface)  cairo_surface_destroy (surface);
   surface = gdk_window_create_similar_surface (gtk_widget_get_window (widget),
@@ -107,9 +110,14 @@ gboolean configure_event_cb (GtkWidget  *widget,
 
   header_spacing = 22;
 
-  
-  box_width = gtk_widget_get_allocated_width (widget) / 7; // 640 / 7;
-  box_height = gtk_widget_get_allocated_width (widget) / 5 -22; //480 / 5 -22;
+  if(gtk_window_is_maximized ( w ) == FALSE) {
+    box_width = gtk_widget_get_allocated_width (widget) / 7; // 640 / 7;
+    box_height = gtk_widget_get_allocated_width (widget) / 5 -22; //480 / 5 -22;
+  }
+  else {
+    box_width = gdk_screen_get_width(screen) / 7;
+    box_height = gdk_screen_get_height(screen) / 5-22;
+  }
  
   
   /* Initialize the surface to black */

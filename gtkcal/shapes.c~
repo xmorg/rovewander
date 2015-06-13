@@ -1,0 +1,62 @@
+#include <gtk/gtk.h>
+
+static void draw_brush (GtkWidget *widget, gdouble x, gdouble y,gdouble sx, gdouble sy);
+static void draw_box(GtkWidget *widget, gdouble x, gdouble y, gdouble sx, gdouble sy);
+static void draw_day_headers(GtkWidget *widget, gdouble x, gdouble y, gdouble sx, gdouble sy);
+static void draw_side_frame (GtkWidget *widget, gdouble x, gdouble y, gdouble sx, gdouble sy);
+
+
+static void draw_day_headers(GtkWidget *widget, gdouble x, gdouble y, gdouble sx, gdouble sy)
+{
+  cairo_t *cr;
+  /* Paint to the surface, where we store our state */
+  cr = cairo_create (surface);
+  cairo_set_source_rgb (cr, 0, 1, 0);
+  cairo_rectangle (cr, x , y, sx, sy);
+  cairo_fill (cr);
+  cairo_destroy (cr);
+  /* Now invalidate the affected region of the drawing area. */
+  gtk_widget_queue_draw_area (widget, x - 3, y - 3, 6, 6);
+}
+
+static void draw_box(GtkWidget *widget, gdouble x, gdouble y, gdouble sx, gdouble sy)
+{
+  cairo_t *cr;
+  /* Paint to the surface, where we store our state */
+  cr = cairo_create (surface);
+  cairo_set_source_rgb (cr, 1, 1, 1);
+  cairo_rectangle (cr, x , y, sx, sy);
+  cairo_fill (cr);
+  cairo_destroy (cr);
+  /* Now invalidate the affected region of the drawing area. */
+  gtk_widget_queue_draw_area (widget, x - 3, y - 3, 6, 6);
+}
+
+static void draw_side_frame (GtkWidget *widget, gdouble x, gdouble y,
+			gdouble sx, gdouble sy)
+{
+  cairo_t *cr;
+  /* Paint to the surface, where we store our state */
+  cr = cairo_create (surface);
+  cairo_set_source_rgb (cr, 0, 1, 0);
+  cairo_rectangle (cr, x , y, sx, sy);
+  cairo_fill (cr);
+  cairo_destroy (cr);
+  /* Now invalidate the affected region of the drawing area. */
+  gtk_widget_queue_draw_area (widget, x - 3, y - 3, 6, 6);
+}
+
+/* Draw a rectangle on the surface at the given position */
+static void draw_brush (GtkWidget *widget, gdouble x, gdouble y,
+			gdouble sx, gdouble sy)
+{
+  cairo_t *cr;
+  /* Paint to the surface, where we store our state */
+  cr = cairo_create (surface);
+  cairo_set_source_rgb (cr, 0, 1, 0);
+  cairo_rectangle (cr, x , y, sx, sy);
+  cairo_fill (cr);
+  cairo_destroy (cr);
+  /* Now invalidate the affected region of the drawing area. */
+  gtk_widget_queue_draw_area (widget, x - 3, y - 3, 6, 6);
+}

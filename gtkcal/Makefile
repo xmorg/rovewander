@@ -8,6 +8,7 @@ FLAGS = `pkg-config --cflags gtk+-3.0`
 
 FILES = menus.c \
 	shapes.c \
+	datetime.c \
 	gtk_app_basic.c \
 
 
@@ -19,7 +20,7 @@ clean:
 	@echo Erasing exec
 	@rm cal_gtk
 	@echo Erasing emacs backups
-	@rm src/*.*~
-	@rm src/*.o
+	@rm *.*~
+	@rm *.o
 	@rm *.core
 	@echo Done.

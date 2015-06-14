@@ -95,26 +95,32 @@ void clear_surface (void)
  #include <gdk/gdk.h>
 gboolean configure_event_cb (GtkWidget  *widget, GdkEventConfigure *event, gpointer data)
 {
-  int header_spacing;
+  int header_spacing, month_header_height;
   int box_width, box_height;
+  int wx, wy;
   int i, x, y;
   GdkScreen *screen =  gdk_screen_get_default();
-  GtkWindow *w = gtk_widget_get_root_window(widget);
+  //GtkWindow *w = gtk_widget_get_root_window(widget);
   
-  cairo_t *cr; cr = cairo_create (surface);
+  cairo_t *cr; cr = cairo_create (surface); 
+  wx = gtk_widget_get_allocated_width(widget);
+  wy = gtk_widget_get_allocated_height(widget);
   if (surface)  cairo_surface_destroy (surface);
   surface = gdk_window_create_similar_surface (gtk_widget_get_window (widget),
                                                CAIRO_CONTENT_COLOR,
-                                               gtk_widget_get_allocated_width (widget),
-                                               gtk_widget_get_allocated_height (widget));
+                                               wx,
+                                               wy);
 
+  month_header_height = 90;
   header_spacing = 22;
 
-  if(gtk_window_is_maximized ( w ) == FALSE) {
+  if(wx < gdk_screen_get_width(screen) ) {
     box_width = gtk_widget_get_allocated_width (widget) / 7; // 640 / 7;
+  }
+  if(wy < gdk_screen_get_width(screen) ) {
     box_height = gtk_widget_get_allocated_width (widget) / 5 -22; //480 / 5 -22;
   }
-  else {
+  if (wx > gdk_screen_get_width(screen)) { //maximized
     box_width = gdk_screen_get_width(screen) / 7;
     box_height = gdk_screen_get_height(screen) / 5-22;
   }
@@ -124,14 +130,15 @@ gboolean configure_event_cb (GtkWidget  *widget, GdkEventConfigure *event, gpoin
   clear_surface ();
   //draw_side_frame(widget, 1, 1, 100, 480); //side frame
 
+  draw_box(widget, 1,1, wx, month_header_height-1); //month header
   for (i=0; i < 7; i++) {
-    draw_day_headers(widget, (i*box_width)+i, 1, box_width, 20); //side frame
+    draw_day_headers(widget, (i*box_width)+i, month_header_height, box_width, 20); //side frame
   }
 
   for (y=0; y < 5; y++) {
     for(x=0; x < 7; x++) {
       draw_box(widget, (x*box_width)+x,
-	       header_spacing+(y*box_height)+y,
+	       month_header_height+header_spacing+(y*box_height)+y,
 	       box_width, box_height); //side frame
     }
   }

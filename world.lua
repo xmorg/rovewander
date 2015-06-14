@@ -150,11 +150,11 @@ function get_inn_name()
 	return inn_name
 end
 function load_newzone(direction, x, y)
+	--Needs to be a way to compare the current zone with the new to be created.
 	if direction == "north" then
 		if y-1 > 1 and worldmap[y-1][x][1] == "X" then
 			generate_random_zone(x, y-1) --create a new map
 		else
-			--load the map from file
 			chunk = love.filesystem.load( worldmap[y-1][x][2]..".lua" )
 			chunk()
 		end
@@ -176,7 +176,6 @@ function load_newzone(direction, x, y)
 		if x-1 > 1 and worldmap[y][x-1][1] == "X" then
 			generate_random_zone(x-1, y) --create a new map
 		else
-			--prototype chunk = love.filesystem.load( worldmap[y][x-1][2][1]..".lua" )
 			chunk = love.filesystem.load( worldmap[y][x-1][2]..".lua" )
 			chunk()
 		end

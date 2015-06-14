@@ -10,7 +10,7 @@ FILES = menus.c \
 	shapes.c \
 	datetime.c \
 	gtk_app_basic.c \
-
+	text.c \
 
 all:
 	$(CC) -o cal_gtk $(FILES) $(FLAGS) $(LIBS)

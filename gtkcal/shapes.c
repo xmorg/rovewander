@@ -13,6 +13,26 @@ gboolean configure_event_cb (GtkWidget  *widget, GdkEventConfigure *event, gpoin
 gboolean draw_cb (GtkWidget *widget, cairo_t   *cr, gpointer data);
 gboolean if_surface();
 void kill_surface();
+void draw_text_atxy(char *text, int size, gdouble x, gdouble y);
+char * get_asclocalltime();
+
+//void draw_largetext_atxy(char *text, gdouble x, gdouble y);
+
+void draw_text_atxy(char *text, int size, gdouble x, gdouble y)
+{
+  cairo_t *cr;
+  cr = cairo_create (surface);
+  cairo_set_source_rgb(cr, 0, 0, 0); //black text
+  cairo_select_font_face(cr, "Purisa",CAIRO_FONT_SLANT_NORMAL, CAIRO_FONT_WEIGHT_BOLD);
+
+  cairo_set_font_size(cr, size);
+  
+  cairo_move_to(cr, x, y);
+  cairo_show_text(cr, text);
+  /* Now invalidate the affected region of the drawing area. */
+  //gtk_widget_queue_draw_area (widget, x - 3, y - 3, 6, 6);
+}
+
 
 void kill_surface()
 {
@@ -30,7 +50,7 @@ void draw_day_headers(GtkWidget *widget, gdouble x, gdouble y, gdouble sx, gdoub
   cairo_t *cr;
   /* Paint to the surface, where we store our state */
   cr = cairo_create (surface);
-  cairo_set_source_rgb (cr, 0, 1, 0);
+  cairo_set_source_rgb(cr, 0, 1, 0);
   cairo_rectangle (cr, x , y, sx, sy);
   cairo_fill (cr);
   cairo_destroy (cr);
@@ -107,9 +127,7 @@ gboolean configure_event_cb (GtkWidget  *widget, GdkEventConfigure *event, gpoin
   wy = gtk_widget_get_allocated_height(widget);
   if (surface)  cairo_surface_destroy (surface);
   surface = gdk_window_create_similar_surface (gtk_widget_get_window (widget),
-                                               CAIRO_CONTENT_COLOR,
-                                               wx,
-                                               wy);
+                                               CAIRO_CONTENT_COLOR, wx, wy);
 
   month_header_height = 90;
   header_spacing = 22;
@@ -131,6 +149,8 @@ gboolean configure_event_cb (GtkWidget  *widget, GdkEventConfigure *event, gpoin
   //draw_side_frame(widget, 1, 1, 100, 480); //side frame
 
   draw_box(widget, 1,1, wx, month_header_height-1); //month header
+  draw_text_atxy(get_asclocalltime(), 24, 100, 40);
+  
   for (i=0; i < 7; i++) {
     draw_day_headers(widget, (i*box_width)+i, month_header_height, box_width, 20); //side frame
   }

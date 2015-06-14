@@ -5,11 +5,21 @@ struct tm *timeinfo; //
 void get_clocaltime(struct tm *t);
 void printf_localtime();
 
-void get_clocalltime(struct tm *t)
+
+#include <stdio.h>
+#include <stdlib.h>
+char * get_asclocalltime()
 {
+  char *texttime;
   time_t rawtime;
+
+  texttime = (char*)malloc(25 * sizeof(char));
+  
   time( &rawtime);
   timeinfo = localtime( &rawtime ); //get time struct
+  sprintf(texttime, "%s\n", asctime(timeinfo));
+  return texttime;
+  
 }
 
 #include <stdio.h>

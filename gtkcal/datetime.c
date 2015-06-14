@@ -14,8 +14,12 @@ void get_clocalltime(struct tm *t)
 
 #include <stdio.h>
  
-void printf_localtime(struct tm *t)
+void printf_localtime()
 {
-  printf("asctime: %s\n", asctime(t) );
+  time_t rawtime;
+  time( &rawtime);
+  timeinfo = localtime(&rawtime);
+  printf("asctime: %s\n", asctime(timeinfo) );
+  
 }
 

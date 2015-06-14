@@ -9,7 +9,7 @@ gboolean configure_event_cb (GtkWidget  *widget, GdkEventConfigure *event, gpoin
 gboolean draw_cb (GtkWidget *widget, cairo_t   *cr, gpointer data);
 void kill_surface();
 gboolean if_surface();
-
+void printf_localtime();
 
 /* Handle button press events by either drawing a rectangle
  * or clearing the surface, depending on which button was pressed.
@@ -105,6 +105,7 @@ int main (int argc, char **argv)
 {
   GtkApplication *app;
   int status;
+  printf_localtime();
   app = gtk_application_new ("org.gtk.example", G_APPLICATION_FLAGS_NONE);
   g_signal_connect (app, "activate", G_CALLBACK (activate), NULL);
   status = g_application_run (G_APPLICATION (app), argc, argv);

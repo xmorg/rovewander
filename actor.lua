@@ -171,6 +171,7 @@ function randomize_actor(a, race)
 	a.health = a.max_health
 	a.background = r_gen_background(a, rand_race) -- generate a random background.
 	a.inventory = {}
+	a.bonus_points = 0
 	table.insert(a.inventory,new_starting_weapon(7) )
 	table.insert(a.inventory,new_starting_armor(3) )
 	table.insert(a.inventory,new_starting_helm(3) )
@@ -292,7 +293,7 @@ function create_actor(game, level,chargen) --create a random actor
 			editing_name = 0, -- are we typing his name?
 			edited       = 0, -- have we rolled yet?
 			current_stat = 5,  -- selected stat to edit.
-			bonus_points = 0,
+			bonus_points = 10,
 			max_stat = 6,
 			loc_x = 0,
 			loc_y = 0,

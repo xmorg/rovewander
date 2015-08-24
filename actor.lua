@@ -113,7 +113,7 @@ end
 function display_actor_stats(actor, editing)--actor object, boolean viewable
 	local line_num = 3
 	local coll_one = 20
-	local coll_two = 230
+	local coll_two = 250
 	
 	love.graphics.setColor(255,255,255,255)
 	love.graphics.print("(N)ame: ".. actor.name, coll_one, line_num*14)

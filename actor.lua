@@ -137,6 +137,7 @@ function display_actor_stats(actor, editing)--actor object, boolean viewable
 		love.graphics.print( actor.luck, coll_one+100, line_num*14) line_num=line_num+1
 	if game.mode == "chargen" then
 		love.graphics.print("X Bonus Points: "..actor.bonus_points, coll_one, line_num*15)
+	end
 end
 function r_gen_background(a, rand_race)
 	bg = "You are a"..race_if_an(a)..".  One of the "..playable_race_names[rand_race][2]

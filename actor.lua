@@ -131,9 +131,9 @@ function display_actor_stats(actor, editing)--actor object, boolean viewable
 		love.graphics.print( actor.intel,coll_one+100, line_num*14) line_num=line_num+1
 	love.graphics.print(point_at_current_stat(8).." Stamina:", coll_one, line_num*14)
 		love.graphics.print( actor.stamina, coll_one+100, line_num*14) line_num=line_num+1
-	love.graphics.print(point_at_current_stat(9).." Charisma:", coll_one, line_num*14)
+	love.graphics.print(point_at_current_stat(10).." Charisma:", coll_one, line_num*14)
 		love.graphics.print( actor.charisma, coll_one+100, line_num*14) line_num=line_num+1
-	love.graphics.print(point_at_current_stat(10).." Luck:", coll_one, line_num*14)
+	love.graphics.print(point_at_current_stat(9).." Luck:", coll_one, line_num*14)
 		love.graphics.print( actor.luck, coll_one+100, line_num*14) line_num=line_num+1
 end
 function r_gen_background(a, rand_race)
@@ -203,9 +203,9 @@ function update_actor_chargen(a, key, mouse_B, mouse_x, mouse_y) --updates based
 	elseif key == "t" and a.editing_name == 0 and game.mode == "chargen"  then
 		a.current_stat = 8 --stamina =  1, --8
 	elseif key == "l" and a.editing_name == 0 and game.mode == "chargen"  then
-		a.current_stat = 10 --luck    =  1, --9
+		a.current_stat = 9 --luck    =  1, --9
 	elseif key == "c" and a.editing_name == 0 and game.mode == "chargen"  then
-		a.current_stat = 9  --charisma = 1, --10
+		a.current_stat = 10  --charisma = 1, --10
 	elseif key == "-" and a.editing_name == 0 and game.mode == "chargen"  then
 		if a.current_stat == 5 then
 			if a.strength > 1 then

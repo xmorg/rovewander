@@ -1,3 +1,5 @@
+--chargen_stat_selector = " "
+
 playable_race_names = {	{"Human", "short-lived hardworking folk of the midland kingdoms"}, --one of the 
 	{"HalfElf", "humans who can trace their bloodlines to an elven heritage."},
 	{"Norlander",  "tall humans who live in the frozen wastes of the north."},
@@ -112,6 +114,7 @@ function display_actor_stats(actor, editing)--actor object, boolean viewable
 	local line_num = 3
 	local coll_one = 20
 	local coll_two = 230
+	
 	love.graphics.setColor(255,255,255,255)
 	love.graphics.print("Name: ".. actor.name, coll_one, line_num*14)
 	love.graphics.print("Race: ".. actor.a_type, coll_two, line_num*14) 
@@ -120,17 +123,17 @@ function display_actor_stats(actor, editing)--actor object, boolean viewable
 	
 	love.graphics.printf(actor.background, coll_two, line_num*14, 350, "left")
 	
-	love.graphics.print("Strength :", coll_one, line_num*14) 
+	love.graphics.print(point_at_current_stat(5)+" Strength :", coll_one, line_num*14) 
 		love.graphics.print( actor.strength, coll_one+100, line_num*14) line_num=line_num+1
-	love.graphics.print("Agility :", coll_one, line_num*14) 
+	love.graphics.print(point_at_current_stat(6)+" Agility :", coll_one, line_num*14) 
 		love.graphics.print(actor.agility,coll_one+100, line_num*14) line_num=line_num+1
-	love.graphics.print("Intelligence:", coll_one, line_num*14)
+	love.graphics.print(point_at_current_stat(7)+" Intelligence:", coll_one, line_num*14)
 		love.graphics.print( actor.intel,coll_one+100, line_num*14) line_num=line_num+1
-	love.graphics.print("Stamina:", coll_one, line_num*14)
+	love.graphics.print(point_at_current_stat(8)+"Stamina:", coll_one, line_num*14)
 		love.graphics.print( actor.stamina, coll_one+100, line_num*14) line_num=line_num+1
-	love.graphics.print("Charisma:", coll_one, line_num*14)
+	love.graphics.print(point_at_current_stat(9)+"Charisma:", coll_one, line_num*14)
 		love.graphics.print( actor.charisma, coll_one+100, line_num*14) line_num=line_num+1
-	love.graphics.print("Luck:", coll_one, line_num*14)
+	love.graphics.print(point_at_current_stat(10)+"Luck:", coll_one, line_num*14)
 		love.graphics.print( actor.luck, coll_one+100, line_num*14) line_num=line_num+1
 end
 function r_gen_background(a, rand_race)
@@ -174,7 +177,10 @@ function randomize_actor(a, race)
 	table.insert(a.inventory,new_starting_helm(3) )
 	return a
 end
-
+function point_at_current_stat(s)
+	if s == a.current_stat then return ">>"
+	else return ""
+end
 function update_actor_chargen(a, key, mouse_B, mouse_x, mouse_y) --updates based on mouse/key press
 	if key == "r" then  --randomize actor
 		randomize_actor(a, nil)

@@ -124,17 +124,17 @@ function display_actor_stats(actor, editing)--actor object, boolean viewable
 	love.graphics.printf(actor.background, coll_two, line_num*14, 350, "left")
 	
 	love.graphics.print(point_at_current_stat(5).." (S)trength :", coll_one, line_num*14) 
-		love.graphics.print( actor.strength, coll_one+100, line_num*14) line_num=line_num+1
+		love.graphics.print( actor.strength, coll_one+120, line_num*14) line_num=line_num+1
 	love.graphics.print(point_at_current_stat(6).." (A)gility :", coll_one, line_num*14) 
-		love.graphics.print(actor.agility,coll_one+100, line_num*14) line_num=line_num+1
+		love.graphics.print(actor.agility,coll_one+120, line_num*14) line_num=line_num+1
 	love.graphics.print(point_at_current_stat(7).." (I)ntelligence:", coll_one, line_num*14)
-		love.graphics.print( actor.intel,coll_one+100, line_num*14) line_num=line_num+1
+		love.graphics.print( actor.intel,coll_one+120, line_num*14) line_num=line_num+1
 	love.graphics.print(point_at_current_stat(8).." S(t)amina:", coll_one, line_num*14)
-		love.graphics.print( actor.stamina, coll_one+100, line_num*14) line_num=line_num+1
+		love.graphics.print( actor.stamina, coll_one+120, line_num*14) line_num=line_num+1
 	love.graphics.print(point_at_current_stat(10).." (C)harisma:", coll_one, line_num*14)
-		love.graphics.print( actor.charisma, coll_one+100, line_num*14) line_num=line_num+1
+		love.graphics.print( actor.charisma, coll_one+120, line_num*14) line_num=line_num+1
 	love.graphics.print(point_at_current_stat(9).." (L)uck:", coll_one, line_num*14)
-		love.graphics.print( actor.luck, coll_one+100, line_num*14) line_num=line_num+1
+		love.graphics.print( actor.luck, coll_one+120, line_num*14) line_num=line_num+1
 	if game.mode == "chargen" then
 		love.graphics.print("X Bonus Points: "..actor.bonus_points, coll_one, line_num*15)
 	end

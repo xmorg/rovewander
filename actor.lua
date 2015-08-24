@@ -155,7 +155,6 @@ function randomize_actor(a, race)
 	for x=1, sylables do
 		a.name = a.name..crude_names_back[math.random(1,table.getn(crude_names_back))]
 	end
-	
 	if race==nil then
 		a.a_type = playable_race_names[rand_race][1]
 	else
@@ -179,7 +178,7 @@ function randomize_actor(a, race)
 end
 function point_at_current_stat(s)
 	if s == a.current_stat then return ">>"
-	else return ""
+	else return "" end
 end
 function update_actor_chargen(a, key, mouse_B, mouse_x, mouse_y) --updates based on mouse/key press
 	if key == "r" then  --randomize actor

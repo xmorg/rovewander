@@ -401,6 +401,8 @@ function love.draw()
 		love.draw_cam_viewable()
 	elseif game.mode == "chargen" then --chargen 100
 		draw_chargen(player)
+	elseif game.mode == "chargen_race_selector" then
+		draw_race_selector()
 	elseif game.mode == "character sheet" then  --character status
 		draw_char_info(player)
 	elseif game.mode == "world map" then --world map

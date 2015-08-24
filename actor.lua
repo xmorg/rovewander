@@ -227,12 +227,12 @@ function update_actor_chargen(a, key, mouse_B, mouse_x, mouse_y) --updates based
 				a.bonus_points = a.bonus_points+1
 				a.stamina = a.stamina -1
 			end
-		elseif a.current_stat == 9 then
+		elseif a.current_stat == 10 then
 			if a.luck > 1 then
 				a.bonus_points = a.bonus_points+1
 				a.luck = a.luck -1
 			end
-		elseif a.current_stat == 10 then
+		elseif a.current_stat == 9 then
 			if a.charisma > 1 then
 				a.bonus_points = a.bonus_points+1
 				a.charisma = a.charisma -1

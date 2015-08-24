@@ -178,7 +178,7 @@ function randomize_actor(a, race)
 end
 function point_at_current_stat(s)
 	if s == a.current_stat then return ">>"
-	else return "" end
+	else return "  " end
 end
 function update_actor_chargen(a, key, mouse_B, mouse_x, mouse_y) --updates based on mouse/key press
 	if key == "r" then  --randomize actor

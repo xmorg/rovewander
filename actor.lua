@@ -131,7 +131,10 @@ function display_playable_races() --playable_race_names(23)
 			coll_one+50+next_col(i), line_num*i ) -- print the names
 	end
 end
-
+function draw_race_selector()
+	draw_border(255,255,255,255)--require("primatives")
+	display_playable_races()
+end
 function display_actor_stats(actor, editing)--actor object, boolean viewable
 	local line_num = 3
 	local coll_one = 20

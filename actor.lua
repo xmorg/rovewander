@@ -116,7 +116,7 @@ function display_actor_stats(actor, editing)--actor object, boolean viewable
 	local coll_two = 230
 	
 	love.graphics.setColor(255,255,255,255)
-	love.graphics.print("Name: ".. actor.name, coll_one, line_num*14)
+	love.graphics.print("(N)ame: ".. actor.name, coll_one, line_num*14)
 	love.graphics.print("Race: ".. actor.a_type, coll_two, line_num*14) 
 	love.graphics.print("Sex: "..sex_if_an(actor), coll_two+200, line_num*14) line_num=line_num+1
 	love.graphics.print("============================================================", coll_one, line_num*14)line_num=line_num+1
@@ -181,8 +181,8 @@ function randomize_actor(a, race)
 	return a
 end
 function point_at_current_stat(s)
-	if s == a.current_stat then return "(*)"
-	else return "( )" end
+	if s == a.current_stat then return "[*]"
+	else return "[ ]" end
 end
 function update_actor_chargen(a, key, mouse_B, mouse_x, mouse_y) --updates based on mouse/key press
 	if key == "r" then  --randomize actor

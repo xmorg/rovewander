@@ -234,8 +234,8 @@ function update_actor_chargen(a, key, mouse_B, mouse_x, mouse_y) --updates based
 		a.current_stat = 9 --luck    =  1, --9
 	elseif key == "c" and a.editing_name == 0 and game.mode == "chargen"  then
 		a.current_stat = 10  --charisma = 1, --10
-	elseif key == "r" and a.editing_name == 0 and game.mode == "chargen"  then
-		game.mode = ""
+	elseif key == "p" and a.editing_name == 0 and game.mode == "chargen"  then
+		game.mode = "chargen_race_selector"
 	elseif key == "-" and a.editing_name == 0 and game.mode == "chargen"  then
 		if a.current_stat == 5 then
 			if a.strength > 1 then

@@ -1,28 +1,28 @@
 --chargen_stat_selector = " "
 
-playable_race_names = {	{"Human", "short-lived hardworking folk of the midland kingdoms"}, --one of the 
-	{"HalfElf", "humans who can trace their bloodlines to an elven heritage."},
-	{"Norlander",  "tall humans who live in the frozen wastes of the north."},
-	{"Nomad",  "mix of tribal humans who wander the lands and trade horses and livestock."},
-	{"Elf",  "fair folk, who have made their home in the midland."},
-	{"Dark Elf",  "dread ones, or the Rock Elves.  The Dark Elves live deep in the earth and often clash with dwarves."},
-	{"High Elf",  "kingdom Elves, who live in the Elven Kingdoms of the mystic Isles."},
-	{"Gnome", "elusive advanced race of mechanical geniuses."},
-	{"Dwarf",  "short stout humanoids who live in the mountains and build great holds out of soid rock."},
-	{"Abyss Dwarf", "redskinned dwarves are known for delving deeply and creating mythical lava forges."}, 
-	{"Topside Dwarf",  "Dwarves who have built great kingdoms in the earth, and often merge with human kingdoms."},
-	{"Wild Elf",  "wild Elves live in the great forrests of the midlands, and the northern snowpines."},
-	{"Goblin", "small devious creatures, which live almost everyhwere and bother almost everyone."},
-	{"Orc",  "large race of barbaric humanoids who look like giant furry goblins."},
-	{"Trorc",  "halftroll who are a hybrid creature, created by dark experiments.  They are few in number but large, strong and violent."},
-	{"Owlman",  "reclusive winged humanoids, who inhabid the winded craigs of the southland."},
-	{"Catman",  "feline humanoids who live the deep forests that blur the lines between men and beast. Catmen are wise fast, and furry."},
-	{"Ratigan",  "race of ratmen, not to be confused with the were-rat.   Ratigans, were once as numerous as goblins, but now live in caves."},
-	{"Mermen", "mythical aquatic peoples that rule the sea as men rule the land.  They are in constant war with the Naga."},
-	{"Harepon",  "feral birdmen which live on remote islands and are a constant nuisance to shipping."},
-	{"Locustin",  "lords of the the crop wasters, are giant locust-man.  Many years ago the midland kings pushed their kind far to the east."},
-	{"Lizardman",  "scaled ones, are an ancient race, which once ruled the midland. Their numbers declined for an unknown reason, and they remain in the western isles."},
-	{"Naga", "a vicious races of snakemen, often called mersnakes.  They have a dubious alliance with the Lizardmen."}
+playable_race_names = {	{"Human", "short-lived hardworking folk of the midland kingdoms", "a"}, --one of the 
+	{"HalfElf", "humans who can trace their bloodlines to an elven heritage.", "b"},
+	{"Norlander",  "tall humans who live in the frozen wastes of the north.", "c"},
+	{"Nomad",  "mix of tribal humans who wander the lands and trade horses and livestock.", "d"},
+	{"Elf",  "fair folk, who have made their home in the midland.", "e"},
+	{"Dark Elf",  "dread ones, or the Rock Elves.  The Dark Elves live deep in the earth and often clash with dwarves.", "f"},
+	{"High Elf",  "kingdom Elves, who live in the Elven Kingdoms of the mystic Isles.", "g"},
+	{"Gnome", "elusive advanced race of mechanical geniuses.", "h"},
+	{"Dwarf",  "short stout humanoids who live in the mountains and build great holds out of soid rock.", "i"},
+	{"Abyss Dwarf", "redskinned dwarves are known for delving deeply and creating mythical lava forges.", "j"}, 
+	{"Topside Dwarf",  "Dwarves who have built great kingdoms in the earth, and often merge with human kingdoms.", "l"},
+	{"Wild Elf",  "wild Elves live in the great forrests of the midlands, and the northern snowpines.", "m"},
+	{"Goblin", "small devious creatures, which live almost everyhwere and bother almost everyone.", "n"},
+	{"Orc",  "large race of barbaric humanoids who look like giant furry goblins.", "o"},
+	{"Trorc",  "halftroll who are a hybrid creature, created by dark experiments.  They are few in number but large, strong and violent.", "p"},
+	{"Owlman",  "reclusive winged humanoids, who inhabid the winded craigs of the southland.", "q"},
+	{"Catman",  "feline humanoids who live the deep forests that blur the lines between men and beast. Catmen are wise fast, and furry.", "r"},
+	{"Ratigan",  "race of ratmen, not to be confused with the were-rat.   Ratigans, were once as numerous as goblins, but now live in caves.", "s"},
+	{"Mermen", "mythical aquatic peoples that rule the sea as men rule the land.  They are in constant war with the Naga.", "t"},
+	{"Harepon",  "feral birdmen which live on remote islands and are a constant nuisance to shipping.", "u"},
+	{"Locustin",  "lords of the the crop wasters, are giant locust-man.  Many years ago the midland kings pushed their kind far to the east.", "v"},
+	{"Lizardman",  "scaled ones, are an ancient race, which once ruled the midland. Their numbers declined for an unknown reason, and they remain in the western isles.", "w"},
+	{"Naga", "a vicious races of snakemen, often called mersnakes.  They have a dubious alliance with the Lizardmen.", "x"}
 }	
 
 crude_names_front = {"Al", "Bre", "Cel", "Dan", "Ed", "Ford", "Guy", "Haus", "Ister",
@@ -110,6 +110,28 @@ function sex_if_an(a)
 		return "male"
 	end
 end
+
+function display_playable_races() --playable_race_names(23)
+	local line_num = 3
+	local coll_one = 20
+	local coll_two = 250
+	--{"HalfElf", "humans who can trace their bloodlines to an elven heritage."}
+	--for i, v in ipairs(a) do
+      	--print(i, v)
+    	--end
+    function next_col(ind)
+    	if i > 12 then
+    		return 200
+    	else
+    		return 0
+    	end
+    end
+	for i,v in ipairs(playable_race_names) do
+		love.graphics.print(playable_race_names[i][3]..") "..playable_race_names[i][1], 
+			coll_one+50+next_col(i), line_num*i ) -- print the names
+	end
+end
+
 function display_actor_stats(actor, editing)--actor object, boolean viewable
 	local line_num = 3
 	local coll_one = 20

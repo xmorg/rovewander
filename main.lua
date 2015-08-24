@@ -175,7 +175,11 @@ function love.keypressed( key, isrepeat )
 	elseif key == "c" then
 		if game.mode == "character sheet" then
 			game.mode = "ingame"
-		else game.mode = "character sheet" end --character sheet mode
+		else
+			if game.mode == "ingame" then
+				game.mode = "character sheet" 
+			end --character sheet mode
+		end
 	elseif key == "i" and game.mode == "ingame" then 
 			game.mode = "inventory sheet"
 	elseif key == "i" and game.mode == "inventory sheet" then

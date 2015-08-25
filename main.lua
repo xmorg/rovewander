@@ -98,31 +98,31 @@ function love.load()
 end
 
 function love.mousepressed(x, y, button)
-	if button == "l" then --left button?
-		if game.mode == "chargen" then
-			if player.edited == 1 then
-				--save player data
-				love.filesystem.write( "player.lua", table.show(player, "player")) 
-				game.mode = "message box" --97
-			end
-		elseif game.mode == "message box" then --97
-			game.mode = "ingame"
-		end
-		if x >=0 and x <=100 and y >= love.graphics.getHeight()/10 
-			and y <= love.graphics.getHeight()/10*9 then
-			game.player_loc_x = game.player_loc_x -1
-		elseif x >=love.graphics.getWidth()/10 and x <=love.graphics.getWidth() 
-			and y >= love.graphics.getHeight()/10 
-			and y <= love.graphics.getHeight()/10*9 then
-			game.player_loc_x = game.player_loc_x +1
-		elseif x >=love.graphics.getWidth()/10 and x <=love.graphics.getWidth()/10*9 
-			and y >= 0 and y <= 100 then
-			game.player_loc_y = game.player_loc_y -1
-		elseif x >=love.graphics.getWidth()/10 and x <=love.graphics.getWidth()/10*9 
-			and y <= love.graphics.getHeight() and y >= love.graphics.getHeight()/10*9 then
-			game.player_loc_y = game.player_loc_y +1
-		end--endif
-	end--endif
+   if button == "l" then --left button?
+      if game.mode == "chargen" then
+	 if player.edited == 1 then
+	    --save player data
+	    love.filesystem.write( "player.lua", table.show(player, "player")) 
+	    game.mode = "message box" --97
+	 end
+      elseif game.mode == "message box" then --97
+	 game.mode = "ingame"
+      end
+      if x >=0 and x <=100 and y >= love.graphics.getHeight()/10 
+      and y <= love.graphics.getHeight()/10*9 then
+	 game.player_loc_x = game.player_loc_x -1
+      elseif x >=love.graphics.getWidth()/10 and x <=love.graphics.getWidth() 
+	 and y >= love.graphics.getHeight()/10 
+      and y <= love.graphics.getHeight()/10*9 then
+	 game.player_loc_x = game.player_loc_x +1
+      elseif x >=love.graphics.getWidth()/10 and x <=love.graphics.getWidth()/10*9 
+      and y >= 0 and y <= 100 then
+	 game.player_loc_y = game.player_loc_y -1
+      elseif x >=love.graphics.getWidth()/10 and x <=love.graphics.getWidth()/10*9 
+      and y <= love.graphics.getHeight() and y >= love.graphics.getHeight()/10*9 then
+	 game.player_loc_y = game.player_loc_y +1
+      end--endif
+   end--endif
 end
 
 function love.keypressed( key, isrepeat )
@@ -132,7 +132,10 @@ function love.keypressed( key, isrepeat )
 	local dx = game.draw_x
 	if game.mode == "chargen" then
 		update_actor_chargen(player, key, nil, nil, nil) 
+	elseif game.mode == "chargen_race_selector" then
+	   update_race_chargen(player, key, nil, nil, nil)
 	end
+	
 	if key == "escape" then
 		if game.mode == 95 then
 			game.mode = 1
@@ -274,28 +277,28 @@ function love.keypressed( key, isrepeat )
 	end--endif key
 end--endfunction
 function love.update()
-	local barrier_y = 0
-	local barrior_x = 0
-	local fnight = 0
-	if is_night() == true then
-		 fnight = 0
-	else
-		 fnight = 10
-	end
-	for y= -5-fnight, 5+fnight do
-		for x= -5-fnight,5+fnight do
-			if game.player_loc_y+y > 0 and game.player_loc_x+x > 0 
-				and game.player_loc_y+y < game.tilecount+1 
-					and game.player_loc_x+x < game.tilecount+1 then
-					--if game_map[game.player_loc_y+y][game.player_loc_x+x]
-					--can currently see through walls :(
-					--what about daytime?
-					fogofwar[game.player_loc_y+y][game.player_loc_x+x] = 1
-			end
-		end
-	end
-	player.loc_y = game.player_loc_y
-	player.loc_x = game.player_loc_x
+   local barrier_y = 0
+   local barrior_x = 0
+   local fnight = 0
+   if is_night() == true then
+      fnight = 0
+   else
+      fnight = 10
+   end
+   for y= -5-fnight, 5+fnight do
+      for x= -5-fnight,5+fnight do
+	 if game.player_loc_y+y > 0 and game.player_loc_x+x > 0 
+	    and game.player_loc_y+y < game.tilecount+1 
+	 and game.player_loc_x+x < game.tilecount+1 then
+	    --if game_map[game.player_loc_y+y][game.player_loc_x+x]
+	    --can currently see through walls :(
+	    --what about daytime?
+	    fogofwar[game.player_loc_y+y][game.player_loc_x+x] = 1
+	 end
+      end
+   end
+   player.loc_y = game.player_loc_y
+   player.loc_x = game.player_loc_x
 end
 
 function setcolorbyChar(char)
@@ -353,67 +356,67 @@ function show_look_data(mchar, x, y)
 	love.graphics.print(lstr, px, py)
 end
 function love.draw_cam_viewable()
-	local px = game.player_loc_x
-	local py = game.player_loc_y
-	local dy = game.draw_y
-	local dx = game.draw_x
-	local draw_center_x = love.graphics.getWidth()/2
-	local draw_center_y = love.graphics.getHeight()/2
-	sx = px*8
-	sy = py*14
-	for y=1 , game.tilecount do --50
-		for x=1 , game.tilecount do --50
-			if fogofwar[y][x] == 0 then
-				love.graphics.setColor(0,0,0,140)
-			else
-				love.graphics.setColor(setcolorbyChar(game_map[y][x]))
-			end
-			if y == game.player_loc_y and x == game.player_loc_x then
-				love.graphics.setColor(255,255,255,255)
-				love.graphics.print("@", x*8-4+dx,y*14+dy )
-			--elseif x*8 <= 16 and y*14 <= 28 then
-			--	t = 0
-			elseif game_map[y][x] == "#" then
-				love.graphics.setColor(setcolorbyChar(game_map[y][x]))
-				love.graphics.rectangle("fill", x*8+dx, y*14+dy, 8, 14)
-			elseif npc_map[y][x] ~= 0 and fogofwar[y][x] ~= 0 then
-				love.graphics.setColor(190,190,255,255)
-				love.graphics.print("@", x*8-4+dx,y*14+dy )
-			else
-				love.graphics.print(game_map[y][x],x*8 +dx, y*14+dy)
-			end
-			if game.mode == "look mode" and y == game.look_y and x == game.look_x then --lookmode
-				love.graphics.print("_", x*8-4+dx,y*14+dy )
-				--print what you see
-				show_look_data(game_map[y][x], x, y)
-			end
-		end
-	end
-	draw_border(200,200,200,255)
-	love.graphics.setColor(255, 255, 255, 255)
-	love.graphics.print(player.name..": "..player.health.."("
-		..player.max_health..")  ["..game.default_collision.."]", 10,14)
-	love.graphics.print("Time: ".. game.time_day..":"..game.time_hour..":"..game.time_minute.. "   " ..px.."X"..py..game_map[py][px], 642,14)
-	--time_day=0, time_hour=0, time_minute=0
+   local px = game.player_loc_x
+   local py = game.player_loc_y
+   local dy = game.draw_y
+   local dx = game.draw_x
+   local draw_center_x = love.graphics.getWidth()/2
+   local draw_center_y = love.graphics.getHeight()/2
+   sx = px*8
+   sy = py*14
+   for y=1 , game.tilecount do --50
+      for x=1 , game.tilecount do --50
+	 if fogofwar[y][x] == 0 then
+	    love.graphics.setColor(0,0,0,140)
+	 else
+	    love.graphics.setColor(setcolorbyChar(game_map[y][x]))
+	 end
+	 if y == game.player_loc_y and x == game.player_loc_x then
+	    love.graphics.setColor(255,255,255,255)
+	    love.graphics.print("@", x*8-4+dx,y*14+dy )
+	    --elseif x*8 <= 16 and y*14 <= 28 then
+	    --	t = 0
+	 elseif game_map[y][x] == "#" then
+	    love.graphics.setColor(setcolorbyChar(game_map[y][x]))
+	    love.graphics.rectangle("fill", x*8+dx, y*14+dy, 8, 14)
+	 elseif npc_map[y][x] ~= 0 and fogofwar[y][x] ~= 0 then
+	    love.graphics.setColor(190,190,255,255)
+	    love.graphics.print("@", x*8-4+dx,y*14+dy )
+	 else
+	    love.graphics.print(game_map[y][x],x*8 +dx, y*14+dy)
+	 end
+	 if game.mode == "look mode" and y == game.look_y and x == game.look_x then --lookmode
+	    love.graphics.print("_", x*8-4+dx,y*14+dy )
+	    --print what you see
+	    show_look_data(game_map[y][x], x, y)
+	 end
+      end
+   end
+   draw_border(200,200,200,255)
+   love.graphics.setColor(255, 255, 255, 255)
+   love.graphics.print(player.name..": "..player.health.."("
+			  ..player.max_health..")  ["..game.default_collision.."]", 10,14)
+   love.graphics.print("Time: ".. game.time_day..":"..game.time_hour..":"..game.time_minute.. "   " ..px.."X"..py..game_map[py][px], 642,14)
+   --time_day=0, time_hour=0, time_minute=0
 end
 function love.draw()
-	if game.mode == "ingame" then --game
-		love.draw_cam_viewable()
-	elseif game.mode == "chargen" then --chargen 100
-		draw_chargen(player)
-	elseif game.mode == "chargen_race_selector" then
-		draw_race_selector()
-	elseif game.mode == "character sheet" then  --character status
-		draw_char_info(player)
-	elseif game.mode == "world map" then --world map
-		draw_worldmap()
-	elseif game.mode == "message box" then --message box 97
-		love.draw_cam_viewable()
-		draw_messagebox()
-	elseif game.mode == "inventory sheet" then --inventory 96
-		draw_inventory()
-	elseif game.mode == "look mode" then --look mode 95
-		love.draw_cam_viewable()
-		--love.graphics.print("_", x*8-4+dx,y*14+dy )
-	end
+   if game.mode == "ingame" then --game
+      love.draw_cam_viewable()
+   elseif game.mode == "chargen" then --chargen 100
+      draw_chargen(player)
+   elseif game.mode == "chargen_race_selector" then --update_race_chargen()
+      draw_race_selector()
+   elseif game.mode == "character sheet" then  --character status
+      draw_char_info(player)
+   elseif game.mode == "world map" then --world map
+      draw_worldmap()
+   elseif game.mode == "message box" then --message box 97
+      love.draw_cam_viewable()
+      draw_messagebox()
+   elseif game.mode == "inventory sheet" then --inventory 96
+      draw_inventory()
+   elseif game.mode == "look mode" then --look mode 95
+      love.draw_cam_viewable()
+      --love.graphics.print("_", x*8-4+dx,y*14+dy )
+   end
 end

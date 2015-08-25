@@ -89,299 +89,353 @@ require("primatives")
 math.randomseed(os.time())
 
 function race_if_an(a)
-	if a.a_type == playable_race_names[5][1] then
-		return "n Elf"
-	elseif a.sex == 0 and a.a_type == "Mermen" then
-		return " mermaid"
-	elseif a.sex == 0 and a.a_type == "Harepon" then
-		return " harpy"
-	elseif a.sex == 0 and a.a_type == "Catman" then
-		return " catwoman"
-	elseif a.sex == 0 and a.a_type == "Owlman" then
-		return " owlwoman"
-	else
-		return " "..a.a_type
-	end
+   if a.a_type == playable_race_names[5][1] then
+      return "n Elf"
+   elseif a.sex == 0 and a.a_type == "Mermen" then
+      return " mermaid"
+   elseif a.sex == 0 and a.a_type == "Harepon" then
+      return " harpy"
+   elseif a.sex == 0 and a.a_type == "Catman" then
+      return " catwoman"
+   elseif a.sex == 0 and a.a_type == "Owlman" then
+      return " owlwoman"
+   else
+      return " "..a.a_type
+   end
 end
 function sex_if_an(a)
-	if a.sex == 0 then
-		return "female"
-	else
-		return "male"
-	end
+   if a.sex == 0 then
+      return "female"
+   else
+      return "male"
+   end
 end
 
 function display_playable_races() --playable_race_names(23)
-	local line_num = 20
-	local coll_one = 20
-	local coll_two = 250
-	--{"HalfElf", "humans who can trace their bloodlines to an elven heritage."}
-	--for i, v in ipairs(a) do
-      	--print(i, v)
-    	--end
-    	function next_col(ind)
-    		if ind > 12 then
-    			return 200
-    		else
-    			return 0
-    		end
-    end
-    	function next_line(ind)
-    		if ind > 12 then
-    			return ind -12
-    		else return ind
-    		end
-    	end
-    love.graphics.setColor(255,255,255,255)
-	for i,v in ipairs(playable_race_names) do
-		love.graphics.print(playable_race_names[i][3]..") "..playable_race_names[i][1], 
-			coll_one+50+next_col(i), line_num*next_line(i) ) -- print the names
-	end
-
+   local line_num = 20
+   local coll_one = 20
+   local coll_two = 250
+   --{"HalfElf", "humans who can trace their bloodlines to an elven heritage."}
+   --for i, v in ipairs(a) do
+   --print(i, v)
+   --end
+   function next_col(ind)
+      if ind > 12 then
+	 return 200
+      else
+	 return 0
+      end
+   end
+   function next_line(ind)
+      if ind > 12 then
+	 return ind -12
+      else return ind
+      end
+   end
+   love.graphics.setColor(255,255,255,255)
+   for i,v in ipairs(playable_race_names) do
+      love.graphics.print(playable_race_names[i][3]..") "..playable_race_names[i][1], 
+			  coll_one+50+next_col(i), line_num*next_line(i) ) -- print the names
+   end
+   
 end
+
 function draw_race_selector()
-	draw_border(255,255,255,255)--require("primatives")
-	display_playable_races()
+   draw_border(255,255,255,255)--require("primatives")
+   display_playable_races()
 end
 function display_actor_stats(actor, editing)--actor object, boolean viewable
-	local line_num = 3
-	local coll_one = 20
-	local coll_two = 250
-	
-	love.graphics.setColor(255,255,255,255)
-	love.graphics.print("(N)ame: ".. actor.name, coll_one, line_num*14)
-	love.graphics.print("Race: ".. actor.a_type, coll_two, line_num*14) 
-	love.graphics.print("Sex(m/f): "..sex_if_an(actor), coll_two+200, line_num*14) line_num=line_num+1
-	love.graphics.print("============================================================", coll_one, line_num*14)line_num=line_num+1
-	
-	love.graphics.printf(actor.background, coll_two, line_num*14, 350, "left")
-	
-	love.graphics.print(point_at_current_stat(5).." (S)trength :", coll_one, line_num*14) 
-		love.graphics.print( actor.strength, coll_one+120, line_num*14) line_num=line_num+1
-	love.graphics.print(point_at_current_stat(6).." (A)gility :", coll_one, line_num*14) 
-		love.graphics.print(actor.agility,coll_one+120, line_num*14) line_num=line_num+1
-	love.graphics.print(point_at_current_stat(7).." (I)ntelligence:", coll_one, line_num*14)
-		love.graphics.print( actor.intel,coll_one+120, line_num*14) line_num=line_num+1
-	love.graphics.print(point_at_current_stat(8).." S(t)amina:", coll_one, line_num*14)
-		love.graphics.print( actor.stamina, coll_one+120, line_num*14) line_num=line_num+1
-	love.graphics.print(point_at_current_stat(10).." (C)harisma:", coll_one, line_num*14)
-		love.graphics.print( actor.charisma, coll_one+120, line_num*14) line_num=line_num+1
-	love.graphics.print(point_at_current_stat(9).." (L)uck:", coll_one, line_num*14)
-		love.graphics.print( actor.luck, coll_one+120, line_num*14) line_num=line_num+1
-	if game.mode == "chargen" then
-		love.graphics.print("X Bonus Points: "..actor.bonus_points, coll_one, line_num*15)
-	end
-end
-function r_gen_background(a, rand_race)
-	bg = "You are a"..race_if_an(a)..".  One of the "..playable_race_names[rand_race][2]
-		.. " ".. strength_background_text[a.strength].. " "..agility_background_text[a.agility]
-		.. " ".. intel_background_text[a.intel].. " "..stamina_background_text[a.stamina]
-		.. " ".. charisma_background_text[a.charisma].. " "..luck_background_text[a.luck]
-		.. " ".. random_life_event[math.random(1,table.getn(random_life_event))]
-		.. " Your father was a "..past_occupationsh[math.random(1,table.getn(past_occupationsh))]
-		.. ". Your mother was a "..past_occupationsh[math.random(1,table.getn(past_occupationsh))]
-		.. "."
-	return bg
+   local line_num = 3
+   local coll_one = 20
+   local coll_two = 250
+   
+   love.graphics.setColor(255,255,255,255)
+   love.graphics.print("(N)ame: ".. actor.name, coll_one, line_num*14)
+   love.graphics.print("Race: ".. actor.a_type, coll_two, line_num*14) 
+   love.graphics.print("Sex(m/f): "..sex_if_an(actor), coll_two+200, line_num*14) line_num=line_num+1
+   love.graphics.print("============================================================", coll_one, line_num*14)line_num=line_num+1
+   
+   love.graphics.printf(actor.background, coll_two, line_num*14, 350, "left")
+   
+   love.graphics.print(point_at_current_stat(5).." (S)trength :", coll_one, line_num*14) 
+   love.graphics.print( actor.strength.." (-/+)", coll_one+120, line_num*14) line_num=line_num+1
+   love.graphics.print(point_at_current_stat(6).." (A)gility :", coll_one, line_num*14) 
+   love.graphics.print(actor.agility.." (-/+)",coll_one+120, line_num*14) line_num=line_num+1
+   love.graphics.print(point_at_current_stat(7).." (I)ntelligence:", coll_one, line_num*14)
+   love.graphics.print( actor.intel.." (-/+)",coll_one+120, line_num*14) line_num=line_num+1
+   love.graphics.print(point_at_current_stat(8).." S(t)amina:", coll_one, line_num*14)
+   love.graphics.print( actor.stamina.." (-/+)", coll_one+120, line_num*14) line_num=line_num+1
+   love.graphics.print(point_at_current_stat(10).." (C)harisma:", coll_one, line_num*14)
+   love.graphics.print( actor.charisma.." (-/+)", coll_one+120, line_num*14) line_num=line_num+1
+   love.graphics.print(point_at_current_stat(9).." (L)uck:", coll_one, line_num*14)
+   love.graphics.print( actor.luck.." (-/+)", coll_one+120, line_num*14) line_num=line_num+1
+   if game.mode == "chargen" then
+      love.graphics.print("X Bonus Points: "..actor.bonus_points, coll_one, line_num*15)
+   end
+   love.graphics.print("============================================================", coll_one, line_num*25)
+   
 end
 
+function r_gen_background(a, rand_race)
+   bg = "You are a"..race_if_an(a)..".  One of the "..playable_race_names[rand_race][2]
+      .. " ".. strength_background_text[a.strength].. " "..agility_background_text[a.agility]
+      .. " ".. intel_background_text[a.intel].. " "..stamina_background_text[a.stamina]
+      .. " ".. charisma_background_text[a.charisma].. " "..luck_background_text[a.luck]
+      .. " ".. random_life_event[math.random(1,table.getn(random_life_event))]
+      .. " Your father was a "..past_occupationsh[math.random(1,table.getn(past_occupationsh))]
+      .. ". Your mother was a "..past_occupationsh[math.random(1,table.getn(past_occupationsh))]
+      .. "."
+   return bg
+end
+function update_init_maxhealth(a)
+   max_health = math.floor( (a.strength+a.stamina)/2+a.stamina)
+   h = max_health
+   return h
+end
 function randomize_actor(a, race)
-	local sylables = math.random(1,3)
-	local rand_race = math.random(1,table.getn(playable_race_names))
-	a.name = crude_names_front[math.random(1,table.getn(crude_names_front))]
-	for x=1, sylables do
-		a.name = a.name..crude_names_back[math.random(1,table.getn(crude_names_back))]
-	end
-	if race==nil then
-		a.a_type = playable_race_names[rand_race][1]
-	else
-		a.a_type = race
-	end
-	a.strength = math.random(1,5)
-	a.agility = math.random(1,5)
-	a.intel   = math.random(1,5)
-	a.stamina = math.random(1,5)
-	a.luck    = math.random(1,5)
-	a.charisma = math.random(1,5)
-	a.sex     = math.random(0,1)
-	a.max_health = math.floor( (a.strength+a.stamina)/2+a.stamina)
-	a.health = a.max_health
-	a.background = r_gen_background(a, rand_race) -- generate a random background.
-	a.inventory = {}
-	a.bonus_points = 0
-	table.insert(a.inventory,new_starting_weapon(7) )
-	table.insert(a.inventory,new_starting_armor(3) )
-	table.insert(a.inventory,new_starting_helm(3) )
-	return a
+   local sylables = math.random(1,3)
+   local rand_race = math.random(1,table.getn(playable_race_names))
+   a.name = crude_names_front[math.random(1,table.getn(crude_names_front))]
+   for x=1, sylables do
+      a.name = a.name..crude_names_back[math.random(1,table.getn(crude_names_back))]
+   end
+   if race==nil then
+      a.a_type = playable_race_names[rand_race][1]
+   else
+      a.a_type = race
+   end
+   a.strength = math.random(1,5)
+   a.agility = math.random(1,5)
+   a.intel   = math.random(1,5)
+   a.stamina = math.random(1,5)
+   a.luck    = math.random(1,5)
+   a.charisma = math.random(1,5)
+   a.sex     = math.random(0,1)
+   --a.max_health = math.floor( (a.strength+a.stamina)/2+a.stamina)
+   --a.health = a.max_health
+   a.max_health = update_init_maxhealth(a)
+   a.health = update_init_maxhealth(a)
+   a.background = r_gen_background(a, rand_race) -- generate a random background.
+   a.inventory = {}
+   a.bonus_points = 0
+   table.insert(a.inventory,new_starting_weapon(7) )
+   table.insert(a.inventory,new_starting_armor(3) )
+   table.insert(a.inventory,new_starting_helm(3) )
+   return a
 end
 function point_at_current_stat(s)
-	if s == a.current_stat then return "[*]"
-	else return "[ ]" end
+   if s == a.current_stat then return "[*]"
+   else return "[ ]" end
 end
+
+function update_race_chargen(player, key)
+   --for i,v in ipairs(playable_race_names) do
+   --   love.graphics.print(playable_race_names[i][3]..") "..playable_race_names[i][1], 
+   --			  coll_one+50+next_col(i), line_num*next_line(i) ) -- print the names
+   --end
+   for i,v in ipairs(playable_race_names) do
+      if key == playable_race_names[i][3] then
+	 a.a_type = playable_race_names[i][1]
+	 a.background = r_gen_background(a, i)
+	 game.mode = "chargen"
+      end
+   end
+end
+
 function update_actor_chargen(a, key, mouse_B, mouse_x, mouse_y) --updates based on mouse/key press
-	if key == "d" then  --randomize actor
-		randomize_actor(a, nil)
-		a.edited = 1
-	elseif key == "n" and a.editing_name == 0 then --set editing name flag
-		a.editing_name = 1
-		a.name = ""
-	elseif (key == "enter" or key == "return") and a.editing_name == 1 then
-		a.editing_name = 0
-	elseif key == "f" and a.editing_name == 0 then
-		a.sex = 0
-	elseif key == "m" and a.editing_name == 0 and game.mode == "chargen" then
-		a.sex = 1
-	elseif key == "s" and a.editing_name == 0 and game.mode == "chargen"  then
-		a.current_stat = 5 --strength = 1, --5
-	elseif key == "a" and a.editing_name == 0 and game.mode == "chargen"  then
-		a.current_stat = 6 --agility =  1, --6
-	elseif key == "i" and a.editing_name == 0 and game.mode == "chargen"  then
-		a.current_stat = 7 --intel   =  1, --7
-	elseif key == "t" and a.editing_name == 0 and game.mode == "chargen"  then
-		a.current_stat = 8 --stamina =  1, --8
-	elseif key == "l" and a.editing_name == 0 and game.mode == "chargen"  then
-		a.current_stat = 9 --luck    =  1, --9
-	elseif key == "c" and a.editing_name == 0 and game.mode == "chargen"  then
-		a.current_stat = 10  --charisma = 1, --10
-	elseif key == "r" and a.editing_name == 0 and game.mode == "chargen"  then
-		game.mode = "chargen_race_selector"
-	elseif key == "-" and a.editing_name == 0 and game.mode == "chargen"  then
-		if a.current_stat == 5 then
-			if a.strength > 1 then
-				a.bonus_points = a.bonus_points+1
-				a.strength = a.strength -1
-			end
-		elseif a.current_stat == 6 then
-			if a.agility > 1 then
-				a.bonus_points = a.bonus_points+1
-				a.agility = a.agility -1
-			end
-		elseif a.current_stat == 7 then
-			if a.intel > 1 then
-				a.bonus_points = a.bonus_points+1
-				a.intel = a.intel -1
-			end
-		elseif a.current_stat == 8 then
-			if a.stamina > 1 then
-				a.bonus_points = a.bonus_points+1
-				a.stamina = a.stamina -1
-			end
-		elseif a.current_stat == 10 then
-			if a.luck > 1 then
-				a.bonus_points = a.bonus_points+1
-				a.luck = a.luck -1
-			end
-		elseif a.current_stat == 9 then
-			if a.charisma > 1 then
-				a.bonus_points = a.bonus_points+1
-				a.charisma = a.charisma -1
-			end
-		end
-	elseif key == "=" and a.editing_name == 0 and game.mode == "chargen"  then
-		if a.bonus_points > 0 then
-			if a.current_stat == 5 then
-				a.bonus_points = a.bonus_points-1
-				a.strength = a.strength +1
-			elseif a.current_stat == 6 then
-				a.bonus_points = a.bonus_points-1
-				a.agility = a.agility +1
-			elseif a.current_stat == 7 then
-				a.bonus_points = a.bonus_points-1
-				a.intel = a.intel +1
-			elseif a.current_stat == 8 then
-				a.bonus_points = a.bonus_points-1
-				a.stamina = a.stamina +1
-			elseif a.current_stat == 9 then
-				a.bonus_points = a.bonus_points-1
-				a.luck = a.luck +1
-			elseif a.current_stat == 10 then
-				a.bonus_points = a.bonus_points-1
-				a.charisma = a.charisma +1
-			end
-		end
-	elseif a.editing_name == 1 then
-		if key ~= "rshift" and key ~= "lshift" then
-			if key=="backspace" then
-				a.name=a.name
-			else
-				if string.len(a.name) == 0 then
-					a.name=a.name..string.upper(key)
-				else
-					a.name=a.name..key
-				end
-			end--not backspace
-		end--if not shift
-	end--endif
+   if key == "d" then  --randomize actor
+      randomize_actor(a, nil)
+      a.edited = 1
+   elseif key == "n" and a.editing_name == 0 then --set editing name flag
+      a.editing_name = 1
+      a.name = ""
+   elseif (key == "enter" or key == "return") and a.editing_name == 1 then
+      a.editing_name = 0
+   elseif key == "p" and a.editing_name == 0 and game.mode == "chargen" then
+      --randomize stats.
+      randomize_actor(a, nill)
+   elseif key == "g" and a.editing_name == 0 and game.mode == "chargen" then
+      --ARE YOU SURE?
+      a.max_health = update_init_maxhealth(a)
+      a.health = update_init_maxhealth(a)
+      game.mode = "message box"
+      player.edited = 1
+      --save player data
+      love.filesystem.write( "player.lua", table.show(player, "player")) 
+      game.mode = "message box" --97      
+   elseif key == "f" and a.editing_name == 0 then
+      a.sex = 0
+   elseif key == "m" and a.editing_name == 0 and game.mode == "chargen" then
+      a.sex = 1
+   elseif key == "s" and a.editing_name == 0 and game.mode == "chargen"  then
+      a.current_stat = 5 --strength = 1, --5
+   elseif key == "a" and a.editing_name == 0 and game.mode == "chargen"  then
+      a.current_stat = 6 --agility =  1, --6
+   elseif key == "i" and a.editing_name == 0 and game.mode == "chargen"  then
+      a.current_stat = 7 --intel   =  1, --7
+   elseif key == "t" and a.editing_name == 0 and game.mode == "chargen"  then
+      a.current_stat = 8 --stamina =  1, --8
+   elseif key == "l" and a.editing_name == 0 and game.mode == "chargen"  then
+      a.current_stat = 9 --luck    =  1, --9
+   elseif key == "c" and a.editing_name == 0 and game.mode == "chargen"  then
+      a.current_stat = 10  --charisma = 1, --10
+   elseif key == "r" and a.editing_name == 0 and game.mode == "chargen"  then
+      game.mode = "chargen_race_selector"
+   elseif key == "-" and a.editing_name == 0 and game.mode == "chargen"  then
+      if a.current_stat == 5 then
+	 if a.strength > 1 then
+	    a.bonus_points = a.bonus_points+1
+	    a.strength = a.strength -1
+	 end
+	 a.max_health = update_init_maxhealth(a)
+	 a.health = update_init_maxhealth(a)
+      elseif a.current_stat == 6 then
+	 if a.agility > 1 then
+	    a.bonus_points = a.bonus_points+1
+	    a.agility = a.agility -1
+	 end
+      elseif a.current_stat == 7 then
+	 if a.intel > 1 then
+	    a.bonus_points = a.bonus_points+1
+	    a.intel = a.intel -1
+	 end
+      elseif a.current_stat == 8 then
+	 if a.stamina > 1 then
+	    a.bonus_points = a.bonus_points+1
+	    a.stamina = a.stamina -1
+	 end
+	 a.max_health = update_init_maxhealth(a)
+	 a.health = update_init_maxhealth(a)
+      elseif a.current_stat == 10 then
+	 if a.luck > 1 then
+	    a.bonus_points = a.bonus_points+1
+	    a.luck = a.luck -1
+	 end
+      elseif a.current_stat == 9 then
+	 if a.charisma > 1 then
+	    a.bonus_points = a.bonus_points+1
+	    a.charisma = a.charisma -1
+	 end
+      end
+   elseif (key == "=" or key == "+") and a.editing_name == 0 and game.mode == "chargen"  then
+      if a.bonus_points > 0 then
+	 if a.current_stat == 5 then
+	    a.bonus_points = a.bonus_points-1
+	    a.strength = a.strength +1
+	    a.max_health = update_init_maxhealth(a)
+	    a.health = update_init_maxhealth(a)
+	 elseif a.current_stat == 6 then
+	    a.bonus_points = a.bonus_points-1
+	    a.agility = a.agility +1
+	 elseif a.current_stat == 7 then
+	    a.bonus_points = a.bonus_points-1
+	    a.intel = a.intel +1
+	 elseif a.current_stat == 8 then
+	    a.bonus_points = a.bonus_points-1
+	    a.stamina = a.stamina +1
+	    a.max_health = update_init_maxhealth(a)
+	    a.health = update_init_maxhealth(a)
+	 elseif a.current_stat == 9 then
+	    a.bonus_points = a.bonus_points-1
+	    a.luck = a.luck +1
+	 elseif a.current_stat == 10 then
+	    a.bonus_points = a.bonus_points-1
+	    a.charisma = a.charisma +1
+	 end
+      end
+   elseif a.editing_name == 1 then
+      if key ~= "rshift" and key ~= "lshift" then
+	 if key=="backspace" then
+	    a.name=a.name
+	 else
+	    if string.len(a.name) == 0 then
+	       a.name=a.name..string.upper(key)
+	    else
+	       a.name=a.name..key
+	    end
+	 end--not backspace
+      end--if not shift
+   end--endif
 end
 
 function create_actor(game, level,chargen) --create a random actor
-	a = {
-			name = "random",
-			a_type = "human",
-			level = 0,
-			sex = math.random(0,1), --0 female, 1 male
-			strength = 1, --5
-			agility =  1, --6
-			intel   =  1, --7
-			stamina =  1, --8
-			luck    =  1, --9
-			charisma = 1, --10
-			health = 1,
-			maxhealth = 1,
-			background = "None",
-			editing_name = 0, -- are we typing his name?
-			edited       = 0, -- have we rolled yet?
-			current_stat = 5,  -- selected stat to edit.
-			bonus_points = 10,
-			max_stat = 6,
-			loc_x = 0,
-			loc_y = 0,
-		}
-	if chargen == false then --randomize the actor
-		a = randomize_actor(a, nil)
-	else -- chargen == true
-		game.mode = "chargen" --100
-	end--endif
-	return a --return the actor to the "pointer" hehe.
+   a = {
+      name = "random",
+      a_type = "human",
+      level = 0,
+      sex = math.random(0,1), --0 female, 1 male
+      strength = 1, --5
+      agility =  1, --6
+      intel   =  1, --7
+      stamina =  1, --8
+      luck    =  1, --9
+      charisma = 1, --10
+      health = 1,
+      maxhealth = 1,
+      background = "None",
+      editing_name = 0, -- are we typing his name?
+      edited       = 0, -- have we rolled yet?
+      current_stat = 5,  -- selected stat to edit.
+      bonus_points = 10,
+      max_stat = 6,
+      loc_x = 0,
+      loc_y = 0,
+   }
+   if chargen == false then --randomize the actor
+      a = randomize_actor(a, nil)
+   else -- chargen == true
+      game.mode = "chargen" --100
+   end--endif
+   return a --return the actor to the "pointer" hehe.
 end
+
 function draw_char_info(actor)
-	draw_border(255,255,255,255)--require("primatives")
-	display_actor_stats(actor, false)--false, not editable, true, editable
+   draw_border(255,255,255,255)--require("primatives")
+   display_actor_stats(actor, false)--false, not editable, true, editable
 end
+
 function draw_chargen(actor) --stock actor has been generated
-	instruction_line = love.graphics.getHeight()-40
-	draw_border(255,255,255,255)--require("primatives")
-	display_actor_stats(actor, false)--false, not editable, true, editable
-	love.graphics.print("Press 'r' to randomize stats, press (enter) to enter a customer name.", 20, instruction_line)
+   instruction_line = love.graphics.getHeight()-40
+   draw_border(255,255,255,255)--require("primatives")
+   display_actor_stats(actor, false)--false, not editable, true, editable
+   love.graphics.print("Type 'n' for name, m/f to change sex, and r to change race.",
+		       20, instruction_line -60)
+   love.graphics.print("Type 's/a/i/t/l/c' to select stat to edit, and +/- to modify it",
+		       20, instruction_line -40)
+   love.graphics.print("Type 'p' to randomize stats, press (enter) to enter a customer name.",
+		       20, instruction_line -20)
+   love.graphics.print("Type 'g' when ready to start the game! Be sure to distribute all points.",
+		       20, instruction_line -0)
 end
 
 function create_actor_list(town_name, race)
-	local population = 0
-	population = math.random(5,25)
-	actor_list = {}
-	for x=1, population do
-		a = create_actor(game, 1, false)
-		a = randomize_actor(a, race)
-		a.loc_x = math.random(5, game.tilecount-5)
-		a.loc_y = math.random(5, game.tilecount-5)
-		table.insert(actor_list, a)
-	end  --save the file, townname_script.lua	
-	love.filesystem.write( town_name.."_script.lua", table.show(actor_list, "actor_list"))--save worldmap
-	return actor_list
+   local population = 0
+   population = math.random(5,25)
+   actor_list = {}
+   for x=1, population do
+      a = create_actor(game, 1, false)
+      a = randomize_actor(a, race)
+      a.loc_x = math.random(5, game.tilecount-5)
+      a.loc_y = math.random(5, game.tilecount-5)
+      table.insert(actor_list, a)
+   end  --save the file, townname_script.lua	
+   love.filesystem.write( town_name.."_script.lua", table.show(actor_list, "actor_list"))--save worldmap
+   return actor_list
 end
 
 function load_actor_to_map(actor_list)
-	--go through a list and put '@' in
-	--note this function assumes that that the tilecount is not less that actor locations if so
-	--then index out of range errors will occour
-	npc_map = {}
-	for y=1, game.tilecount do
-		x_temp_map = {}
-		table.insert(npc_map, x_temp_map)
-		for x=1, game.tilecount  do
-			table.insert(npc_map[y], 0)
-		end
-	end
-	for i,v in ipairs(actor_list) do
-		npc_map[actor_list[i].loc_y][actor_list[i].loc_x] = actor_list[i]
-	end
+   --go through a list and put '@' in
+   --note this function assumes that that the tilecount is not less that actor locations if so
+   --then index out of range errors will occour
+   npc_map = {}
+   for y=1, game.tilecount do
+      x_temp_map = {}
+      table.insert(npc_map, x_temp_map)
+      for x=1, game.tilecount  do
+	 table.insert(npc_map[y], 0)
+      end
+   end
+   for i,v in ipairs(actor_list) do
+      npc_map[actor_list[i].loc_y][actor_list[i].loc_x] = actor_list[i]
+   end
 end

@@ -126,10 +126,16 @@ function display_playable_races() --playable_race_names(23)
     			return 0
     		end
     end
+    	function next_line(ind)
+    		if ind > 12 then
+    			return ind -12
+    		else return ind
+    		end
+    	end
     love.graphics.setColor(255,255,255,255)
 	for i,v in ipairs(playable_race_names) do
 		love.graphics.print(playable_race_names[i][3]..") "..playable_race_names[i][1], 
-			coll_one+50+next_col(i), line_num*i ) -- print the names
+			coll_one+50+next_col(i), line_num*next_line(i) ) -- print the names
 	end
 
 end

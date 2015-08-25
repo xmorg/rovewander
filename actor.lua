@@ -120,7 +120,7 @@ function display_playable_races() --playable_race_names(23)
       	--print(i, v)
     	--end
     function next_col(ind)
-    	if i > 12 then
+    	if ind > 12 then
     		return 200
     	else
     		return 0

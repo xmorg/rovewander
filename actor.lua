@@ -112,24 +112,26 @@ function sex_if_an(a)
 end
 
 function display_playable_races() --playable_race_names(23)
-	local line_num = 3
+	local line_num = 20
 	local coll_one = 20
 	local coll_two = 250
 	--{"HalfElf", "humans who can trace their bloodlines to an elven heritage."}
 	--for i, v in ipairs(a) do
       	--print(i, v)
     	--end
-    function next_col(ind)
-    	if ind > 12 then
-    		return 200
-    	else
-    		return 0
-    	end
+    	function next_col(ind)
+    		if ind > 12 then
+    			return 200
+    		else
+    			return 0
+    		end
     end
+    love.graphics.setColor(255,255,255,255)
 	for i,v in ipairs(playable_race_names) do
 		love.graphics.print(playable_race_names[i][3]..") "..playable_race_names[i][1], 
 			coll_one+50+next_col(i), line_num*i ) -- print the names
 	end
+
 end
 function draw_race_selector()
 	draw_border(255,255,255,255)--require("primatives")

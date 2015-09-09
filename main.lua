@@ -217,6 +217,8 @@ function love.keypressed( key, isrepeat )
 				increase_gametime()
 			end
 			if px > 2 and game_map[py][px-1] ~= "t" and game_map[py][px-1] ~= "#" and game_map[py][px-1] ~= "l" then
+				if npc_map[py][px-1] ~= 0 then
+				end
 				game.player_loc_x = game.player_loc_x -1
 				game.draw_x=game.draw_x+1*8
 				increase_gametime()

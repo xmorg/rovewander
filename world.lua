@@ -190,12 +190,14 @@ function draw_worldmap()
 		for x=1,11 do
 			--prototype t = worldmap[y][x][1][1]
 			t = worldmap[y][x][1]
-			if t == "f" then love.graphics.setColor(0,200,0,255)
-			elseif t == "t" then love.graphics.setColor(200,200,0,255)
-			elseif t == "d" then love.graphics.setColor(200,0,0,255)
-			elseif t == "~" then love.graphics.setColor(0,0,255,255)
-			elseif t == "i" then love.graphics.setColor(200,200,0,255)
-			elseif t == "X" then love.graphics.setColor(0,0,0,255) end
+			if t == "f" then love.graphics.setColor(0,200,0,255) --forest
+			elseif t == "t" then love.graphics.setColor(200,200,0,255) --town?
+			elseif t == "d" then love.graphics.setColor(200,0,0,255) --dungeon
+			elseif t == "~" then love.graphics.setColor(0,0,255,255) --water
+			elseif t == "i" then love.graphics.setColor(200,200,0,255) --inn
+			elseif t == "D" then love.graphics.setColor(200,200,0,255) --dwarf hold
+			elseif t == "X" then love.graphics.setColor(0,0,0,255) 
+			end
 			--love.filesystem.write( "whatsthat.lua", table.show(t, "t")) 
 			love.graphics.print(t,x*8 +dx, y*14+dy)
 		end

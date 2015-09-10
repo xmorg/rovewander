@@ -2,13 +2,13 @@
 
 function on_get_obstacle_look() -- see what is blocking your path
   if player.facing == "north" then
-    show_look_data(game_map[y-1][x], x, y-1)
+    show_look_data(game_map[player.player_loc_y-1][player.player_loc_x], player.player_loc_x, player.player_loc_y-1)
   elseif player.facing == "east" then
-    show_look_data(game_map[y][x+1], x+1, y)
+    show_look_data(game_map[player.player_loc_y][player.player_loc_x+1], player.player_loc_x+1, player.player_loc_y)
   elseif player.facing == "south" then
-    show_look_data(game_map[y+1][x], x, y+1)
+    show_look_data(game_map[player.player_loc_y+1][player.player_loc_x], player.player_loc_x, player.player_loc_y+1)
   elseif player.facing == "west" then
-    show_look_data(game_map[y][x-1], x-1, y)
+    show_look_data(game_map[player.player_loc_y][player.player_loc_x-1], player.player_loc_x-1, player.player_loc_y)
   end
 end
   

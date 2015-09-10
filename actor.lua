@@ -418,7 +418,10 @@ function create_actor_list(town_name, race)
    actor_list = {}
    for x=1, population do
       a = create_actor(game, 1, false)
-      a = randomize_actor(a, race)
+      if race == "Watertype" then
+      else
+      	a = randomize_actor(a, race)
+      end
       a.loc_x = math.random(5, game.tilecount-5)
       a.loc_y = math.random(5, game.tilecount-5)
       table.insert(actor_list, a)

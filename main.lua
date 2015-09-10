@@ -131,26 +131,37 @@ end
 
 function npc_actions() --current event.
 	local move_rand = math.random(0, 4) -- 0none,1north,2east,3south,4west
+	for y=1,game.tilecount do
+		for x=1,game.tilecount do
+			if npc_map[y][x] ~= 0 then
+				npc_map[y][x].movestatus = "ready"
+			end
+		end
+	end
 	if game.current_event == "player move" then
 		for y=1, game.tilecount do
 			for x=1, game.tilecount do
 				if npc_map[y][x] ~= 0 then --move NPC
-					if move_rand == 1 and get_any_obstacle(y-1,x) == 0 then --north
+					if move_rand == 1 and get_any_obstacle(y-1,x) == 0 and npc_map[y][x].movestatus == "ready" then --north
 						--move NPC
 						npc_map[y-1][x] = npc_map[y][x] --moved
 						npc_map[y][x] = 0 --filed vacume
-					elseif move_rand == 2 and get_any_obstacle(y,x+1) == 0 then --east
+						npc_map[y][x].movestatus == "finished"
+					elseif move_rand == 2 and get_any_obstacle(y,x+1) == 0 and npc_map[y][x].movestatus == "ready" then --east
 						--move NPC
 						npc_map[y][x+1] = npc_map[y][x] --moved
 						npc_map[y][x] = 0 --filed vacume
-					elseif move_rand == 3 and get_any_obstacle(y+1,x) == 0 then --south
+						npc_map[y][x].movestatus == "finished"
+					elseif move_rand == 3 and get_any_obstacle(y+1,x) == 0 and npc_map[y][x].movestatus == "ready" then --south
 						--move NPC
 						npc_map[y+1][x] = npc_map[y][x] --moved
 						npc_map[y][x] = 0 --filed vacume
-					elseif move_rand == 4 and get_any_obstacle(y,x-1) == 0 then --approved to move
+						npc_map[y][x].movestatus == "finished"
+					elseif move_rand == 4 and get_any_obstacle(y,x-1) == 0 and npc_map[y][x].movestatus == "ready" then --approved to move
 						--move NPC
 						npc_map[y][x-1] = npc_map[y][x] --moved
 						npc_map[y][x] = 0 --filed vacume
+						npc_map[y][x].movestatus == "finished"
 					end
 				end
 			end

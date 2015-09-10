@@ -87,7 +87,7 @@ function generate_random_zone(x,y)
 		worldmap[y][x][1] = "~"
 		worldmap[y][x][2] = get_town_name()
 		game.current_message = inn_origin_messages1[math.random(1,table.getn(inn_origin_messages1))].. " " ..worldmap[y][x][2]
-		load_actor_to_map(create_actor_list(worldmap[y][x][2], "Human"))
+		load_actor_to_map(create_actor_list(worldmap[y][x][2], "Watertype"))
 	end
 	--love_crude_save()
 	love_save_zone(worldmap[y][x][2])

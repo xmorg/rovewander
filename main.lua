@@ -27,6 +27,7 @@ require("world")
 require("message")
 require("items")
 require("interact")
+require("controls")
 
 math.randomseed(os.time())
 

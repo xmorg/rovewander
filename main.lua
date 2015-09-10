@@ -129,9 +129,24 @@ function love.mousepressed(x, y, button)
    end--endif
 end
 
+function npc_actions() --current event.
+	local move_rand = math.random(0, 4) -- 0none,1north,2east,3south,4west
+	game.current_event == "player move" then
+		for y=1, game.tilecount do
+			for x=1, game.tilecount do
+				if npc_map[y][x] ~= 0 then --move NPC
+					if move_rand == 1 and get_any_obstacle(y-1,x) == 0 then --approved to move
+						--move NPC
+						npc_map[y-1][x] = npc_map[y][x] --moved
+						npc_map[y][x] = 0 --filed vacume
+					end
+				end
+end
 function update_process_events() --process events.
 	if game.current_event == "player move" then
+		--npc_map[actor_list[i].loc_y][actor_list[i].loc_x] = actor_list[i]
 		--npc's should move sometimes
+		npc_actions() --do it
 		game.current_event == "none" -- ok we get it
 	elseif game.current_event == "player steal" then
 		--woa! pickpockets!

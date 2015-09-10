@@ -11,6 +11,7 @@ game = {
 	player_world_x = 0,
 	player_world_y = 0,
 	default_collision = "attack",
+	current_event = "none",
 	current_message = "Sample Message",
 	time_day=0, time_hour=6, time_minute=0
 }

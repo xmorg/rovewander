@@ -130,7 +130,15 @@ function love.mousepressed(x, y, button)
 end
 
 function update_process_events() --process events.
-	if game.current_event == "player moved" then
+	if game.current_event == "player move" then
+		--npc's should move sometimes
+		game.current_event == "none" -- ok we get it
+	elseif game.current_event == "player steal" then
+		--woa! pickpockets!
+		game.current_event == "none" -- ok we get it
+	elseif game.current_event == "player attack" then
+		--combat happens!
+		game.current_event == "none" -- ok we get it
 	end
 end
 function love.update()

@@ -1,7 +1,14 @@
 --interact .lua, talk, look, etc
 
-function on_get_obstacle_look(y,x) -- see what is blocking your path
-  show_look_data(game_map[y][x], x, y)
+function on_get_obstacle_look() -- see what is blocking your path
+  if player.facing == "north" then
+    show_look_data(game_map[y-1][x], x, y-1)
+  elseif player.facing == "east" then
+    show_look_data(game_map[y][x+1], x+1, y)
+  elseif player.facing == "south" then
+    show_look_data(game_map[y+1][x], x, y+1)
+  elseif player.facing == "west" then
+    show_look_data(game_map[y][x-1], x-1, y)
 end
   
 function get_ncpmap_obstacle(y,x) --check if npc_map returned an obstacle

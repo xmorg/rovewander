@@ -55,7 +55,7 @@ function is_night() --checks to see if its day or night.
 	end
 end
 function generate_random_zone(x,y)
-	start_loc = math.random(1,5)
+	start_loc = math.random(1,6)
 	wm_start = table.getn(worldmap)/2
 	if start_loc == 1 then
 		create_inn_map(game.tilecount)
@@ -109,6 +109,14 @@ function generate_random_zone(x,y)
 		worldmap[y][x][2] = get_town_name()
 		game.current_message = inn_origin_messages1[math.random(1,table.getn(inn_origin_messages1))].. " " ..worldmap[y][x][2]
 		load_actor_to_map(create_actor_list(worldmap[y][x][2], "Watertype"))
+	elseif start_loc == 6 then
+		shore_dir = math.random(1,7) --1 north, 2 east 3 south 4 west 5 none, 6 middle, 7
+		create_dwarfhold_map(shore_dir) --- put direction
+		worldmap[y][x][1] = "D"
+		worldmap[y][x][2] = get_town_name()
+		--do dwarfhold message
+		game.current_message = inn_origin_messages1[math.random(1,table.getn(inn_origin_messages1))].. " " ..worldmap[y][x][2]
+		load_actor_to_map(create_actor_list(worldmap[y][x][2], "Dwarf"))
 	end
 	--love_crude_save()
 	love_save_zone(worldmap[y][x][2])

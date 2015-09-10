@@ -253,7 +253,7 @@ function love.keypressed( key, isrepeat )
 				game.draw_y = game.draw_y- (table.getn(game_map)-2)*14
 				increase_gametime()
 			end
-			if py > 2 and get_any_obstacle(npc_map[py-1][px]) == 0then
+			if py > 2 and get_any_obstacle(npc_map[py-1][px]) == 0 then
 				game.player_loc_y = game.player_loc_y -1
 				game.draw_y=game.draw_y+1*14
 				increase_gametime()

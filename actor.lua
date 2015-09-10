@@ -413,19 +413,46 @@ function draw_chargen(actor) --stock actor has been generated
 end
 
 function create_actor_list(town_name, race)
-   local population = 0
-   population = math.random(5,25)
-   actor_list = {}
-   for x=1, population do
-      a = create_actor(game, 1, false)
-      if race == "Watertype" then
-      else
-      	a = randomize_actor(a, race)
-      end
-      a.loc_x = math.random(5, game.tilecount-5)
-      a.loc_y = math.random(5, game.tilecount-5)
-      table.insert(actor_list, a)
-   end  --save the file, townname_script.lua	
+	local population = 0
+   	local race_rand
+   	population = math.random(5,25)
+   	actor_list = {}
+   	for x=1, population do
+		a = create_actor(game, 1, false)
+      	if race == "Watertype" then
+			race_rand = math.random(1,3)
+			if race_rand == 1 then
+				a = randomize_actor(a, "Mermen")
+			elseif race_rand == 2 then
+				a = randomize_actor(a, "Lizardman")
+			elseif race_rand == 3 then
+				a = randomize_actor(a, "Naga")
+      		end
+		elseif race == "Lower Undeadtype" then
+			race_rand = math.random(1,3)
+			if race_rand == 1 then
+				a = randomize_actor(a, "Skeleton")
+			elseif race_rand == 2 then
+				a = randomize_actor(a, "Ghoul")
+			elseif race_rand == 3 then
+				a = randomize_actor(a, "Zombie")
+			end
+		elseif race == "Lower Orctype" then
+			race_rand = math.random(1,3)
+			if race_rand == 1 then
+				a = randomize_actor(a, "Goblin")
+			elseif race_rand == 2 then
+				a = randomize_actor(a, "Orc")
+			elseif race_rand == 3 then
+				a = randomize_actor(a, "Trorc")
+			end
+		else
+			a = randomize_actor(a, race)
+		end
+		a.loc_x = math.random(5, game.tilecount-5)
+		a.loc_y = math.random(5, game.tilecount-5)
+		table.insert(actor_list, a)
+	end  --save the file, townname_script.lua	
    love.filesystem.write( town_name.."_script.lua", table.show(actor_list, "actor_list"))--save worldmap
    return actor_list
 end

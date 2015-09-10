@@ -26,6 +26,7 @@ require("primatives")
 require("world")
 require("message")
 require("items")
+require("interact")
 
 math.randomseed(os.time())
 
@@ -216,7 +217,7 @@ function love.keypressed( key, isrepeat )
 				game.draw_x = game.draw_x- (table.getn(game_map)-2)*8
 				increase_gametime()
 			end
-			if px > 2 and game_map[py][px-1] ~= "t" and game_map[py][px-1] ~= "#" and game_map[py][px-1] ~= "l" then
+			if px > 2 and get_any_obstacle(game_map[py][px-1])== 0 then
 				if npc_map[py][px-1] ~= 0 then
 				end
 				game.player_loc_x = game.player_loc_x -1
@@ -235,7 +236,7 @@ function love.keypressed( key, isrepeat )
 				game.draw_x = game.draw_x+ (table.getn(game_map)-2)*8
 				increase_gametime()
 			end
-			if game_map[py][px+1] ~= "t" and game_map[py][px+1] ~= "#" and game_map[py][px+1] ~= "l" then
+			if get_any_obstacle(game_map[py][px+1]) == 0 then
 				game.player_loc_x = game.player_loc_x +1
 				game.draw_x=game.draw_x-1*8
 				increase_gametime()
@@ -252,7 +253,7 @@ function love.keypressed( key, isrepeat )
 				game.draw_y = game.draw_y- (table.getn(game_map)-2)*14
 				increase_gametime()
 			end
-			if py > 2 and game_map[py-1][px] ~= "t" and game_map[py-1][px] ~= "#" and game_map[py-1][px] ~= "l" then
+			if py > 2 and get_any_obstacle(npc_map[py-1][px]) == 0then
 				game.player_loc_y = game.player_loc_y -1
 				game.draw_y=game.draw_y+1*14
 				increase_gametime()
@@ -269,7 +270,7 @@ function love.keypressed( key, isrepeat )
 				game.draw_y = game.draw_y + (table.getn(game_map)-2)*14
 				increase_gametime()
 			end
-			if game_map[py+1][px] ~= "t" and game_map[py+1][px] ~= "#"  and game_map[py+1][px] ~= "l" then
+			if get_any_obstacle(game_map[py+1][px]) == 0 then
 				--game.draw_y = game.draw_y -1
 				game.player_loc_y = game.player_loc_y +1
 				game.draw_y=game.draw_y-1*14

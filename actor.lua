@@ -454,6 +454,16 @@ function create_actor_list(town_name, race)
 			elseif race_rand == 3 then
 				a = randomize_actor(a, "Trorc")
 			end
+		elseif race == "Lower Abysstype" then
+			race_rand = math.random(1,3)
+			if race_rand == 1 then
+				a = randomize_actor(a, "Goblin")
+				--run agro by list.
+			elseif race_rand == 2 then
+				a = randomize_actor(a, "Abyss Dwarf")
+			elseif race_rand == 3 then
+				a = randomize_actor(a, "Dark Elf")
+			end
 		else
 			a = randomize_actor(a, race)
 		end

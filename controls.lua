@@ -13,8 +13,8 @@ function love.keypressed( key, isrepeat )
 	if key == "escape" then
 		if game.mode == "look mode" then
 			game.mode == "ingame"
-		elseif game.mode == 95 then
-			game.mode = 1
+		--elseif game.mode == 95 then
+		--	game.mode = 1
 		else
 			love.event.quit()
 		end

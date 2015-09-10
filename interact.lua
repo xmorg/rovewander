@@ -3,7 +3,7 @@ function on_interact(player, o)
 end
 
 function get_ncpmap_obstacle(y,x) --check if npc_map returned an obstacle
-  if npc_map[y][x] == "@" then 
+  if npc_map[y][x] ~= 0 then 
     return 1
   else 
     return 0

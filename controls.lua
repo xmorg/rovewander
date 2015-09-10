@@ -83,6 +83,7 @@ function love.keypressed( key, isrepeat )
 			end
 	elseif key == "left" and game.mode == "look mode" then game.look_x = game.look_x -1
 	elseif key == "left" and game.mode == "ingame" then
+		player.facing = "west"
 		if game_map[py][px-1] == "D" then
 			load_newzone("west", game.player_world_x, game.player_world_y)
 			game.player_world_x = game.player_world_x-1
@@ -104,6 +105,7 @@ function love.keypressed( key, isrepeat )
 		end
 	elseif key == "right" and game.mode == "look mode" then game.look_x = game.look_x +1
 	elseif key == "right" and game.mode == "ingame" then
+		player.facing = "east"
 		if game_map[py][px+1] == "D" then
 			load_newzone("east", game.player_world_x, game.player_world_y)
 			game.player_world_x = game.player_world_x+1
@@ -123,6 +125,7 @@ function love.keypressed( key, isrepeat )
 		end
 	elseif key == "up" and game.mode == "look mode" then game.look_y = game.look_y -1
 	elseif key == "up" and game.mode == "ingame" then
+		player.facing = "north"
 		if game_map[py-1][px] == "D" then
 			load_newzone("north", game.player_world_x, game.player_world_y)
 			game.player_world_y = game.player_world_y-1
@@ -142,6 +145,7 @@ function love.keypressed( key, isrepeat )
 		end
 	elseif key == "down" and game.mode == "look mode" then game.look_y = game.look_y +1
 	elseif key == "down" and game.mode == "ingame" then
+		player.facing = "south"
 		if game_map[py+1][px] == "D" then
 			load_newzone("south", game.player_world_x, game.player_world_y)
 			game.player_world_y = game.player_world_y+1

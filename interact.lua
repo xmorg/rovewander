@@ -1,7 +1,9 @@
 --interact .lua, talk, look, etc
-function on_interact(player, o)
-end
 
+function on_get_obstacle_look(y,x) -- see what is blocking your path
+  show_look_data(game_map[y][x], x, y)
+end
+  
 function get_ncpmap_obstacle(y,x) --check if npc_map returned an obstacle
   if npc_map[y][x] ~= 0 then 
     return 1
@@ -27,5 +29,12 @@ function get_any_obstacle(y,x)
     return 1
   else
     return 0
+  end
+end
+
+function on_interact(player, y, x)
+  --check for mode
+  if game.default_collision == "look" then
+    on_get_obstacle_look(y,x) -- see what is blocking your path
   end
 end

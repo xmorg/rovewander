@@ -82,9 +82,8 @@ function place_dwarf_building(btype, bsize, lx, ly)
 	end
 	for y=2, bsize-1 do
 		for x=2, bsize-1 do
-			if (x > 2 and y >2) or (x<bsize-1 and y < bsize-1)
-				or (x > 2 and y < bsize-1) 
-				or (x<bsize-1 and y >2) then
+			if ((x > 2 and y >2) or (x<bsize-1 and y < bsize-1)) and
+			((x > 2 and y < bsize-1) or (x<bsize-1 and y >2)) then
 				game_map[ly+y][lx+x]= "+"
 			end
 		end

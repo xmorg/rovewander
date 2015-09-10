@@ -89,6 +89,7 @@ function love.keypressed( key, isrepeat )
 			game.player_world_x = game.player_world_x-1
 			game.player_loc_x = table.getn(game_map)-2
 			game.draw_x = game.draw_x- (table.getn(game_map)-2)*8
+			game.current_event = "player move"
 			increase_gametime()
 		end
 		if px > 2 and get_any_obstacle(py, px-1)== 0 then
@@ -111,6 +112,7 @@ function love.keypressed( key, isrepeat )
 			game.player_world_x = game.player_world_x+1
 			game.player_loc_x = 2
 			game.draw_x = game.draw_x+ (table.getn(game_map)-2)*8
+			game.current_event = "player move"
 			increase_gametime()
 		end
 		if get_any_obstacle(py,px+1) == 0 then
@@ -131,6 +133,7 @@ function love.keypressed( key, isrepeat )
 			game.player_world_y = game.player_world_y-1
 			game.player_loc_y = table.getn(game_map)-2
 			game.draw_y = game.draw_y- (table.getn(game_map)-2)*14
+			game.current_event = "player move"
 			increase_gametime()
 		end
 		if py > 2 and get_any_obstacle(py-1,px) == 0 then
@@ -151,6 +154,7 @@ function love.keypressed( key, isrepeat )
 			game.player_world_y = game.player_world_y+1
 			game.player_loc_y = 2
 			game.draw_y = game.draw_y + (table.getn(game_map)-2)*14
+			game.current_event = "player move"
 			increase_gametime()
 		end
 		if get_any_obstacle(py+1,px) == 0 then

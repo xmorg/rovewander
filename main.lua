@@ -131,7 +131,7 @@ end
 
 function npc_actions() --current event.
 	local move_rand = math.random(0, 4) -- 0none,1north,2east,3south,4west
-	game.current_event = "player move" then
+	game.current_event = "player move"
 	for y=1, game.tilecount do
 		for x=1, game.tilecount do
 			if npc_map[y][x] ~= 0 then --move NPC

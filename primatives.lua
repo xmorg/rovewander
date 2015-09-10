@@ -83,7 +83,8 @@ function place_dwarf_building(btype, bsize, lx, ly)
 	for y=2, bsize-1 do
 		for x=2, bsize-1 do
 			if (x > 2 and y >2) and (x<bsize-1 and y < bsize-1) then
-			game_map[ly+y][lx+x]= "+"
+				game_map[ly+y][lx+x]= "+"
+			end
 		end
 	end
 	if door_pos == 1 then game_map[ly+1][lx+door_loc] = "+"

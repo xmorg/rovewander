@@ -12,7 +12,7 @@ function love.keypressed( key, isrepeat )
 	end
 	if key == "escape" and game.mode == "look mode" then
 		game.mode = "ingame"
-	elseif == "escape" and (game.mode == "ingame" or game.mode == "chargen") then
+	elseif key == "escape" and (game.mode == "ingame" or game.mode == "chargen") then
 		love.event.quit()
 	elseif key == "f1" then 
 		if game.default_collision == "attack" then game.default_collision = "look"

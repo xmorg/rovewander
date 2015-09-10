@@ -82,7 +82,7 @@ function place_dwarf_building(btype, bsize, lx, ly)
 	end
 	for y=2, bsize-1 do
 		for x=2, bsize-1 do
-			if (x > 2 and y >2) and (x<bsize-1 and y < bsize-1) then
+			if (x > 2 and y >2) or (x<bsize-1 and y < bsize-1) then
 				game_map[ly+y][lx+x]= "+"
 			end
 		end
@@ -133,7 +133,7 @@ function create_dwarfhold_map()
 			end--endif	
 		end
 	end
-	buildingcount = math.random(3, 20)
+	buildingcount = math.random(10, 20)
 	--for x=1,buildingcount do
 	--	place_garden(0, math.random(5,10), math.random(3, game.tilecount-11), math.random(3, game.tilecount-11))
 	--end

@@ -165,13 +165,13 @@ function update_process_events() --process events.
 		--npc_map[actor_list[i].loc_y][actor_list[i].loc_x] = actor_list[i]
 		--npc's should move sometimes
 		npc_actions() --do it
-		game.current_event == "none" -- ok we get it
+		game.current_event = "none" -- ok we get it
 	elseif game.current_event == "player steal" then
 		--woa! pickpockets!
-		game.current_event == "none" -- ok we get it
+		game.current_event = "none" -- ok we get it
 	elseif game.current_event == "player attack" then
 		--combat happens!
-		game.current_event == "none" -- ok we get it
+		game.current_event = "none" -- ok we get it
 	end
 end
 function love.update()

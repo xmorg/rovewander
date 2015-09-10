@@ -96,7 +96,12 @@ function generate_random_zone(x,y)
 		worldmap[y][x][1] = "t"
 		worldmap[y][x][2] = get_town_name()
 		game.current_message = inn_origin_messages1[math.random(1,table.getn(inn_origin_messages1))].. " " ..worldmap[y][x][2]
-		load_actor_to_map(create_actor_list(worldmap[y][x][2], "Human"))
+		local towntype = math.random(1,2)
+		if towntype == 1 then
+			load_actor_to_map(create_actor_list(worldmap[y][x][2], "Human"))
+		elseif towntype == 2 then
+			load_actor_to_map(create_actor_list(worldmap[y][x][2], "Lower Human")) -- all human types
+		end
 	elseif start_loc == 5 then
 		shore_dir = math.random(1,7) --1 north, 2 east 3 south 4 west 5 none, 6 middle, 7
 		create_sea_map(shore_dir) --- put direction

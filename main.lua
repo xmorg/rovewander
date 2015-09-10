@@ -62,13 +62,22 @@ function generate_random_zone(x,y)
 		worldmap[y][x][1] = "i"
 		worldmap[y][x][2] = get_inn_name()
 		game.current_message = inn_origin_messages1[math.random(1,table.getn(inn_origin_messages1))].. " " ..worldmap[y][x][2]
-		load_actor_to_map(create_actor_list(worldmap[y][x][2], "Human"))
+		load_actor_to_map(create_actor_list(worldmap[y][x][2], "Lower Humantype"))
 	elseif start_loc == 2 then
 		create_forest_map(math.random(1,10))
 		worldmap[y][x][1] = "f"
 		worldmap[y][x][2] = get_forest_name()
 		game.current_message = inn_origin_messages1[math.random(1,table.getn(inn_origin_messages1))].. " " ..worldmap[y][x][2]
-		load_actor_to_map(create_actor_list(worldmap[y][x][2], "Human"))
+		local forestype = math.random(1,4)
+		if forestype == 1 then
+			load_actor_to_map(create_actor_list(worldmap[y][x][2], "Human"))
+		elseif forestype == 2 then
+			load_actor_to_map(create_actor_list(worldmap[y][x][2], "Lower Elftype"))
+		elseif forestype == 3 then
+			load_actor_to_map(create_actor_list(worldmap[y][x][2], "Lower Beasttype"))
+		elseif forestype == 4 then
+			load_actor_to_map(create_actor_list(worldmap[y][x][2], "Lower Orctype"))
+		end
 	elseif start_loc == 3 then
 		create_dungeon_topside()
 		worldmap[y][x][1] = "d"

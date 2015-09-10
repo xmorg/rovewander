@@ -1,14 +1,14 @@
 --interact .lua, talk, look, etc
 
-function on_get_obstacle_look(player) -- see what is blocking your path
-  if player.facing == "north" then
-    show_look_data(game_map[player.player_loc_y-1][player.player_loc_x], player.player_loc_x, player.player_loc_y-1)
-  elseif player.facing == "east" then
-    show_look_data(game_map[player.player_loc_y][player.player_loc_x+1], player.player_loc_x+1, player.player_loc_y)
-  elseif player.facing == "south" then
-    show_look_data(game_map[player.player_loc_y+1][player.player_loc_x], player.player_loc_x, player.player_loc_y+1)
-  elseif player.facing == "west" then
-    show_look_data(game_map[player.player_loc_y][player.player_loc_x-1], player.player_loc_x-1, player.player_loc_y)
+function on_get_obstacle_look(p) -- see what is blocking your path
+  if p.facing == "north" then
+    show_look_data(game_map[p.player_loc_y-1][p.player_loc_x], p.player_loc_x, p.player_loc_y-1)
+  elseif p.facing == "east" then
+    show_look_data(game_map[p.player_loc_y][p.player_loc_x+1], p.player_loc_x+1, p.player_loc_y)
+  elseif p.facing == "south" then
+    show_look_data(game_map[p.player_loc_y+1][p.player_loc_x], p.player_loc_x, p.player_loc_y+1)
+  elseif p.facing == "west" then
+    show_look_data(game_map[p.player_loc_y][p.player_loc_x-1], p.player_loc_x-1, p.player_loc_y)
   end
 end
   

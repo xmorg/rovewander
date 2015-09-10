@@ -143,13 +143,9 @@ function npc_actions() --current event.
 						--move NPC
 						npc_map[y][x+1] = npc_map[y][x] --moved
 						npc_map[y][x] = 0 --filed vacume
-					elseif move_rand == 2 and get_any_obstacle(y,x+1) == 0 then --approved to move
-						--move NPC
-						npc_map[y][x+1] = npc_map[y][x] --moved
-						npc_map[y][x] = 0 --filed vacume
 					elseif move_rand == 3 and get_any_obstacle(y+1,x) == 0 then --approved to move
 						--move NPC
-						npc_map[y+1][x] = npc_map[y][x] --moved
+						npc_map[y][x+1] = npc_map[y][x] --moved
 						npc_map[y][x] = 0 --filed vacume
 					elseif move_rand == 4 and get_any_obstacle(y,x-1) == 0 then --approved to move
 						--move NPC

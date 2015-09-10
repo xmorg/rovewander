@@ -71,6 +71,28 @@ function place_water(gtype, bsize, lx, ly)
 		end
 	end
 end
+
+function place_dwarf_building(btype, bsize, lx, ly)
+	door_loc = math.random(2,bsize-1)
+	door_pos = math.random(1, 4)
+	for y=1, bsize do
+		for x=1, bsize do
+				game_map[ly+y][lx+x]= "#"
+		end
+	end
+	for y=2, bsize-1 do
+		for x=2, bsize-1 do
+			if (x > 2 and y >2) and (x<bsize-1 and y < bsize-1) then
+			game_map[ly+y][lx+x]= "+"
+		end
+	end
+	if door_pos == 1 then game_map[ly+1][lx+door_loc] = "+"
+	elseif door_pos == 2 then game_map[ly+door_loc][lx+1] = "+"
+	elseif door_pos == 3 then game_map[ly+bsize][lx+door_loc] = "+"
+	elseif door_pos == 4 then game_map[ly+door_loc][lx+bsize] = "+"
+	end	
+end
+
 function place_building(btype, bsize, lx, ly)
 	door_loc = math.random(2,bsize-1)
 	door_pos = math.random(1, 4)
@@ -89,6 +111,44 @@ function place_building(btype, bsize, lx, ly)
 	elseif door_pos == 3 then game_map[ly+bsize][lx+door_loc] = "+"
 	elseif door_pos == 4 then game_map[ly+door_loc][lx+bsize] = "+"
 	end	
+end
+function create_dwarfhold()
+	game.tilecount = 100
+	game_map = {}
+	for y=1, game.tilecount do
+		x_temp_map = {}
+		x_obj_map = {}
+		table.insert(game_map, x_temp_map)
+		table.insert(obj_map, x_obj_map)
+		for x=1, game.tilecount  do
+			if x > 1 and x < game.tilecount and y > 1 and y < game.tilecount then
+				table.insert(game_map[y], "+") --floors
+			elseif x == game.tilecount/2 and y == 1 then
+				table.insert(game_map[y], "D")
+			elseif x == game.tilecount/2 and y == game.tilecount then
+				table.insert(game_map[y], "D")
+			else
+				table.insert(game_map[y], "#") --walls
+			end--endif	
+		end
+	end
+	buildingcount = math.random(3, 20)
+	--for x=1,buildingcount do
+	--	place_garden(0, math.random(5,10), math.random(3, game.tilecount-11), math.random(3, game.tilecount-11))
+	--end
+	for x=1,buildingcount do
+		place_dwarf_building(0, math.random(5,10), math.random(3, game.tilecount-11), math.random(3, game.tilecount-11))
+	end
+	place_walls(1, 5, 1, 1, game.tilecount, 5)
+	place_walls(1, 5, 1, 1, 5, game.tilecount-1)
+	place_walls(1, game.tilecount-5, 1, 1,  game.tilecount-1,5)
+	place_walls(1, 5, game.tilecount-5, 1, 5, game.tilecount-1)
+	for y=2, 7 do --ensure exit is not blocked by walls
+		game_map[y][game.tilecount/2] = "+"
+		game_map[y][game.tilecount/2+1] = "+"
+		game_map[game.tilecount-y][game.tilecount/2] = "+"
+	end
+	create_fog_of_war(game.tilecount)
 end
 
 function create_town_map(walls)--walls boolean

@@ -25,6 +25,10 @@ playable_race_names = {	{"Human", "short-lived hardworking folk of the midland k
 	{"Naga", "a vicious races of snakemen, often called mersnakes.  They have a dubious alliance with the Lizardmen.", "x"}
 }	
 
+function get_agro_by_race(player, npc)
+	
+end
+
 crude_names_front = {"Al", "Bre", "Cel", "Dan", "Ed", "Ford", "Guy", "Haus", "Ister",
 	"Jim", "Kael", "Liam", "Mor", "Nast", "Oh", "Pel", "Qin", "Ray", "Sten","Tell",
 	"Urst", "Val", "Wist", "Xen", "Yor", "Zum"

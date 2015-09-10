@@ -1,4 +1,34 @@
 --file
+function show_look_data(mchar, x, y)
+	px = 100
+	py = 600-28
+	lstr = ""
+	love.graphics.setColor(255,255,255,255)
+	if npc_map[y][x] ~= 0 then
+		if npc_map[y][x].name ~= nil then
+			lstr = lstr..npc_map[y][x].name.. " the ".. npc_map[y][x].a_type
+		else
+			lstr = lstr.."a person "
+		end
+	end
+	if mchar == "#" then
+		lstr = lstr.." a wall"
+	elseif mchar == "~" then
+		lstr = lstr.." water"
+	elseif mchar == "+" then
+		lstr = lstr.." Stone floor"
+	elseif mchar == "t" then
+		lstr = lstr.." a tree"
+	elseif mchar == "," then
+		lstr = lstr.." Grass"
+	elseif mchar == "." then
+		lstr = lstr.." Dirt"
+	else
+		lstr = lstr.." nothing"
+	end
+	love.graphics.print(lstr, px, py)
+end
+
 function love.draw_cam_viewable()
    local px = game.player_loc_x
    local py = game.player_loc_y

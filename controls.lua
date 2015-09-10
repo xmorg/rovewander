@@ -96,21 +96,29 @@ function love.keypressed( key, isrepeat )
 			game.player_loc_x = game.player_loc_x -1
 			game.draw_x=game.draw_x+1*8
 			increase_gametime()
+		else -- we encountered an obstacle!
+			if get_ncpmap_obstacle(py, px-1) == 1 then
+				--interact
+			end
 		end
 	elseif key == "right" and game.mode == "look mode" then game.look_x = game.look_x +1
 	elseif key == "right" and game.mode == "ingame" then
-			if game_map[py][px+1] == "D" then
-				load_newzone("east", game.player_world_x, game.player_world_y)
-				game.player_world_x = game.player_world_x+1
-				game.player_loc_x = 2
-				game.draw_x = game.draw_x+ (table.getn(game_map)-2)*8
-				increase_gametime()
+		if game_map[py][px+1] == "D" then
+			load_newzone("east", game.player_world_x, game.player_world_y)
+			game.player_world_x = game.player_world_x+1
+			game.player_loc_x = 2
+			game.draw_x = game.draw_x+ (table.getn(game_map)-2)*8
+			increase_gametime()
+		end
+		if get_any_obstacle(py,px+1) == 0 then
+			game.player_loc_x = game.player_loc_x +1
+			game.draw_x=game.draw_x-1*8
+			increase_gametime()
+		else -- we encountered an obstacle!
+			if get_ncpmap_obstacle(py, px+1) == 1 then
+				--interact
 			end
-			if get_any_obstacle(py,px+1) == 0 then
-				game.player_loc_x = game.player_loc_x +1
-				game.draw_x=game.draw_x-1*8
-				increase_gametime()
-			end
+		end
 	elseif key == "up" and game.mode == "look mode" then game.look_y = game.look_y -1
 	elseif key == "up" and game.mode == "ingame" then
 		if game_map[py-1][px] == "D" then
@@ -124,6 +132,10 @@ function love.keypressed( key, isrepeat )
 			game.player_loc_y = game.player_loc_y -1
 			game.draw_y=game.draw_y+1*14
 			increase_gametime()
+		else -- we encountered an obstacle!
+			if get_ncpmap_obstacle(py-1, px) == 1 then
+				--interact
+			end
 		end
 	elseif key == "down" and game.mode == "look mode" then game.look_y = game.look_y +1
 	elseif key == "down" and game.mode == "ingame" then
@@ -139,6 +151,10 @@ function love.keypressed( key, isrepeat )
 			game.player_loc_y = game.player_loc_y +1
 			game.draw_y=game.draw_y-1*14
 			increase_gametime()
+		else -- we encountered an obstacle!
+			if get_ncpmap_obstacle(py+1, px) == 1 then
+				--interact
+			end
 		end
 	end--endif key
 end--endfunction

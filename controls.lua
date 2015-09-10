@@ -41,6 +41,7 @@ function love.keypressed( key, isrepeat )
 			game.look_y = game.player_loc_y
 		elseif game.mode == "look mode" then
 			game.mode = "ingame"
+		end
 	elseif key == "s" and game.mode == "ingame" then
 		--save game(assume zone files are already saved
 		love.filesystem.write( "game.lua", table.show(game, "game")) --save game

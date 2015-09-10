@@ -11,7 +11,7 @@ function love.keypressed( key, isrepeat )
 	   update_race_chargen(player, key, nil, nil, nil)
 	end
 	if key == "escape" and game.mode == "look mode" then
-		game.mode == "ingame"
+		game.mode = "ingame"
 	elseif == "escape" and (game.mode == "ingame" or game.mode == "chargen") then
 		love.event.quit()
 	elseif key == "f1" then 

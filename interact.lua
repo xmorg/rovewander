@@ -13,3 +13,11 @@ function get_obstacle(c) --test weather character is an obstacle
   elseif c == "l" then return 1
   else return 0
 end
+
+function get_any_obstacle(c)
+  if get_obstacle(c) == 1 or get_ncpmap_obstacle(c) == 1 then
+    return 1
+  else
+    return 0
+  end
+end

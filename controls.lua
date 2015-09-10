@@ -24,7 +24,7 @@ function love.keypressed( key, isrepeat )
 		--cant quaff yet!
 		game.current_message = "Can't Quaff yet!"
 		game.mode = 97
-	elseif key == "l" and game.mode == "ingame" then
+	elseif key == "C" and game.mode == "ingame" then
 		chunk = love.filesystem.load( "game.lua" )
 		chunk()--bug check for these files first!
 		chunk = love.filesystem.load( "player.lua" )
@@ -34,7 +34,7 @@ function love.keypressed( key, isrepeat )
 		chunk = love.filesystem.load( worldmap[game.player_world_y][game.player_world_x][2]..".lua")
 		--chunk = love.filesystem.load( worldmap[y-1][x][2]..".lua" )
 		chunk()
-	elseif key == "k" then
+	elseif key == "o" then --changed o, lOOk
 		if game.mode == "ingame" then
 			game.mode = "look mode" -- look mode
 			game.look_x = game.player_loc_x
@@ -42,7 +42,7 @@ function love.keypressed( key, isrepeat )
 		elseif game.mode == "look mode" then
 			game.mode = "ingame"
 		end
-	elseif key == "s" and game.mode == "ingame" then
+	elseif key == "S" and game.mode == "ingame" then
 		--save game(assume zone files are already saved
 		love.filesystem.write( "game.lua", table.show(game, "game")) --save game
 		love.filesystem.write( "player.lua", table.show(player, "player")) --save player
@@ -81,8 +81,8 @@ function love.keypressed( key, isrepeat )
 				chunk = love.filesystem.load( worldmap[game.player_world_y][game.player_world_x][2]..".lua")
 				chunk()
 			end
-	elseif key == "left" and game.mode == "look mode" then game.look_x = game.look_x -1
-	elseif key == "left" and game.mode == "ingame" then
+	elseif (key == "left" or key == "h") and game.mode == "look mode" then game.look_x = game.look_x -1
+	elseif (key == "left" or key == "h") and game.mode == "ingame" then
 		player.facing = "west"
 		if game_map[py][px-1] == "D" then
 			load_newzone("west", game.player_world_x, game.player_world_y)
@@ -104,8 +104,8 @@ function love.keypressed( key, isrepeat )
 				on_interact(player, py, px-1)
 			end
 		end
-	elseif key == "right" and game.mode == "look mode" then game.look_x = game.look_x +1
-	elseif key == "right" and game.mode == "ingame" then
+	elseif (key == "right" or key == "l") and game.mode == "look mode" then game.look_x = game.look_x +1
+	elseif (key == "right" or key == "l") == "ingame" then
 		player.facing = "east"
 		if game_map[py][px+1] == "D" then
 			load_newzone("east", game.player_world_x, game.player_world_y)
@@ -125,8 +125,8 @@ function love.keypressed( key, isrepeat )
 				on_interact(player, py, px+1)
 			end
 		end
-	elseif key == "up" and game.mode == "look mode" then game.look_y = game.look_y -1
-	elseif key == "up" and game.mode == "ingame" then
+	elseif (key == "up" or key == "k") and game.mode == "look mode" then game.look_y = game.look_y -1
+	elseif (key == "up" or key == "k") and game.mode == "ingame" then
 		player.facing = "north"
 		if game_map[py-1][px] == "D" then
 			load_newzone("north", game.player_world_x, game.player_world_y)
@@ -146,8 +146,8 @@ function love.keypressed( key, isrepeat )
 				on_interact(player, py-1, px)
 			end
 		end
-	elseif key == "down" and game.mode == "look mode" then game.look_y = game.look_y +1
-	elseif key == "down" and game.mode == "ingame" then
+	elseif (key == "down" or key == "j") and game.mode == "look mode" then game.look_y = game.look_y +1
+	elseif (key == "down" or key == "j") and game.mode == "ingame" then
 		player.facing = "south"
 		if game_map[py+1][px] == "D" then
 			load_newzone("south", game.player_world_x, game.player_world_y)

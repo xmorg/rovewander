@@ -490,6 +490,44 @@ function create_actor_list(town_name, race)
 			elseif race_rand == 3 then
 				a = randomize_actor(a, "Nomad")
 			end
+		elseif race == "Lower Civtype" then -- a big city with lots of races
+			race_rand = math.random(1,8)
+			if race_rand == 1 then
+				a = randomize_actor(a, "Human")
+			elseif race_rand == 2 then
+				a = randomize_actor(a, "Norlander")
+			elseif race_rand == 3 then
+				a = randomize_actor(a, "Nomad")
+			elseif race_rand == 4 then
+				a = randomize_actor(a, "Elf")
+			elseif race_rand == 5 then
+				a = randomize_actor(a, "HalfElf")
+			elseif race_rand == 6 then
+				a = randomize_actor(a, "High Elf")
+			elseif race_rand == 7 then
+				a = randomize_actor(a, "Gnome")
+			elseif race_rand == 8 then
+				a = randomize_actor(a, "Topside Dwarf") -- you can only encounter "real" dwraves in dwarfholds
+			end
+		elseif race == "Lower Darktype" then -- a big city with lots of races
+			race_rand = math.random(1,8)
+			if race_rand == 1 then
+				a = randomize_actor(a, "Nomad")
+			elseif race_rand == 2 then
+				a = randomize_actor(a, "Dark Elf")
+			elseif race_rand == 3 then
+				a = randomize_actor(a, "Goblin")
+			elseif race_rand == 4 then
+				a = randomize_actor(a, "Orc")
+			elseif race_rand == 5 then
+				a = randomize_actor(a, "Trorc")
+			elseif race_rand == 6 then
+				a = randomize_actor(a, "Abyss Dwarf")
+			elseif race_rand == 7 then
+				a = randomize_actor(a, "Ettin")
+			elseif race_rand == 8 then
+				a = randomize_actor(a, "Zombie")
+			end
 		else
 			a = randomize_actor(a, race)
 		end

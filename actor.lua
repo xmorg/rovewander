@@ -220,6 +220,7 @@ function randomize_actor(a, race)
    a.bonus_points = 0
    a.facing = "north"
    a.movestatus = "finished" --finished(dont move again)/ready(set premove)
+   a.playeragro = 0 -- player agro
    table.insert(a.inventory,new_starting_weapon(7) )
    table.insert(a.inventory,new_starting_armor(3) )
    table.insert(a.inventory,new_starting_helm(3) )
@@ -382,6 +383,7 @@ function create_actor(game, level,chargen) --create a random actor
       max_stat = 6,
       loc_x = 0,
       loc_y = 0,
+      playeragro = 0
    }
    if chargen == false then --randomize the actor
       a = randomize_actor(a, nil)

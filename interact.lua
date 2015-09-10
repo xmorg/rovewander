@@ -22,8 +22,8 @@ function get_obstacle(c) --test weather character is an obstacle
   end
 end
 
-function get_any_obstacle(c)
-  if get_obstacle(c) == 1 or get_ncpmap_obstacle(c) == 1 then
+function get_any_obstacle(c, n)
+  if get_obstacle(c) == 1 or get_ncpmap_obstacle(n) == 1 then
     return 1
   else
     return 0

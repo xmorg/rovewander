@@ -34,12 +34,13 @@ function love.keypressed( key, isrepeat )
 		chunk = love.filesystem.load( worldmap[game.player_world_y][game.player_world_x][2]..".lua")
 		--chunk = love.filesystem.load( worldmap[y-1][x][2]..".lua" )
 		chunk()
-	elseif key == "k" and game.mode == "ingame" then
-		game.mode = "look mode" -- look mode
-		game.look_x = game.player_loc_x
-		game.look_y = game.player_loc_y
-	elseif key == "k" and game.mode == "look mode" then
-		game.mode = "ingame"
+	elseif key == "k" then
+		if game.mode == "ingame" then
+			game.mode = "look mode" -- look mode
+			game.look_x = game.player_loc_x
+			game.look_y = game.player_loc_y
+		elseif game.mode == "look mode" then
+			game.mode = "ingame"
 	elseif key == "s" and game.mode == "ingame" then
 		--save game(assume zone files are already saved
 		love.filesystem.write( "game.lua", table.show(game, "game")) --save game

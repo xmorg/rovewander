@@ -99,6 +99,7 @@ function love.keypressed( key, isrepeat )
 		else -- we encountered an obstacle!
 			if get_ncpmap_obstacle(py, px-1) == 1 then
 				--interact
+				on_interact(player, py, px-1)
 			end
 		end
 	elseif key == "right" and game.mode == "look mode" then game.look_x = game.look_x +1
@@ -117,6 +118,7 @@ function love.keypressed( key, isrepeat )
 		else -- we encountered an obstacle!
 			if get_ncpmap_obstacle(py, px+1) == 1 then
 				--interact
+				on_interact(player, py, px+1)
 			end
 		end
 	elseif key == "up" and game.mode == "look mode" then game.look_y = game.look_y -1
@@ -135,6 +137,7 @@ function love.keypressed( key, isrepeat )
 		else -- we encountered an obstacle!
 			if get_ncpmap_obstacle(py-1, px) == 1 then
 				--interact
+				on_interact(player, py-1, px)
 			end
 		end
 	elseif key == "down" and game.mode == "look mode" then game.look_y = game.look_y +1
@@ -154,6 +157,7 @@ function love.keypressed( key, isrepeat )
 		else -- we encountered an obstacle!
 			if get_ncpmap_obstacle(py+1, px) == 1 then
 				--interact
+				on_interact(player, py+1, px)
 			end
 		end
 	end--endif key

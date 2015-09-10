@@ -238,7 +238,7 @@ function love.draw_cam_viewable()
 	    love.graphics.print(game_map[y][x],x*8 +dx, y*14+dy)
 	 end
 	 if game.mode == "ingame" and game.default_collision == "look" then
-	 	on_get_obstacle_look()
+	 	on_get_obstacle_look(player)
 	 end
 	 if game.mode == "look mode" and y == game.look_y and x == game.look_x then --lookmode
 	    --love.graphics.print("_", x*8-4+dx,y*14+dy )

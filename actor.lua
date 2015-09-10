@@ -472,6 +472,24 @@ function create_actor_list(town_name, race)
 			elseif race_rand == 3 then
 				a = randomize_actor(a, "Catman")
 			end
+		elseif race == "Lower Elftype" then
+			race_rand = math.random(1,3)
+			if race_rand == 1 then
+				a = randomize_actor(a, "Elf")
+			elseif race_rand == 2 then
+				a = randomize_actor(a, "Wild Elf")
+			elseif race_rand == 3 then
+				a = randomize_actor(a, "High Elf")
+			end
+		elseif race == "Lower Humantype" then
+			race_rand = math.random(1,3)
+			if race_rand == 1 then
+				a = randomize_actor(a, "Human")
+			elseif race_rand == 2 then
+				a = randomize_actor(a, "Norlander")
+			elseif race_rand == 3 then
+				a = randomize_actor(a, "Nomad")
+			end
 		else
 			a = randomize_actor(a, race)
 		end

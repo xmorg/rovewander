@@ -112,7 +112,7 @@ function place_building(btype, bsize, lx, ly)
 	elseif door_pos == 4 then game_map[ly+door_loc][lx+bsize] = "+"
 	end	
 end
-function create_dwarfhold()
+function create_dwarfhold_map()
 	game.tilecount = 100
 	game_map = {}
 	for y=1, game.tilecount do

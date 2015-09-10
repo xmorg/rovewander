@@ -74,7 +74,14 @@ function generate_random_zone(x,y)
 		worldmap[y][x][1] = "d"
 		worldmap[y][x][2] = get_dungeon_name()
 		game.current_message = dungeon_origin_message1[math.random(1,table.getn(dungeon_origin_message1))].. " " ..worldmap[y][x][2]
-		load_actor_to_map(create_actor_list(worldmap[y][x][2], "Human"))
+		local dungeontype = math.random(1,3)
+		if dungeontype == 1 then
+			load_actor_to_map(create_actor_list(worldmap[y][x][2], "Human"))
+		elseif dungeontype == 2 then
+			load_actor_to_map(create_actor_list(worldmap[y][x][2], "Lower Orctype"))
+		elseif dungeontype == 3 then
+			load_actor_to_map(create_actor_list(worldmap[y][x][2], "Lower Undeadtype"))
+		end
 	elseif start_loc == 4 then
 		create_town_map()
 		worldmap[y][x][1] = "t"

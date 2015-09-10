@@ -10,14 +10,10 @@ function love.keypressed( key, isrepeat )
 	elseif game.mode == "chargen_race_selector" then
 	   update_race_chargen(player, key, nil, nil, nil)
 	end
-	if key == "escape" then
-		if game.mode == "look mode" then
-			game.mode == "ingame"
-		--elseif game.mode == 95 then
-		--	game.mode = 1
-		else
-			love.event.quit()
-		end
+	if key == "escape" and game.mode == "look mode" then
+		game.mode == "ingame"
+	elseif == "escape" and (game.mode == "ingame" or game.mode == "chargen") then
+		love.event.quit()
 	elseif key == "f1" then 
 		if game.default_collision == "attack" then game.default_collision = "look"
 		elseif game.default_collision == "look" then game.default_collision = "talk"
@@ -42,6 +38,8 @@ function love.keypressed( key, isrepeat )
 		game.mode = "look mode" -- look mode
 		game.look_x = game.player_loc_x
 		game.look_y = game.player_loc_y
+	elseif key == "k" and game.mode == "look mode" then
+		game.mode = "ingame"
 	elseif key == "s" and game.mode == "ingame" then
 		--save game(assume zone files are already saved
 		love.filesystem.write( "game.lua", table.show(game, "game")) --save game

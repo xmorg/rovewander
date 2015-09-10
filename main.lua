@@ -135,17 +135,17 @@ function npc_actions() --current event.
 		for y=1, game.tilecount do
 			for x=1, game.tilecount do
 				if npc_map[y][x] ~= 0 then --move NPC
-					if move_rand == 1 and get_any_obstacle(y-1,x) == 0 then --approved to move
+					if move_rand == 1 and get_any_obstacle(y-1,x) == 0 then --north
 						--move NPC
 						npc_map[y-1][x] = npc_map[y][x] --moved
 						npc_map[y][x] = 0 --filed vacume
-					elseif move_rand == 2 and get_any_obstacle(y,x+1) == 0 then --approved to move
+					elseif move_rand == 2 and get_any_obstacle(y,x+1) == 0 then --east
 						--move NPC
 						npc_map[y][x+1] = npc_map[y][x] --moved
 						npc_map[y][x] = 0 --filed vacume
-					elseif move_rand == 3 and get_any_obstacle(y+1,x) == 0 then --approved to move
+					elseif move_rand == 3 and get_any_obstacle(y+1,x) == 0 then --south
 						--move NPC
-						npc_map[y][x+1] = npc_map[y][x] --moved
+						npc_map[y+1][x] = npc_map[y][x] --moved
 						npc_map[y][x] = 0 --filed vacume
 					elseif move_rand == 4 and get_any_obstacle(y,x-1) == 0 then --approved to move
 						--move NPC

@@ -129,7 +129,10 @@ function love.mousepressed(x, y, button)
    end--endif
 end
 
-
+function update_process_events() --process events.
+	if game.current_event == "player moved" then
+	end
+end
 function love.update()
    local barrier_y = 0
    local barrior_x = 0
@@ -151,6 +154,7 @@ function love.update()
 	 end
       end
    end
+   update_process_events() --process events.
    player.loc_y = game.player_loc_y
    player.loc_x = game.player_loc_x
 end

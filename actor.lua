@@ -219,6 +219,7 @@ function randomize_actor(a, race)
    a.inventory = {}
    a.bonus_points = 0
    a.facing = "north"
+   a.movestatus = "finished" --finished(dont move again)/ready(set premove)
    table.insert(a.inventory,new_starting_weapon(7) )
    table.insert(a.inventory,new_starting_armor(3) )
    table.insert(a.inventory,new_starting_helm(3) )

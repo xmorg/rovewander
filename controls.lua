@@ -104,7 +104,8 @@ function love.keypressed( key, isrepeat )
 				on_interact(player, py, px-1)
 			end
 		end
-	elseif (key == "right" or key == "l") and game.mode == "look mode" then game.look_x = game.look_x +1
+elseif (key == "right" or key == "l") and game.mode == "look mode" then game.look_x = game.look_x +1
+	player.facing="east"
 	elseif (key == "right" or key == "l") == "ingame" then
 		player.facing = "east"
 		if game_map[py][px+1] == "D" then

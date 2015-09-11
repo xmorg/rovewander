@@ -24,7 +24,8 @@ playable_race_names = {	{"Human", "short-lived hardworking folk of the midland k
 	{"Lizardman",  "scaled ones, are an ancient race, which once ruled the midland. Their numbers declined for an unknown reason, and they remain in the western isles.", "w"},
 	{"Naga", "a vicious races of snakemen, often called mersnakes.  They have a dubious alliance with the Lizardmen.", "x"}
 }	
-
+npc_monster_types = {
+}
 function get_agro_by_race(player, npc)
 	
 end

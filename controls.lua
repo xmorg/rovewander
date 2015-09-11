@@ -105,7 +105,7 @@ function love.keypressed( key, isrepeat )
 			end
 		end
 	elseif (key == "right" or key == "l") and game.mode == "look mode" then game.look_x = game.look_x +1
-	elseif (key == "right" or key == "l") == "ingame" then
+	elseif (key == "right" ) == "ingame" then
 		player.facing = "east"
 		if game_map[py][px+1] == "D" then
 			load_newzone("east", game.player_world_x, game.player_world_y)

@@ -114,7 +114,7 @@ function love.keypressed( key, isrepeat )
 			game.draw_x = game.draw_x+ (table.getn(game_map)-2)*8
 			increase_gametime()
 		end
-		if  px > 2 and get_any_obstacle(py,px+1) == 0 then
+		if  get_any_obstacle(py,px+1) == 0 then
 			game.player_loc_x = game.player_loc_x +1
 			game.draw_x=game.draw_x-1*8
 			game.current_event = "player move"

@@ -105,23 +105,22 @@ function love.keypressed( key, isrepeat )
 			end
 		end
 	elseif (key == "right" or key == "l") and game.mode == "look mode" then game.look_x = game.look_x +1
-	elseif (key == "right" ) == "ingame" then
+	elseif (key == "right" or key == "l") == "ingame" then
 		player.facing = "east"
 		if game_map[py][px+1] == "D" then
 			load_newzone("east", game.player_world_x, game.player_world_y)
 			game.player_world_x = game.player_world_x+1
 			game.player_loc_x = 2
 			game.draw_x = game.draw_x+ (table.getn(game_map)-2)*8
-			game.current_event = "player move"
 			increase_gametime()
 		end
 		if get_any_obstacle(py,px+1) == 0 then
 			game.player_loc_x = game.player_loc_x +1
 			game.draw_x=game.draw_x-1*8
+			game.current_event = "player move"
 			increase_gametime()
 		else -- we encountered an obstacle!
 			if get_ncpmap_obstacle(py, px+1) == 1 then
-				--interact
 				on_interact(player, py, px+1)
 			end
 		end

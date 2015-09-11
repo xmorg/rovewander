@@ -81,7 +81,8 @@ function love.keypressed( key, isrepeat )
 				chunk = love.filesystem.load( worldmap[game.player_world_y][game.player_world_x][2]..".lua")
 				chunk()
 			end
-	elseif (key == "left" or key == "h") and game.mode == "look mode" then game.look_x = game.look_x -1
+	elseif (key == "left" or key == "h") and game.mode == "look mode" then 
+		game.look_x = game.look_x -1
 	elseif (key == "left" or key == "h") and game.mode == "ingame" then
 		player.facing = "west"
 		if game_map[py][px-1] == "D" then
@@ -100,13 +101,12 @@ function love.keypressed( key, isrepeat )
 			increase_gametime()
 		else -- we encountered an obstacle!
 			if get_ncpmap_obstacle(py, px-1) == 1 then
-				--interact
 				on_interact(player, py, px-1)
 			end
 		end
-elseif (key == "right" or key == "l") and game.mode == "look mode" then game.look_x = game.look_x +1
-	player.facing="east"
-	elseif (key == "right" or key == "l") == "ingame" then
+	elseif (key == "right" or key == "l") and game.mode == "look mode" then 
+		game.look_x = game.look_x +1
+	elseif (key == "right" or key == "l") and game.mode == "ingame" then
 		player.facing = "east"
 		if game_map[py][px+1] == "D" then
 			load_newzone("east", game.player_world_x, game.player_world_y)

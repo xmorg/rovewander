@@ -2,7 +2,7 @@
 
 tl = 200
 
-function draw_border_conversation()
+function draw_border_conversation() -- coversation menu.
 	love.graphics.setColor(255,255,255,255)
 	love.graphics.rectangle("fill", love.graphics.getWidth()/2,0, love.graphics.getWidth(), love.graphics.getHeight()) 
 	love.graphics.setColor(0,0,0,255)

@@ -1,17 +1,17 @@
 --chargen_stat_selector = " "
-
-playable_race_names = {	{"Human", "short-lived hardworking folk of the midland kingdoms", "a"}, --one of the 
-	{"HalfElf", "humans who can trace their bloodlines to an elven heritage.", "b"},
-	{"Norlander",  "tall humans who live in the frozen wastes of the north.", "c"},
-	{"Nomad",  "mix of tribal humans who wander the lands and trade horses and livestock.", "d"},
-	{"Elf",  "fair folk, who have made their home in the midland.", "e"},
-	{"Dark Elf",  "dread ones, or the Rock Elves.  The Dark Elves live deep in the earth and often clash with dwarves.", "f"},
-	{"High Elf",  "kingdom Elves, who live in the Elven Kingdoms of the mystic Isles.", "g"},
-	{"Gnome", "elusive advanced race of mechanical geniuses.", "h"},
-	{"Dwarf",  "short stout humanoids who live in the mountains and build great holds out of soid rock.", "i"},
-	{"Abyss Dwarf", "redskinned dwarves are known for delving deeply and creating mythical lava forges.", "j"}, 
-	{"Topside Dwarf",  "Dwarves who have built great kingdoms in the earth, and often merge with human kingdoms.", "l"},
-	{"Wild Elf",  "wild Elves live in the great forrests of the midlands, and the northern snowpines.", "m"},
+--------Strength-Inteligence-Agility-Stamina-Charisma-Luck-SIATCL
+playable_race_names = {	{"Human", "short-lived hardworking folk of the midland kingdoms", "a", 0,0,0,0,1,0}, --one of the 
+	{"HalfElf", "humans who can trace their bloodlines to an elven heritage.", "b", 0,1,0,-1,1,0},
+	{"Norlander",  "tall humans who live in the frozen wastes of the north.", "c", , 1,-1,0,1,0,0},
+	{"Nomad",  "mix of tribal humans who wander the lands and trade horses and livestock.", "d", , 0,0,1,0,0,0},
+	{"Elf",  "fair folk, who have made their home in the midland.", "e", -1,1,1,-1,0,0},
+	{"Dark Elf",  "dread ones, or the Rock Elves.  The Dark Elves live deep in the earth and often clash with dwarves.", "f",-1,1,1,-1,0,0},
+	{"High Elf",  "kingdom Elves, who live in the Elven Kingdoms of the mystic Isles.", "g", -2,2,1,-1,0,0},
+	{"Gnome", "elusive advanced race of mechanical geniuses.", "h",-3,2,0,1,0,0},
+	{"Dwarf",  "short stout humanoids who live in the mountains and build great holds out of soid rock.", "i",2,0,0,2,1,-3},
+	{"Abyss Dwarf", "redskinned dwarves are known for delving deeply and creating mythical lava forges.", "j",2,0,0,2,1,-3}, 
+	{"Topside Dwarf",  "Dwarves who have built great kingdoms in the earth, and often merge with human kingdoms.", "l",2,1,0,2,2,-1},
+	{"Wild Elf",  "wild Elves live in the great forrests of the midlands, and the northern snowpines.", "m",0,1,3,0,0,-1},
 	{"Goblin", "small devious creatures, which live almost everyhwere and bother almost everyone.", "n"},
 	{"Orc",  "large race of barbaric humanoids who look like giant furry goblins.", "o"},
 	{"Trorc",  "halftroll who are a hybrid creature, created by dark experiments.  They are few in number but large, strong and violent.", "p"},

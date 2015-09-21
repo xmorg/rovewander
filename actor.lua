@@ -1,5 +1,5 @@
 --chargen_stat_selector = " "
---------Strength-Inteligence-Agility-Stamina-Charisma-Luck-SIATCL
+---------------------------------------Strength-Inteligence-Agility-Stamina-Charisma-Luck-SIATCL
 playable_race_names = {	{"Human", "short-lived hardworking folk of the midland kingdoms", "a", 0,0,0,0,1,0}, --one of the 
 	{"HalfElf", "humans who can trace their bloodlines to an elven heritage.", "b", 0,1,0,-1,1,0},
 	{"Norlander",  "tall humans who live in the frozen wastes of the north.", "c", , 1,-1,0,1,0,0},
@@ -12,17 +12,17 @@ playable_race_names = {	{"Human", "short-lived hardworking folk of the midland k
 	{"Abyss Dwarf", "redskinned dwarves are known for delving deeply and creating mythical lava forges.", "j",2,0,0,2,1,-3}, 
 	{"Topside Dwarf",  "Dwarves who have built great kingdoms in the earth, and often merge with human kingdoms.", "l",2,1,0,2,2,-1},
 	{"Wild Elf",  "wild Elves live in the great forrests of the midlands, and the northern snowpines.", "m",0,1,3,0,0,-1},
-	{"Goblin", "small devious creatures, which live almost everyhwere and bother almost everyone.", "n"},
-	{"Orc",  "large race of barbaric humanoids who look like giant furry goblins.", "o"},
-	{"Trorc",  "halftroll who are a hybrid creature, created by dark experiments.  They are few in number but large, strong and violent.", "p"},
-	{"Owlman",  "reclusive winged humanoids, who inhabid the winded craigs of the southland.", "q"},
-	{"Catman",  "feline humanoids who live the deep forests that blur the lines between men and beast. Catmen are wise fast, and furry.", "r"},
-	{"Ratigan",  "race of ratmen, not to be confused with the were-rat.   Ratigans, were once as numerous as goblins, but now live in caves.", "s"},
-	{"Mermen", "mythical aquatic peoples that rule the sea as men rule the land.  They are in constant war with the Naga.", "t"},
-	{"Harepon",  "feral birdmen which live on remote islands and are a constant nuisance to shipping.", "u"},
-	{"Locustin",  "lords of the the crop wasters, are giant locust-man.  Many years ago the midland kings pushed their kind far to the east.", "v"},
-	{"Lizardman",  "scaled ones, are an ancient race, which once ruled the midland. Their numbers declined for an unknown reason, and they remain in the western isles.", "w"},
-	{"Naga", "a vicious races of snakemen, often called mersnakes.  They have a dubious alliance with the Lizardmen.", "x"}
+	{"Goblin", "small devious creatures, which live almost everyhwere and bother almost everyone.", "n",0,1,1,0,0,-1},
+	{"Orc",  "large race of barbaric humanoids who look like giant furry goblins.", "o",2,0,2,0,-2,-1},
+	{"Trorc",  "halftroll who are a hybrid creature, created by dark experiments.  They are few in number but large, strong and violent.", "p",3,0,1,3,-3,-2},
+	{"Owlman",  "reclusive winged humanoids, who inhabid the winded craigs of the southland.", "q", 0,3,2,-2,-1,0},
+	{"Catman",  "feline humanoids who live the deep forests that blur the lines between men and beast. Catmen are wise fast, and furry.", "r",1,2,3,-2,-1,-1},
+	{"Ratigan",  "race of ratmen, not to be confused with the were-rat.   Ratigans, were once as numerous as goblins, but now live in caves.", "s",-1,-1,3,-1,0,0},
+	{"Mermen", "mythical aquatic peoples that rule the sea as men rule the land.  They are in constant war with the Naga.", "t",0,1,1,0,-1,0},
+	{"Harepon",  "feral birdmen which live on remote islands and are a constant nuisance to shipping.", "u",1,0,1,0,1,-2},
+	{"Locustin",  "lords of the the crop wasters, are giant locust-man.  Many years ago the midland kings pushed their kind far to the east.", "v",0,0,0,0,0,1},
+	{"Lizardman",  "scaled ones, are an ancient race, which once ruled the midland. Their numbers declined for an unknown reason, and they remain in the western isles.", "w",1,0,1,-2,1,0},
+	{"Naga", "a vicious races of snakemen, often called mersnakes.  They have a dubious alliance with the Lizardmen.", "x",0,-1,1,0,1,0}
 }	
 npc_monster_types = {
 }

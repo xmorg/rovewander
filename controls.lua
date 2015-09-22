@@ -1,7 +1,7 @@
 --controls
 
 function update_talk_mode(player,key)
-	if key == "f" then game.mode = "ingame"
+	if key == "f" then game.mode = "ingame" end
 end
 
 function love.keypressed( key, isrepeat )

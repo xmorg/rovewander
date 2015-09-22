@@ -285,6 +285,7 @@ function love.draw()
 	elseif game.mode == "look mode" then --look mode 95
 		love.draw_cam_viewable()
 	elseif game.mode == "talk" then
+		love.draw_cam_viewable()	
 		draw_border_conversation() -- coversation menu.
 		--love.graphics.print("_", x*8-4+dx,y*14+dy )
 	end

@@ -1,6 +1,6 @@
 --controls
 
-function update_talk_mode(player,key,nil, nil, nil)
+function update_talk_mode(player,key)
 	if key == "f" then game.mode == "ingame"
 end
 

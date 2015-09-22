@@ -9,7 +9,7 @@ end
 function draw_border_conversation() -- coversation menu.
 	love.graphics.setColor(255,255,255,255)
 	love.graphics.rectangle("fill", love.graphics.getWidth()/2,0, love.graphics.getWidth(), love.graphics.getHeight()) 
-	love.graphics.setColor(0,0,0,0)
+	love.graphics.setColor(0,0,0,255)
 	love.graphics.rectangle("fill", love.graphics.getWidth()/2+8,love.graphics.getWidth()+14, 
 		love.graphics.getWidth()-16, love.graphics.getHeight()-28)
 end
@@ -18,7 +18,7 @@ function draw_border_m(r, g, b, a)
 	--tl = 20
 	love.graphics.setColor(r,g,b,a)
 	love.graphics.rectangle("fill", tl,tl, 400, 200) --top
-	love.graphics.setColor(0,0,0,0)
+	love.graphics.setColor(0,0,0,255)
 	love.graphics.rectangle("fill", tl+8,tl+14, 400-16, 200-28)
 end
 

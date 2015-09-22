@@ -49,7 +49,12 @@ function get_any_obstacle(y,x)
   end
 end
 
-get_ta
+function set_talk_target(x,y)
+  --go through npc list and return the talk target?
+  npc_map[y][x] ~= 0 then --it must be an NPC!
+    --get talk table by..item.
+  end
+end
 
 function on_interact(player, y, x)
   --check for mode

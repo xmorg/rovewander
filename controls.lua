@@ -1,14 +1,20 @@
 --controls
 
+function update_talk_mode(player,key,nil, nil, nil)
+	if key == "f" then game.mode == "ingame"
+end
+
 function love.keypressed( key, isrepeat )
 	local px = game.player_loc_x
 	local py = game.player_loc_y
 	local dy = game.draw_y
 	local dx = game.draw_x
 	if game.mode == "chargen" then
-		update_actor_chargen(player, key, nil, nil, nil) 
+		update_actor_chargen(player, key, nil, nil, nil)
 	elseif game.mode == "chargen_race_selector" then
-	   update_race_chargen(player, key, nil, nil, nil)
+		update_race_chargen(player, key, nil, nil, nil)
+	elseif game.mode == "talk" then
+		update_talk_mode(player,key,nil, nil, nil)
 	end
 	if key == "escape" and game.mode == "look mode" then
 		game.mode = "ingame"

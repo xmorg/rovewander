@@ -53,5 +53,9 @@ function on_interact(player, y, x)
   --check for mode
   if game.default_collision == "look" then
     on_get_obstacle_look(y,x) -- see what is blocking your path
+  elseif game.default_collision == "talk" then
+    --set the draw/inupt mode for conversation.
+  elseif game.default_collision == "steal" then
+  elseif game.default_collision == "attack" then
   end
 end

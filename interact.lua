@@ -51,8 +51,9 @@ end
 
 function set_talk_target(x,y)
   --go through npc list and return the talk target?
-  npc_map[y][x] ~= 0 then --it must be an NPC!
+  if npc_map[y][x] ~= 0 then --it must be an NPC!
     --get talk table by..item.
+    game.mode = "talk"
   end
 end
 
@@ -63,6 +64,7 @@ function on_interact(player, y, x)
   elseif game.default_collision == "talk" then
   game.mode = "talk" -- we are in talk mode now.
   set_talk_target(x,y) -- who is at x,y
+  
     --set the draw/inupt mode for conversation.
   elseif game.default_collision == "steal" then
   elseif game.default_collision == "attack" then

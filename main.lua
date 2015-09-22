@@ -267,23 +267,25 @@ end
 
 
 function love.draw()
-   if game.mode == "ingame" then --game
-      love.draw_cam_viewable()
-   elseif game.mode == "chargen" then --chargen 100
-      draw_chargen(player)
-   elseif game.mode == "chargen_race_selector" then --update_race_chargen()
-      draw_race_selector()
-   elseif game.mode == "character sheet" then  --character status
-      draw_char_info(player)
-   elseif game.mode == "world map" then --world map
-      draw_worldmap()
-   elseif game.mode == "message box" then --message box 97
-      love.draw_cam_viewable()
-      draw_messagebox()
-   elseif game.mode == "inventory sheet" then --inventory 96
-      draw_inventory()
-   elseif game.mode == "look mode" then --look mode 95
-      love.draw_cam_viewable()
-      --love.graphics.print("_", x*8-4+dx,y*14+dy )
-   end
+	if game.mode == "ingame" then --game
+		love.draw_cam_viewable()
+	elseif game.mode == "chargen" then --chargen 100
+		draw_chargen(player)
+	elseif game.mode == "chargen_race_selector" then --update_race_chargen()
+		draw_race_selector()
+	elseif game.mode == "character sheet" then  --character status
+		draw_char_info(player)
+	elseif game.mode == "world map" then --world map
+		draw_worldmap()
+	elseif game.mode == "message box" then --message box 97
+		love.draw_cam_viewable()
+		draw_messagebox()
+	elseif game.mode == "inventory sheet" then --inventory 96
+		draw_inventory()
+	elseif game.mode == "look mode" then --look mode 95
+		love.draw_cam_viewable()
+	elseif game.mode == "talk" then
+		draw_border_conversation() -- coversation menu.
+		--love.graphics.print("_", x*8-4+dx,y*14+dy )
+	end
 end

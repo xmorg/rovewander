@@ -4,7 +4,7 @@ tl = 200
 
 function draw_conversation_list(list)
 	love.graphics.setColor(255,255,255,255)
-	love.grpahics.print("(F)arewell", love.graphics.getWidth()/2+20, love.graphics.getHeight()-48))
+	love.grpahics.print("(F)arewell", love.graphics.getWidth()/2+20, love.graphics.getHeight()-48)
 end
 function draw_border_conversation() -- coversation menu.
 	love.graphics.setColor(255,255,255,255)

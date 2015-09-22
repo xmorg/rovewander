@@ -2,8 +2,8 @@
 ---------------------------------------Strength-Inteligence-Agility-Stamina-Charisma-Luck-SIATCL
 playable_race_names = {	{"Human", "short-lived hardworking folk of the midland kingdoms", "a", 0,0,0,0,1,0}, --one of the 
 	{"HalfElf", "humans who can trace their bloodlines to an elven heritage.", "b", 0,1,0,-1,1,0},
-	{"Norlander",  "tall humans who live in the frozen wastes of the north.", "c", , 1,-1,0,1,0,0},
-	{"Nomad",  "mix of tribal humans who wander the lands and trade horses and livestock.", "d", , 0,0,1,0,0,0},
+	{"Norlander",  "tall humans who live in the frozen wastes of the north.", "c", 1,-1,0,1,0,0},
+	{"Nomad",  "mix of tribal humans who wander the lands and trade horses and livestock.", "d", 0,0,1,0,0,0},
 	{"Elf",  "fair folk, who have made their home in the midland.", "e", -1,1,1,-1,0,0},
 	{"Dark Elf",  "dread ones, or the Rock Elves.  The Dark Elves live deep in the earth and often clash with dwarves.", "f",-1,1,1,-1,0,0},
 	{"High Elf",  "kingdom Elves, who live in the Elven Kingdoms of the mystic Isles.", "g", -2,2,1,-1,0,0},

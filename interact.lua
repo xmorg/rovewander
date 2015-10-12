@@ -60,11 +60,47 @@ end
 --function get_xy_target(x,y)--find x,y and return the npc target.
 --end
 function on_steal(x,y)
-    if npc_map[y][x] ~= 0 then
-        --
-    end
+   if npc_map[y][x] ~= 0 then --encountered something
+      
+   end
 end
 
+function hit_success(p, target)
+   local player_attack_rand = math.random(1,6)
+   local enemy_defense_rand = math.random(1,6)
+   if player_attack_rand > enemy_defense_rand then --scored a hit.
+      return 1
+   else
+      return 0
+   end
+end
+
+function on_attack(x,y)
+   --things to consider, do we have a shield equiped?(rerolls defense)
+   --How does the enemy react? Attacks, warns, runs away.
+   if npc_map[y][x] ~= 0 then --do a dice roll, and subtract from enemies hp.
+      if hit_sucess(player, npc_map[y][x]) == 1 then --scored a hit.
+	     elseif game.default_collision == "talk" then
+    elseif game.default_collision == "talk" then
+    elseif game.default_collision == "talk" then
+    elseif game.default_collision == "talk" then
+    elseif game.default_collision == "talk" then
+    elseif game.default_collision == "talk" then
+    elseif game.default_collision == "talk" then
+    elseif game.default_collision == "talk" then
+    elseif game.default_collision == "talk" then
+    elseif game.default_collision == "talk" then
+    elseif game.default_collision == "talk" then
+    elseif game.default_collision == "talk" then
+    elseif game.default_collision == "talk" then
+    elseif game.default_collision == "talk" then
+    elseif game.default_collision == "talk" then
+    elseif game.default_collision == "talk" then
+
+      else --did not hit
+      end
+   end
+end
 function on_interact(player, y, x)
     --check for mode
     if game.default_collision == "look" then

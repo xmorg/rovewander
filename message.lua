@@ -7,11 +7,13 @@ function draw_conversation_list(list)
 	love.grpahics.print("(F)arewell", love.graphics.getWidth()/2+20, love.graphics.getHeight()-48)
 end
 function draw_border_conversation() -- coversation menu.
+	love.graphics.push()
 	love.graphics.setColor(255,255,255,255)
 	love.graphics.rectangle("fill", love.graphics.getWidth()/2,0, love.graphics.getWidth(), love.graphics.getHeight()) 
-	love.graphics.setColor(0,0,0,255)
+	love.graphics.setColor(100,0,0,255)
 	love.graphics.rectangle("fill", love.graphics.getWidth()/2+8,love.graphics.getWidth()+14, 
 		love.graphics.getWidth()-16, love.graphics.getHeight()-28)
+	love.graphics.pop()
 end
 
 function draw_border_m(r, g, b, a)

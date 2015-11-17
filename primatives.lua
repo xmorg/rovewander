@@ -277,8 +277,6 @@ function create_inn_map()
 	for y=20, 40 do
 		x_temp_map = {}
 		x_obj_map = {}
-		--table.insert(game_map, x_temp_map)
-		--table.insert(obj_map, x_obj_map)
 		for x=20, 40  do
 			if x > 20 and x < 40 and y > 20 and y < 40 then
 				game_map[y][x] = "="
@@ -289,7 +287,12 @@ function create_inn_map()
 			end--endif
 		end--endfor x
 	end--endfor
-	draw_table(game_map, 4, 5,5)
+	draw_table(game_map, 4, 23,23)
+	draw_table(game_map, 4, 23,28)
+	draw_table(game_map, 4, 23,35)
+	draw_table(game_map, 4, 35,23)
+	draw_table(game_map, 4, 35,28)
+	draw_table(game_map, 4, 35,35)
 	create_fog_of_war(game.tilecount)
 end
 

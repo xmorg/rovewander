@@ -12,9 +12,9 @@ function draw_table(gmap, chairs, x,y)
 	--=h=
 	--hOh
 	--=h=
-	gmap[y][x+1] = "h"
-	gmap[y+1][x]  = "h"
-	gmap[y+1][x+1] = "O"
+	gmap[y][x+1] = "h"  	--=h=
+	gmap[y+1][x]  = "h"     --hOh
+	gmap[y+1][x+1] = "O"    --=h=
 	gmap[y+1][x+2] = "h"
 	gmap[y+2][x+1] = "h"
 end

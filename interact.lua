@@ -52,8 +52,7 @@ end
 function set_talk_target(x,y)
   --go through npc list and return the talk target?
   if npc_map[y][x] ~= 0 then --it must be an NPC!
-    --get talk table by..item.
-    game.mode = "talk"
+    game.mode = "talk" --get talk table by..item.
   end
 end
 

@@ -29,7 +29,9 @@ function love.keypressed( key, isrepeat )
 	elseif key == "q" then
 		--cant quaff yet!
 		game.current_message = "Can't Quaff yet!"
-		game.mode = 97
+		game.mode = "ingame"
+	elseif key == "enter" and game.mode = "message box" then
+		game.mode = "ingame"
 	elseif key == "C" and game.mode == "ingame" then
 		chunk = love.filesystem.load( "game.lua" )
 		chunk()--bug check for these files first!

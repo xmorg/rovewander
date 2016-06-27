@@ -4,9 +4,18 @@ function get_outofbounds(y,x)
     return 1
   else
     return 0
-  end
-  
+  end  
 end
+
+
+function map_outofbounds(x,y)
+   if x < 1 or y < 1 or x > game.tilecount or y > game.tilecount then
+      return true
+   else
+      return false
+   end
+end
+
 function on_get_obstacle_look(p) -- see what is blocking your path
   if player.facing == "north" then
     show_look_data(game_map[game.player_loc_y-1][game.player_loc_x], game.player_loc_x, game.player_loc_y-1)
@@ -18,9 +27,11 @@ function on_get_obstacle_look(p) -- see what is blocking your path
     show_look_data(game_map[game.player_loc_y][game.player_loc_x-1], game.player_loc_x-1, game.player_loc_y)
   end
 end
-  
+
+-- still gets null
 function get_ncpmap_obstacle(y,x) --check if npc_map returned an obstacle
-  if npc_map[y][x] ~= 0 then 
+   if npc_map[y][x] == nil then return 0 end
+   if npc_map[y][x] ~= nil and npc_map[y][x] ~= 0 and map_outofbounds(x,y) == false then 
     return 1
   else 
     return 0
@@ -40,6 +51,8 @@ function get_obstacle(y,x) --test weather character is an obstacle
     end
   end
 end
+
+
 
 function get_any_obstacle(y,x)
   if get_obstacle(y,x) == 1 or get_ncpmap_obstacle(y,x) == 1 then

@@ -61,11 +61,11 @@ function ingame_mode( key, isrepeat )
       love.filesystem.write( "player.lua", table.show(player, "player")) --save player
       love.filesystem.write( "worldmap.lua", table.show(worldmap, "worldmap"))--save worldmap
    elseif key == "w" then
-      if game.mode == "world map" then
-	 game.mode = "ingame"
-      end
+	 game.mode = "world map"
    elseif key == "i" then 
       game.mode = "inventory sheet"
+   elseif key == "c" then
+      game.mode = "character sheet"
    elseif (key == "." or key == ">") and game.mode == "ingame" then
       if worldmap[game.player_world_y][game.player_world_x][1] == "d" then
 	 if worldmap[game.player_world_y][game.player_world_x][3] == "" then

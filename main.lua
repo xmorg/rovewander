@@ -2,8 +2,8 @@ game = {
 	mode = "chargen",
 	tilecount = 30, 
 	drawcount = 50,
-	draw_x = 80, --where to start drawing the map
-	draw_y = 40,
+	draw_x = 60, --where to start drawing the map
+	draw_y = 10,
 	player_loc_x = 15,
 	player_loc_y = 15,
 	look_x = player_loc_x,
@@ -37,97 +37,97 @@ player = create_actor(game, 1, false)
 player_inventory = {}
 
 function increase_gametime() --time_day=0, time_hour=0, time_minute=0
-	game.time_minute = game.time_minute+1
-	if game.time_minute >= 60 then
-		game.time_minute=0
-		game.time_hour= game.time_hour+1
-		if game.time_hour >=24 then
-			game.time_hour=0
-			game.time_day=game.time_day+1
-		end
-	end
+   game.time_minute = game.time_minute+1
+   if game.time_minute >= 60 then
+      game.time_minute=0
+      game.time_hour= game.time_hour+1
+      if game.time_hour >=24 then
+	 game.time_hour=0
+	 game.time_day=game.time_day+1
+      end
+   end
 end
 function is_night() --checks to see if its day or night.
-	if game.time_hour >= 21 and game.time_hour <= 4 then
-		return true
-	else 
-		return false
-	end
+   if game.time_hour >= 21 and game.time_hour <= 4 then
+      return true
+   else 
+      return false
+   end
 end
 function generate_random_zone(x,y)
-	start_loc = math.random(1,6)
-	wm_start = table.getn(worldmap)/2
-	if start_loc == 1 then
-		create_inn_map(game.tilecount)
-		worldmap[y][x][1] = "i"
-		worldmap[y][x][2] = get_inn_name()
-		game.current_message = inn_origin_messages1[math.random(1,table.getn(inn_origin_messages1))].. " " ..worldmap[y][x][2]
-		load_actor_to_map(create_actor_list(worldmap[y][x][2], "Lower Humantype"))
-	elseif start_loc == 2 then
-		create_forest_map(math.random(1,10))
-		worldmap[y][x][1] = "f"
-		worldmap[y][x][2] = get_forest_name()
-		game.current_message = inn_origin_messages1[math.random(1,table.getn(inn_origin_messages1))].. " " ..worldmap[y][x][2]
-		local forestype = math.random(1,4)
-		if forestype == 1 then
-			load_actor_to_map(create_actor_list(worldmap[y][x][2], "Human"))
-		elseif forestype == 2 then
-			load_actor_to_map(create_actor_list(worldmap[y][x][2], "Lower Elftype"))
-		elseif forestype == 3 then
-			load_actor_to_map(create_actor_list(worldmap[y][x][2], "Lower Beasttype"))
-		elseif forestype == 4 then
+   start_loc = math.random(1,6)
+   wm_start = table.getn(worldmap)/2
+   if start_loc == 1 then
+      create_inn_map(game.tilecount)
+      worldmap[y][x][1] = "i"
+      worldmap[y][x][2] = get_inn_name()
+      game.current_message = inn_origin_messages1[math.random(1,table.getn(inn_origin_messages1))].. " " ..worldmap[y][x][2]
+      load_actor_to_map(create_actor_list(worldmap[y][x][2], "Lower Humantype"))
+   elseif start_loc == 2 then
+      create_forest_map(math.random(1,10))
+      worldmap[y][x][1] = "f"
+      worldmap[y][x][2] = get_forest_name()
+      game.current_message = inn_origin_messages1[math.random(1,table.getn(inn_origin_messages1))].. " " ..worldmap[y][x][2]
+      local forestype = math.random(1,4)
+      if forestype == 1 then
+	 load_actor_to_map(create_actor_list(worldmap[y][x][2], "Human"))
+      elseif forestype == 2 then
+	 load_actor_to_map(create_actor_list(worldmap[y][x][2], "Lower Elftype"))
+      elseif forestype == 3 then
+	 load_actor_to_map(create_actor_list(worldmap[y][x][2], "Lower Beasttype"))
+      elseif forestype == 4 then
+	 load_actor_to_map(create_actor_list(worldmap[y][x][2], "Lower Orctype"))
+      end
+   elseif start_loc == 3 then
+      create_dungeon_topside()
+      worldmap[y][x][1] = "d"
+      worldmap[y][x][2] = get_dungeon_name()
+      game.current_message = dungeon_origin_message1[math.random(1,table.getn(dungeon_origin_message1))].. " " ..worldmap[y][x][2]
+      local dungeontype = math.random(1,3)
+      if dungeontype == 1 then
+	 load_actor_to_map(create_actor_list(worldmap[y][x][2], "Human"))
+      elseif dungeontype == 2 then
 			load_actor_to_map(create_actor_list(worldmap[y][x][2], "Lower Orctype"))
-		end
-	elseif start_loc == 3 then
-		create_dungeon_topside()
-		worldmap[y][x][1] = "d"
-		worldmap[y][x][2] = get_dungeon_name()
-		game.current_message = dungeon_origin_message1[math.random(1,table.getn(dungeon_origin_message1))].. " " ..worldmap[y][x][2]
-		local dungeontype = math.random(1,3)
-		if dungeontype == 1 then
-			load_actor_to_map(create_actor_list(worldmap[y][x][2], "Human"))
-		elseif dungeontype == 2 then
-			load_actor_to_map(create_actor_list(worldmap[y][x][2], "Lower Orctype"))
-		elseif dungeontype == 3 then
-			load_actor_to_map(create_actor_list(worldmap[y][x][2], "Lower Undeadtype"))
-		end
-	elseif start_loc == 4 then
-		create_town_map()
-		worldmap[y][x][1] = "t"
-		worldmap[y][x][2] = get_town_name()
-		game.current_message = inn_origin_messages1[math.random(1,table.getn(inn_origin_messages1))].. " " ..worldmap[y][x][2]
-		local towntype = math.random(1,2)
-		if towntype == 1 then
-			load_actor_to_map(create_actor_list(worldmap[y][x][2], "Human"))
-		elseif towntype == 2 then
-			load_actor_to_map(create_actor_list(worldmap[y][x][2], "Lower Human")) -- all human types
-		end
-	elseif start_loc == 5 then
-		shore_dir = math.random(1,7) --1 north, 2 east 3 south 4 west 5 none, 6 middle, 7
-		create_sea_map(shore_dir) --- put direction
-		worldmap[y][x][1] = "~"
-		worldmap[y][x][2] = get_town_name()
-		game.current_message = inn_origin_messages1[math.random(1,table.getn(inn_origin_messages1))].. " " ..worldmap[y][x][2]
-		load_actor_to_map(create_actor_list(worldmap[y][x][2], "Watertype"))
-	elseif start_loc == 6 then
-		shore_dir = math.random(1,7) --1 north, 2 east 3 south 4 west 5 none, 6 middle, 7
-		create_dwarfhold_map(shore_dir) --- put direction
-		worldmap[y][x][1] = "D"
-		worldmap[y][x][2] = get_town_name()
-		--do dwarfhold message
-		game.current_message = inn_origin_messages1[math.random(1,table.getn(inn_origin_messages1))].. " " ..worldmap[y][x][2]
-		load_actor_to_map(create_actor_list(worldmap[y][x][2], "Dwarf"))
-	end
-	--love_crude_save()
-	love_save_zone(worldmap[y][x][2])
+      elseif dungeontype == 3 then
+	 load_actor_to_map(create_actor_list(worldmap[y][x][2], "Lower Undeadtype"))
+      end
+   elseif start_loc == 4 then
+      create_town_map()
+      worldmap[y][x][1] = "t"
+      worldmap[y][x][2] = get_town_name()
+      game.current_message = inn_origin_messages1[math.random(1,table.getn(inn_origin_messages1))].. " " ..worldmap[y][x][2]
+      local towntype = math.random(1,2)
+      if towntype == 1 then
+	 load_actor_to_map(create_actor_list(worldmap[y][x][2], "Human"))
+      elseif towntype == 2 then
+	 load_actor_to_map(create_actor_list(worldmap[y][x][2], "Lower Human")) -- all human types
+      end
+   elseif start_loc == 5 then
+      shore_dir = math.random(1,7) --1 north, 2 east 3 south 4 west 5 none, 6 middle, 7
+      create_sea_map(shore_dir) --- put direction
+      worldmap[y][x][1] = "~"
+      worldmap[y][x][2] = get_town_name()
+      game.current_message = inn_origin_messages1[math.random(1,table.getn(inn_origin_messages1))].. " " ..worldmap[y][x][2]
+      load_actor_to_map(create_actor_list(worldmap[y][x][2], "Watertype"))
+   elseif start_loc == 6 then
+      shore_dir = math.random(1,7) --1 north, 2 east 3 south 4 west 5 none, 6 middle, 7
+      create_dwarfhold_map(shore_dir) --- put direction
+      worldmap[y][x][1] = "D"
+      worldmap[y][x][2] = get_town_name()
+      --do dwarfhold message
+      game.current_message = inn_origin_messages1[math.random(1,table.getn(inn_origin_messages1))].. " " ..worldmap[y][x][2]
+      load_actor_to_map(create_actor_list(worldmap[y][x][2], "Dwarf"))
+   end
+   --love_crude_save()
+   love_save_zone(worldmap[y][x][2])
 end
 function love.load()
-	new_world_map(12) --creates new world map
-	wm_start = table.getn(worldmap)/2
-	generate_random_zone(wm_start, wm_start)
-	game.player_world_x = wm_start --start loc on world map
-	game.player_world_y = wm_start
-	player = create_actor(game, 1, true)
+   new_world_map(12) --creates new world map
+   wm_start = table.getn(worldmap)/2
+   generate_random_zone(wm_start, wm_start)
+   game.player_world_x = wm_start --start loc on world map
+   game.player_world_y = wm_start
+   player = create_actor(game, 1, true)
 end
 
 function love.mousepressed(x, y, button)
@@ -159,59 +159,58 @@ function love.mousepressed(x, y, button)
 end
 
 function npc_actions() --current event.
-	local move_rand = math.random(0, 4) -- 0none,1north,2east,3south,4west
-	for y=1,game.tilecount do
-		for x=1,game.tilecount do
-			if npc_map[y][x] ~= 0 then
-				npc_map[y][x].movestatus = "ready"
-			end
-		end
-	end
-	if game.current_event == "player move" then
-		for y=1, game.tilecount do
-			for x=1, game.tilecount do
-				if npc_map[y][x] ~= 0 then --move NPC
-					if move_rand == 1 and get_any_obstacle(y-1,x) == 0 and npc_map[y][x].movestatus == "ready" then --north
-						--move NPC
-						npc_map[y][x].movestatus = "finished"
-						npc_map[y-1][x] = npc_map[y][x] --moved
-						npc_map[y][x] = 0 --filed vacume
-					elseif move_rand == 2 and get_any_obstacle(y,x+1) == 0 and npc_map[y][x].movestatus == "ready" then --east
-						--move NPC
-						npc_map[y][x].movestatus = "finished"
-						npc_map[y][x+1] = npc_map[y][x] --moved
-						npc_map[y][x] = 0 --filed vacume
-					elseif move_rand == 3 and get_any_obstacle(y+1,x) == 0 and npc_map[y][x].movestatus == "ready" then --south
-						--move NPC
-						npc_map[y][x].movestatus = "finished"
-						npc_map[y+1][x] = npc_map[y][x] --moved
-						npc_map[y][x] = 0 --filed vacume
-						
-					elseif move_rand == 4 and get_any_obstacle(y,x-1) == 0 and npc_map[y][x].movestatus == "ready" then --approved to move
-						--move NPC
-						npc_map[y][x].movestatus = "finished"
-						npc_map[y][x-1] = npc_map[y][x] --moved
-						npc_map[y][x] = 0 --filed vacume
-						
-					end
-				end
-			end
-		end
-	end --endif
+   local move_rand = math.random(0, 4) -- 0none,1north,2east,3south,4west
+   for y=1,game.tilecount do
+      for x=1,game.tilecount do
+	 if npc_map[y][x] ~= 0 then
+	    npc_map[y][x].movestatus = "ready"
+	 end
+      end
+   end
+   if game.current_event == "player move" then
+      for y=1, game.tilecount do
+	 for x=1, game.tilecount do
+	    if npc_map[y][x] ~= 0 then --move NPC
+	       if move_rand == 1 and get_any_obstacle(y-1,x) == 0 and npc_map[y][x].movestatus == "ready" then --north
+		  --move NPC
+		  npc_map[y][x].movestatus = "finished"
+		  npc_map[y-1][x] = npc_map[y][x] --moved
+		  npc_map[y][x] = 0 --filed vacume
+	       elseif move_rand == 2 and get_any_obstacle(y,x+1) == 0 and npc_map[y][x].movestatus == "ready" then --east
+		  --move NPC
+		  npc_map[y][x].movestatus = "finished"
+		  npc_map[y][x+1] = npc_map[y][x] --moved
+		  npc_map[y][x] = 0 --filed vacume
+	       elseif move_rand == 3 and get_any_obstacle(y+1,x) == 0 and npc_map[y][x].movestatus == "ready" then --south
+		  --move NPC
+		  npc_map[y][x].movestatus = "finished"
+		  npc_map[y+1][x] = npc_map[y][x] --moved
+		  npc_map[y][x] = 0 --filed vacume
+		  
+	       elseif move_rand == 4 and get_any_obstacle(y,x-1) == 0 and npc_map[y][x].movestatus == "ready" then --approved to move
+		  --move NPC
+		  npc_map[y][x].movestatus = "finished"
+		  npc_map[y][x-1] = npc_map[y][x] --moved
+		  npc_map[y][x] = 0 --filed vacume
+	       end
+	    end
+	 end
+      end
+   end --endif
 end --end function
 function update_process_events() --process events.
-	if game.current_event == "player move" then
-		--npc_map[actor_list[i].loc_y][actor_list[i].loc_x] = actor_list[i]
-		--npc's should move sometimes
-		npc_actions() --do it
-		game.current_event = "none" -- ok we get it
-	elseif game.current_event == "player steal" then
-		--woa! pickpockets!
-		game.current_event = "none" -- ok we get it
-	elseif game.current_event == "player attack" then
-		--combat happens!
-		game.current_event = "none" -- ok we get it
-	end
+   if game.current_event == "player move" then
+      --npc_map[actor_list[i].loc_y][actor_list[i].loc_x] = actor_list[i]
+      --npc's should move sometimes
+      npc_actions() --do it
+      game.current_event = "none" -- ok we get it
+   elseif game.current_event == "player steal" then
+      --woa! pickpockets!
+      game.current_event = "none" -- ok we get it
+   elseif game.current_event == "player attack" then
+      --combat happens!
+      game.current_event = "none" -- ok we get it
+   end
 end
 function love.update()
    local barrier_y = 0

@@ -41,6 +41,21 @@ function map_outofbounds(x,y)
    end
 end
 
+function draw_ingame_actions()
+   love.graphics.print("Actions", love.graphics.getWidth() -250, 100)
+   love.graphics.print("-------------------", love.graphics.getWidth() -250, 120)
+   love.graphics.print("(c)haracter sheet", love.graphics.getWidth() -250, 140)
+   love.graphics.print("(i)nventory sheet", love.graphics.getWidth() -250, 160)
+   love.graphics.print("(q)aff a potion", love.graphics.getWidth() -250,   180)
+   love.graphics.print("l(o)ok around", love.graphics.getWidth() -250,   200)
+   love.graphics.print("(w)orld map", love.graphics.getWidth() -250,   220)
+   love.graphics.print("(t)alk", love.graphics.getWidth() -250,   240)
+   love.graphics.print("(a)ttack", love.graphics.getWidth() -250,   260)
+   love.graphics.print("(s)teal", love.graphics.getWidth() -250,   280)
+   love.graphics.print("(p)ick lock", love.graphics.getWidth() -250,   300)
+   
+end
+
 function love.draw_cam_viewable()
    local px = game.player_loc_x
    local py = game.player_loc_y
@@ -51,7 +66,7 @@ function love.draw_cam_viewable()
    sx = px*8
    sy = py*14
    for y=game.player_loc_y-10 , game.player_loc_y+10 do --50
-      for x=game.player_loc_x-10 , game.player_loc_x+10 do --50
+      for x=game.player_loc_x-20 , game.player_loc_x+20 do --50
 	 if map_outofbounds(x,y) == false then
 	    if fogofwar[y][x] == 0 then
 	       love.graphics.setColor(0,0,0,140)
@@ -89,5 +104,6 @@ function love.draw_cam_viewable()
    love.graphics.print(player.name..": "..player.health.."("
 			  ..player.max_health..")  ["..game.default_collision.."]", 10,14)
    love.graphics.print(worldmap[game.player_world_y][game.player_world_x][2].." facing: "..player.facing.." Time: ".. game.time_day..":"..game.time_hour..":"..game.time_minute.. "   " ..px.."X"..py..game_map[py][px], 442,14)
+   draw_ingame_actions()
    --time_day=0, time_hour=0, time_minute=0
 end

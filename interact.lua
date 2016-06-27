@@ -52,7 +52,8 @@ end
 function set_talk_target(x,y)
   --go through npc list and return the talk target?
   if npc_map[y][x] ~= 0 then --it must be an NPC!
-    game.mode = "talk" --get talk table by..item.
+    --get talk table by..item.
+    game.mode = "talk"
   end
 end
 
@@ -74,19 +75,15 @@ function hit_success(p, target)
    end
 end
 
-function on_attack_caused_damage(x,y)
-	raw_damage = math.random(1,6) -roll a normal dice
-	actual_damage = raw_damage -- +/- modifiers
-	return actual_damage
-end
-function on_attack(x,y)--things to consider, do we have a shield equiped?(rerolls defense)
-	--How does the enemy react? Attacks, warns, runs away.
-	if npc_map[y][x] ~= 0 then --do a dice roll, and check hit.
-		if hit_sucess(player, npc_map[y][x]) == 1 then --scored a hit.
-			--elseif game.default_collision == "talk" then
-			npc_map[y][x].health = npc_map[y][x].health - on_attack_caused_damage(x,y)
-		else -- you missed
-		end
+function on_attack(x,y)
+   local damage_dice = math.random(1,6) --roll dice to see how much damange you did. (or just 1d6 for now
+   --things to consider, do we have a shield equiped?(rerolls defense)
+   --How does the enemy react? Attacks, warns, runs away.
+   if npc_map[y][x] ~= 0 then --do a dice roll, and subtract from enemies hp.
+      if hit_sucess(player, npc_map[y][x]) == 1 then --scored a hit.
+	 npc_map[y][x].health = npc_map[y][x].health - damage_dice
+      else --did not hit
+      end
    end
 end
 function on_interact(player, y, x)
@@ -99,6 +96,5 @@ function on_interact(player, y, x)
         --set the draw/inupt mode for conversation.
     elseif game.default_collision == "steal" then on_steal()
     elseif game.default_collision == "attack" then
-    	on_attack(x,y) -- you attacked an NPC at xy!
     end
 end

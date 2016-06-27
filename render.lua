@@ -5,7 +5,7 @@ function show_attack_msg()
 end
 function show_look_data(mchar, x, y)
 	px = 100
-	py = 600-28
+	py = love.graphics.getHeight()-28
 	lstr = ""
 	love.graphics.setColor(255,255,255,255)
 	if npc_map[y][x] ~= 0 then
@@ -33,6 +33,14 @@ function show_look_data(mchar, x, y)
 	love.graphics.print(lstr, px, py)
 end
 
+function map_outofbounds(x,y)
+   if x < 1 or y < 1 or x > game.tilecount or y > game.tilecount then
+      return true
+   else
+      return false
+   end
+end
+
 function love.draw_cam_viewable()
    local px = game.player_loc_x
    local py = game.player_loc_y
@@ -42,35 +50,37 @@ function love.draw_cam_viewable()
    local draw_center_y = love.graphics.getHeight()/2
    sx = px*8
    sy = py*14
-   for y=1 , game.tilecount do --50
-      for x=1 , game.tilecount do --50
-	 if fogofwar[y][x] == 0 then
-	    love.graphics.setColor(0,0,0,140)
-	 else
-	    love.graphics.setColor(setcolorbyChar(game_map[y][x]))
-	 end
-	 if y == game.player_loc_y and x == game.player_loc_x then
-	    love.graphics.setColor(255,255,255,255)
-	    love.graphics.print("@", x*8-4+dx,y*14+dy )
-	    --elseif x*8 <= 16 and y*14 <= 28 then
-	    --	t = 0
-	 elseif game_map[y][x] == "#" then
-	    love.graphics.setColor(setcolorbyChar(game_map[y][x]))
-	    love.graphics.rectangle("fill", x*8+dx, y*14+dy, 8, 14)
-	 elseif npc_map[y][x] ~= 0 and fogofwar[y][x] ~= 0 then
-	    love.graphics.setColor(190,190,255,255)
-	    love.graphics.print("@", x*8-4+dx,y*14+dy )
-	 else
-	    love.graphics.print(game_map[y][x],x*8 +dx, y*14+dy)
-	 end
-	 if game.mode == "ingame" and game.default_collision == "look" then
-	 	on_get_obstacle_look(player)
-	 end
-	 if game.mode == "look mode" and y == game.look_y and x == game.look_x then --lookmode
-	    --love.graphics.print("_", x*8-4+dx,y*14+dy )
-	    love.graphics.print("_", game.look_x*8-4+dx,game.look_y*14+dy )
-	    --print what you see
-	    show_look_data(game_map[y][x], x, y)
+   for y=game.player_loc_y-10 , game.player_loc_y+10 do --50
+      for x=game.player_loc_x-10 , game.player_loc_x+10 do --50
+	 if map_outofbounds(x,y) == false then
+	    if fogofwar[y][x] == 0 then
+	       love.graphics.setColor(0,0,0,140)
+	    else
+	       love.graphics.setColor(setcolorbyChar(game_map[y][x]))
+	    end
+	    if y == game.player_loc_y and x == game.player_loc_x then
+	       love.graphics.setColor(255,255,255,255)
+	       love.graphics.print("@", x*8-4+dx,y*14+dy )
+	       --elseif x*8 <= 16 and y*14 <= 28 then
+	       --	t = 0
+	    elseif game_map[y][x] == "#" then
+	       love.graphics.setColor(setcolorbyChar(game_map[y][x]))
+	       love.graphics.rectangle("fill", x*8+dx, y*14+dy, 8, 14)
+	    elseif npc_map[y][x] ~= 0 and fogofwar[y][x] ~= 0 then
+	       love.graphics.setColor(190,190,255,255)
+	       love.graphics.print("@", x*8-4+dx,y*14+dy )
+	    else
+	       love.graphics.print(game_map[y][x],x*8 +dx, y*14+dy)
+	    end
+	    if game.mode == "ingame" and game.default_collision == "look" then
+	       on_get_obstacle_look(player)
+	    end
+	    if game.mode == "look mode" and y == game.look_y and x == game.look_x then --lookmode
+	       --love.graphics.print("_", x*8-4+dx,y*14+dy )
+	       love.graphics.print("_", game.look_x*8-4+dx,game.look_y*14+dy )
+	       --print what you see
+	       show_look_data(game_map[y][x], x, y)
+	    end
 	 end
       end
    end

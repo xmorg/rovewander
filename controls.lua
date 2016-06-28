@@ -8,7 +8,7 @@ function activate_default_collision()
 	elseif game.default_collision == "talk" then
 		a = 2
 	elseif game.default_collision == "steal" then
-		a = 3
+		on_steal(game.look_x, game.look_y) --are we in range? when will we range check?
 	end
 end
 function look_mode(key, isrepeat )

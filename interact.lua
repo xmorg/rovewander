@@ -80,7 +80,7 @@ function on_steal(x,y)
 	end
 end
 
-function hit_success(p, target)
+function hit_sucess(p, target)
    local player_attack_rand = math.random(1,6)
    local enemy_defense_rand = math.random(1,6)
    if player_attack_rand > enemy_defense_rand then --scored a hit.

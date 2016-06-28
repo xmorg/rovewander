@@ -1,11 +1,11 @@
 --controls
 
-function update_talk_mode(player,key)
-	if key == "f" then game.mode = "ingame" end
-end
-
 function activate_default_collision()
-	
+	if game.default_collision == "attack" then
+	elseif game.default_collision == "look" then
+	elseif game.default_collision == "talk" then
+	elseif game.default_collision == "steal" then
+	end
 end
 function look_mode(key, isrepeat )
    local px = game.player_loc_x

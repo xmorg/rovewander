@@ -177,6 +177,14 @@ function love.keypressed( key, isrepeat )
       if key == "retern" or key == "o" or key == "space" or key == "space" then
 	 game.mode = "ingame"
       end
+   elseif game.mode == "choice message box" then
+      if key == "y" then
+      	game.lastchoice = "yes"
+      	game.mode = "ingame"
+      elseif key == "n" then
+      	game.lastchoice = "no"
+      	game.mode = "ingame"
+      end -- set a var in game.
    elseif game.mode == "talk" then
       update_talk_mode(player,key,nil, nil, nil)
    elseif game.mode == "look mode" then ------- LOOK MODE ------------------

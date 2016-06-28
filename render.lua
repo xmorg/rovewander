@@ -1,8 +1,5 @@
 --file
-function show_steal_msg()
-end
-function show_attack_msg()
-end
+
 function show_look_data(mchar, x, y)
 	px = 100
 	py = love.graphics.getHeight()-28

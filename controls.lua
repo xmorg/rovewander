@@ -1,10 +1,14 @@
 --controls
 
 function activate_default_collision()
-	if game.default_collision == "attack" then
+	if game.default_collision == "attack" then 
+		on_attack(game.look_x, game.look_y)
 	elseif game.default_collision == "look" then
+		a = 1
 	elseif game.default_collision == "talk" then
+		a = 2
 	elseif game.default_collision == "steal" then
+		a = 3
 	end
 end
 function look_mode(key, isrepeat )

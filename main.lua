@@ -12,6 +12,7 @@ game = {
 	player_world_y = 0,
 	default_collision = "attack",
 	current_event = "none",
+	last_choice = "no"
 	current_message = "Sample Message",
 	time_day=0, time_hour=6, time_minute=0
 }

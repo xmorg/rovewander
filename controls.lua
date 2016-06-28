@@ -13,6 +13,8 @@ function look_mode(key, isrepeat )
       game.mode = "ingame"
    elseif key == "o" then
       game.mode = "ingame"
+   elseif key == "return" or key == "space" then
+      game.mode = "ingame" -- activate the default_collision
    elseif (key == "right" or key == "l") then 
       game.look_x = game.look_x +1
    elseif (key == "left" or key == "h") then 

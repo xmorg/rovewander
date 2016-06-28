@@ -73,9 +73,11 @@ end
 --function get_xy_target(x,y)--find x,y and return the npc target.
 --end
 function on_steal(x,y)
-   if npc_map[y][x] ~= 0 then --encountered something
-      
-   end
+	if npc_map[y][x] ~= 0 then --encountered something
+		game.current_message = "nothing to steal"
+	else
+		game.current_message = "nobody there"
+	end
 end
 
 function hit_success(p, target)

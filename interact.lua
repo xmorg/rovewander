@@ -97,9 +97,9 @@ function on_attack(x,y)
    if npc_map[y][x] ~= 0 then --do a dice roll, and subtract from enemies hp.
       if hit_sucess(player, npc_map[y][x]) == 1 then --scored a hit.
 	 npc_map[y][x].health = npc_map[y][x].health - damage_dice
-	 game.current_message = player.name .. " attacked " .. npc_map[y][x] .. "and hit for" .. damage_dice .. "points of damage"
+	 game.current_message = player.name .. " attacked " .. npc_map[y][x].name .. "and hit for" .. damage_dice .. "points of damage."
       else --did not hit
-      	game.current_message = player.name .. " attacked " .. npc_map[y][x] .. "and missed"
+      	game.current_message = player.name .. " attacked " .. npc_map[y][x].name .. "and missed."
       end
    else
    	game.current_message = "nothing to attack here"

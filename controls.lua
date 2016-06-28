@@ -77,6 +77,11 @@ function ingame_mode( key, isrepeat )
       game.default_collision = "attack"
       game.look_x = game.player_loc_x
       game.look_y = game.player_loc_y
+   elseif key == "s" then --changed o, lOOk
+      game.mode = "look mode" -- look mode
+      game.default_collision = "steal"
+      game.look_x = game.player_loc_x
+      game.look_y = game.player_loc_y
    elseif key == "S" then
       --save game(assume zone files are already saved
       love.filesystem.write( "game.lua", table.show(game, "game")) --save game

@@ -94,7 +94,15 @@ function on_attack(x,y)
 	local damage_dice = math.random(1,6) --roll dice to see how much damange you did. (or just 1d6 for now
 	--things to consider, do we have a shield equiped?(rerolls defense)
 	--How does the enemy react? Attacks, warns, runs away.
-	if npc_map[y][x] ~= 0 then --do a dice roll, and subtract from enemies hp.
+	--check for range
+	range_x = math.abs(player.loc_x - x)
+	range_y = math.abs(player.loc_y - y)
+	if range_x > player.max_range or range_y > player.max_range or range_x < player.min_range or range_y < player.min_range then
+		inrange = true
+	else
+		inrange = false
+	end
+	if npc_map[y][x] ~= 0 and inrange == true then --do a dice roll, and subtract from enemies hp.
 		if hit_sucess(player, npc_map[y][x]) == 1 then --scored a hit.
 			if npc_map[y][x].health <= 0 then
 				game.current_message = player.name .. " attacked " .. npc_map[y][x].name .. " but " .. npc_map[y][x].name " is alrealdy dead."

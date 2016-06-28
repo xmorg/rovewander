@@ -280,6 +280,9 @@ function love.draw()
 	elseif game.mode == "message box" then --message box 97
 		love.draw_cam_viewable()
 		draw_messagebox()
+	elseif game.mode == "choice message box" then
+		love.draw_cam_viewable()
+		draw_choice_messagebox()
 	elseif game.mode == "inventory sheet" then --inventory 96
 		draw_inventory()
 	elseif game.mode == "look mode" then --look mode 95

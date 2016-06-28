@@ -23,10 +23,15 @@ function draw_border_m(r, g, b, a)
 	love.graphics.setColor(0,0,0,255)
 	love.graphics.rectangle("fill", tl+8,tl+14, 400-16, 200-28)
 end
-
+function draw_choice_messagebox()
+	draw_border_m(255,255,255,255)
+	love.graphics.setColor(255,255,255,255)
+	love.graphics.printf(game.current_message, tl+20, tl+20, 300, "left")
+	love.graphics.print("[(y)es] or [(n)o]", tl+20, tl+150)
+end
 function draw_messagebox()
 	draw_border_m(255,255,255,255)
 	love.graphics.setColor(255,255,255,255)
 	love.graphics.printf(game.current_message, tl+20, tl+20, 300, "left")
-	love.graphics.print("Click to continue", tl+20, tl+150)
+	love.graphics.print("Spacebar to continue", tl+20, tl+150)
 end

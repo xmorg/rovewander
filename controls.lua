@@ -4,6 +4,9 @@ function update_talk_mode(player,key)
 	if key == "f" then game.mode = "ingame" end
 end
 
+function activate_default_collision()
+	
+end
 function look_mode(key, isrepeat )
    local px = game.player_loc_x
    local py = game.player_loc_y
@@ -14,7 +17,9 @@ function look_mode(key, isrepeat )
    elseif key == "o" then
       game.mode = "ingame"
    elseif key == "return" or key == "space" then
-      game.mode = "ingame" -- activate the default_collision
+   	activate_default_collision()
+   	game.mode = "ingame" -- activate the default_collision
+      activate_default_collision()
    elseif (key == "right" or key == "l") then 
       game.look_x = game.look_x +1
    elseif (key == "left" or key == "h") then 

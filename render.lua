@@ -104,6 +104,7 @@ function love.draw_cam_viewable()
    love.graphics.print(player.name..": "..player.health.."("
 			  ..player.max_health..")  ["..game.default_collision.."]", 10,14)
    love.graphics.print(worldmap[game.player_world_y][game.player_world_x][2].." facing: "..player.facing.." Time: ".. game.time_day..":"..game.time_hour..":"..game.time_minute.. "   " ..px.."X"..py..game_map[py][px], 442,14)
+   love.graphics.print(game.current_message, 10, 30)
    draw_ingame_actions()
    --time_day=0, time_hour=0, time_minute=0
 end

@@ -226,6 +226,8 @@ function randomize_actor(a, race)
    a.facing = "north"
    a.movestatus = "finished" --finished(dont move again)/ready(set premove)
    a.playeragro = 0 -- player agro
+   a.min_range = 0 --range of attack, stealing, grabing etc
+   a.max_range = 1
    table.insert(a.inventory,new_starting_weapon(7) )
    table.insert(a.inventory,new_starting_armor(3) )
    table.insert(a.inventory,new_starting_helm(3) )

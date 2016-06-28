@@ -53,6 +53,17 @@ function ingame_mode( key, isrepeat )
       chunk()
    elseif key == "o" then --changed o, lOOk
       game.mode = "look mode" -- look mode
+      game.default_collision = "look"
+      game.look_x = game.player_loc_x
+      game.look_y = game.player_loc_y
+   elseif key == "t" then --changed o, lOOk
+      game.mode = "look mode" -- look mode
+      game.default_collision = "talk"
+      game.look_x = game.player_loc_x
+      game.look_y = game.player_loc_y
+   elseif key == "a" then --changed o, lOOk
+      game.mode = "look mode" -- look mode
+      game.default_collision = "attack"
       game.look_x = game.player_loc_x
       game.look_y = game.player_loc_y
    elseif key == "S" then

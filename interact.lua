@@ -90,6 +90,14 @@ function hit_sucess(p, target)
    end
 end
 
+function on_witness_attack(y,x) -- actors around y,x react to the attack(including the victim)
+	--loop through the npc_map[y-10,y+10][x-10,x+10]
+	
+	--if you are npc_map[y][x] (the npc) attack back unless you are a passive
+	--run if you are afraid
+	--call for help
+end
+
 function on_attack(x,y)
 	local damage_dice = math.random(1,6) --roll dice to see how much damange you did. (or just 1d6 for now
 	--things to consider, do we have a shield equiped?(rerolls defense)
@@ -117,6 +125,8 @@ function on_attack(x,y)
 		else --did not hit
 			game.current_message = player.name .. " attacked " .. npc_map[y][x].name .. "and missed."
 		end -- hit or miss
+		--Do a check for witnesses
+		on_witness_attack(y,x)
 	else -- someone is not there.
 		game.current_message = "nothing to attack here"
 	end

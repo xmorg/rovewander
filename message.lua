@@ -33,5 +33,8 @@ function draw_messagebox()
 	draw_border_m(255,255,255,255)
 	love.graphics.setColor(255,255,255,255)
 	love.graphics.printf(game.current_message, tl+20, tl+20, 300, "left")
+	if game.current_messagel2 ~= "none" then
+	   love.graphics.print(game.current_messagel2, tl+20, tl+40)
+	end
 	love.graphics.print("Spacebar to continue", tl+20, tl+150)
 end

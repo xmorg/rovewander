@@ -6,6 +6,9 @@ function draw_border(r, g, b, a)
 	love.graphics.rectangle("fill", love.graphics.getWidth()-8,0, 8, love.graphics.getHeight() )--right side
 	love.graphics.setColor(0,0,0,255)
 	love.graphics.rectangle("fill", 8,14, love.graphics.getWidth() -16, 20)
+	love.graphics.print("[X]", love.graphics.getWidth() - 12*3, 0)
+	love.graphics.print("[S]", love.graphics.getWidth() - 12*6, 0)
+	love.graphics.print("[C]", love.graphics.getWidth() - 12*9, 0)
 end
 
 function draw_table(gmap, chairs, x,y)

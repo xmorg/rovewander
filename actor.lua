@@ -158,7 +158,7 @@ function display_actor_stats(actor, editing)--actor object, boolean viewable
    love.graphics.print("(N)ame: ".. actor.name, coll_one, line_num*14)
    love.graphics.print("Race: ".. actor.a_type, coll_two, line_num*14) 
    love.graphics.print("Sex(m/f): "..sex_if_an(actor), coll_two+200, line_num*14) line_num=line_num+1
-   love.graphics.print("============================================================", coll_one, line_num*14)line_num=line_num+1
+   love.graphics.print("=================================================", coll_one, line_num*14)line_num=line_num+1
    
    love.graphics.printf(actor.background, coll_two, line_num*14, 350, "left")
    
@@ -177,7 +177,8 @@ function display_actor_stats(actor, editing)--actor object, boolean viewable
    if game.mode == "chargen" then
       love.graphics.print("X Bonus Points: "..actor.bonus_points, coll_one, line_num*15)
    end
-   love.graphics.print("============================================================", coll_one, line_num*25)
+   love.graphics.print("================================================", coll_one, line_num*25)
+   love.graphics.print("[randomize stats(p)] [start (g)ame]", coll_one, line_num *26)
    
 end
 
@@ -228,6 +229,7 @@ function randomize_actor(a, race)
    a.playeragro = 0 -- player agro
    a.min_range = 0 --range of attack, stealing, grabing etc
    a.max_range = 1
+   a.selected_inventory = 0
    table.insert(a.inventory,new_starting_weapon(7) )
    table.insert(a.inventory,new_starting_armor(3) )
    table.insert(a.inventory,new_starting_helm(3) )
@@ -420,124 +422,124 @@ function draw_chargen(actor) --stock actor has been generated
 end
 
 function create_actor_list(town_name, race)
-	local population = 0
-   	local race_rand
-   	population = math.random(5,25)
-   	actor_list = {}
-   	for x=1, population do
-		a = create_actor(game, 1, false)
-      	if race == "Watertype" then
-			race_rand = math.random(1,3)
-			if race_rand == 1 then
-				a = randomize_actor(a, "Mermen")
-			elseif race_rand == 2 then
-				a = randomize_actor(a, "Lizardman")
-			elseif race_rand == 3 then
-				a = randomize_actor(a, "Naga")
-      		end
-		elseif race == "Lower Undeadtype" then
-			race_rand = math.random(1,3)
-			if race_rand == 1 then
-				a = randomize_actor(a, "Skeleton")
-				a.playeragro = 100
-			elseif race_rand == 2 then
-				a = randomize_actor(a, "Ghoul")
-				a.playeragro = 100
-			elseif race_rand == 3 then
-				a = randomize_actor(a, "Zombie")
-				a.playeragro = 100
-			end
-		elseif race == "Lower Orctype" then
-			race_rand = math.random(1,3)
-			if race_rand == 1 then
-				a = randomize_actor(a, "Goblin")
-				--run agro by list.
-			elseif race_rand == 2 then
-				a = randomize_actor(a, "Orc")
-			elseif race_rand == 3 then
-				a = randomize_actor(a, "Trorc")
-			end
-		elseif race == "Lower Abysstype" then
-			race_rand = math.random(1,3)
-			if race_rand == 1 then
-				a = randomize_actor(a, "Goblin")
-			elseif race_rand == 2 then
-				a = randomize_actor(a, "Abyss Dwarf")
-			elseif race_rand == 3 then
-				a = randomize_actor(a, "Dark Elf")
-			end
-		elseif race == "Lower Beasttype" then
-			race_rand = math.random(1,3)
-			if race_rand == 1 then
-				a = randomize_actor(a, "Ratigan")
-			elseif race_rand == 2 then
-				a = randomize_actor(a, "Owlman")
-			elseif race_rand == 3 then
-				a = randomize_actor(a, "Catman")
-			end
-		elseif race == "Lower Elftype" then
-			race_rand = math.random(1,3)
-			if race_rand == 1 then
-				a = randomize_actor(a, "Elf")
-			elseif race_rand == 2 then
-				a = randomize_actor(a, "Wild Elf")
-			elseif race_rand == 3 then
-				a = randomize_actor(a, "High Elf")
-			end
-		elseif race == "Lower Humantype" then
-			race_rand = math.random(1,3)
-			if race_rand == 1 then
-				a = randomize_actor(a, "Human")
-			elseif race_rand == 2 then
-				a = randomize_actor(a, "Norlander")
-			elseif race_rand == 3 then
-				a = randomize_actor(a, "Nomad")
-			end
-		elseif race == "Lower Civtype" then -- a big city with lots of races
-			race_rand = math.random(1,8)
-			if race_rand == 1 then
-				a = randomize_actor(a, "Human")
-			elseif race_rand == 2 then
-				a = randomize_actor(a, "Norlander")
-			elseif race_rand == 3 then
-				a = randomize_actor(a, "Nomad")
-			elseif race_rand == 4 then
-				a = randomize_actor(a, "Elf")
-			elseif race_rand == 5 then
-				a = randomize_actor(a, "HalfElf")
-			elseif race_rand == 6 then
-				a = randomize_actor(a, "High Elf")
-			elseif race_rand == 7 then
-				a = randomize_actor(a, "Gnome")
-			elseif race_rand == 8 then
-				a = randomize_actor(a, "Topside Dwarf") -- you can only encounter "real" dwraves in dwarfholds
-			end
-		elseif race == "Lower Darktype" then -- a big city with lots of races
-			race_rand = math.random(1,8)
-			if race_rand == 1 then
-				a = randomize_actor(a, "Nomad")
-			elseif race_rand == 2 then
-				a = randomize_actor(a, "Dark Elf")
-			elseif race_rand == 3 then
-				a = randomize_actor(a, "Goblin")
-			elseif race_rand == 4 then
-				a = randomize_actor(a, "Orc")
-			elseif race_rand == 5 then
-				a = randomize_actor(a, "Trorc")
-			elseif race_rand == 6 then
-				a = randomize_actor(a, "Abyss Dwarf")
-			elseif race_rand == 7 then
-				a = randomize_actor(a, "Ettin")
-			elseif race_rand == 8 then
-				a = randomize_actor(a, "Zombie")
-			end
-		else
-			a = randomize_actor(a, race)
-		end
-		a.loc_x = math.random(5, game.tilecount-5)
-		a.loc_y = math.random(5, game.tilecount-5)
-		table.insert(actor_list, a)
-	end  --save the file, townname_script.lua	
+   local population = 0
+   local race_rand
+   population = math.random(5,25)
+   actor_list = {}
+   for x=1, population do
+      a = create_actor(game, 1, false)
+      if race == "Watertype" then
+	 race_rand = math.random(1,3)
+	 if race_rand == 1 then
+	    a = randomize_actor(a, "Mermen")
+	 elseif race_rand == 2 then
+	    a = randomize_actor(a, "Lizardman")
+	 elseif race_rand == 3 then
+	    a = randomize_actor(a, "Naga")
+	 end
+      elseif race == "Lower Undeadtype" then
+	 race_rand = math.random(1,3)
+	 if race_rand == 1 then
+	    a = randomize_actor(a, "Skeleton")
+	    a.playeragro = 100
+	 elseif race_rand == 2 then
+	    a = randomize_actor(a, "Ghoul")
+	    a.playeragro = 100
+	 elseif race_rand == 3 then
+	    a = randomize_actor(a, "Zombie")
+	    a.playeragro = 100
+	 end
+      elseif race == "Lower Orctype" then
+	 race_rand = math.random(1,3)
+	 if race_rand == 1 then
+	    a = randomize_actor(a, "Goblin")
+	    --run agro by list.
+	 elseif race_rand == 2 then
+	    a = randomize_actor(a, "Orc")
+	 elseif race_rand == 3 then
+	    a = randomize_actor(a, "Trorc")
+	 end
+      elseif race == "Lower Abysstype" then
+	 race_rand = math.random(1,3)
+	 if race_rand == 1 then
+	    a = randomize_actor(a, "Goblin")
+	 elseif race_rand == 2 then
+	    a = randomize_actor(a, "Abyss Dwarf")
+	 elseif race_rand == 3 then
+	    a = randomize_actor(a, "Dark Elf")
+	 end
+      elseif race == "Lower Beasttype" then
+	 race_rand = math.random(1,3)
+	 if race_rand == 1 then
+	    a = randomize_actor(a, "Ratigan")
+	 elseif race_rand == 2 then
+	    a = randomize_actor(a, "Owlman")
+	 elseif race_rand == 3 then
+	    a = randomize_actor(a, "Catman")
+	 end
+      elseif race == "Lower Elftype" then
+	 race_rand = math.random(1,3)
+	 if race_rand == 1 then
+	    a = randomize_actor(a, "Elf")
+	 elseif race_rand == 2 then
+	    a = randomize_actor(a, "Wild Elf")
+	 elseif race_rand == 3 then
+	    a = randomize_actor(a, "High Elf")
+	 end
+      elseif race == "Lower Humantype" then
+	 race_rand = math.random(1,3)
+	 if race_rand == 1 then
+	    a = randomize_actor(a, "Human")
+	 elseif race_rand == 2 then
+	    a = randomize_actor(a, "Norlander")
+	 elseif race_rand == 3 then
+	    a = randomize_actor(a, "Nomad")
+	 end
+      elseif race == "Lower Civtype" then -- a big city with lots of races
+	 race_rand = math.random(1,8)
+	 if race_rand == 1 then
+	    a = randomize_actor(a, "Human")
+	 elseif race_rand == 2 then
+	    a = randomize_actor(a, "Norlander")
+	 elseif race_rand == 3 then
+	    a = randomize_actor(a, "Nomad")
+	 elseif race_rand == 4 then
+	    a = randomize_actor(a, "Elf")
+	 elseif race_rand == 5 then
+	    a = randomize_actor(a, "HalfElf")
+	 elseif race_rand == 6 then
+	    a = randomize_actor(a, "High Elf")
+	 elseif race_rand == 7 then
+	    a = randomize_actor(a, "Gnome")
+	 elseif race_rand == 8 then
+	    a = randomize_actor(a, "Topside Dwarf") -- you can only encounter "real" dwraves in dwarfholds
+	 end
+      elseif race == "Lower Darktype" then -- a big city with lots of races
+	 race_rand = math.random(1,8)
+	 if race_rand == 1 then
+	    a = randomize_actor(a, "Nomad")
+	 elseif race_rand == 2 then
+	    a = randomize_actor(a, "Dark Elf")
+	 elseif race_rand == 3 then
+	    a = randomize_actor(a, "Goblin")
+	 elseif race_rand == 4 then
+	    a = randomize_actor(a, "Orc")
+	 elseif race_rand == 5 then
+	    a = randomize_actor(a, "Trorc")
+	 elseif race_rand == 6 then
+	    a = randomize_actor(a, "Abyss Dwarf")
+	 elseif race_rand == 7 then
+	    a = randomize_actor(a, "Ettin")
+	 elseif race_rand == 8 then
+	    a = randomize_actor(a, "Zombie")
+	 end
+      else
+	 a = randomize_actor(a, race)
+      end
+      a.loc_x = math.random(5, game.tilecount-5)
+      a.loc_y = math.random(5, game.tilecount-5)
+      table.insert(actor_list, a)
+   end  --save the file, townname_script.lua	
    love.filesystem.write( town_name.."_script.lua", table.show(actor_list, "actor_list"))--save worldmap
    return actor_list
 end

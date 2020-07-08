@@ -7,6 +7,7 @@ from pygame.locals import *
 #from OpenGL.GLU import *
 
 from GameMap import GameMap
+from NewPlayerWindow import NewPlayerWindow
 
 class Resources:
     def __init__(self, tiles, t):
@@ -19,22 +20,24 @@ class Game:
         self.display = (800,600)
         self.scr = pygame.display.set_mode(self.display, DOUBLEBUF)
         self.gm = GameMap()
+
     def load(self):
-        self.worldtiles = Resources("worldtiles.png", self.tilesize)
-        self.localtiles = Resources("localtiles.png", self.tilesize)
-        self.charactertiles = Resources("characters.png", self.tilesize)
-        self.monstertiles = Resources("monsters.png", self.tilesize)
+        self.worldtiles = Resources("data/worldtiles.png", self.tilesize)
+        self.localtiles = Resources("data/localtiles.png", self.tilesize)
+        self.charactertiles = Resources("data/characters.png", self.tilesize)
+        self.monstertiles = Resources("data/monsters.png", self.tilesize)
         self.worldtileset = []
         self.localtileset = []
         self.chartileset = []
         self.monstertileset = []
-        for i in range(0, 20):
+        self.newplayerwindow = NewPlayerWindow(self.scr, self.chartileset)
+        for i in range(0, 38):
             #+i
             r = (self.tilesize*i +0, 0, self.tilesize,self.tilesize)
             self.worldtileset.append(self.worldtiles.tiles.subsurface(r))
-            self.localtileset.append(self.worldtiles.tiles.subsurface(r))
-            self.chartileset.append(self.worldtiles.tiles.subsurface(r))
-            self.monstertileset.append(self.worldtiles.tiles.subsurface(r))
+            self.localtileset.append(self.localtiles.tiles.subsurface(r))
+            self.chartileset.append(self.charactertiles.tiles.subsurface(r))
+            self.monstertileset.append(self.monstertiles.tiles.subsurface(r))
     def blt(self, s, dest):
         self.scr.blit(s, dest)
     def draw(self):
@@ -45,7 +48,8 @@ class Game:
             for x in range(0,50):
                 data = self.gm.data[y][x]
                 self.blt(self.worldtileset[data], (x*t, y*t) )
-            
+
+        self.newplayerwindow.draw()
         pygame.display.flip()
         pygame.time.wait(10)
     def input(self):
@@ -64,6 +68,7 @@ def main():
     game = Game()
     game.load()
     game_state = "playing"
+    game_window = "newplayer"
     while game_state == "playing":
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -73,7 +78,10 @@ def main():
                 game_state = "exit"
                 #pygame.event.post(pygame.QUIT)
                 pygame.quit()
-        game_state = game.input()
+        if game_window == "newplayer":
+            game_window = game.newplayerwindow.input()
+        else:
+            game_window = game.input()
         game.draw()
         #print("game_state = ", game_state, "loop again")
     print("somehow you got to the end of the loop")

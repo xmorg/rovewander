@@ -26,10 +26,13 @@ class NewPlayerWindow:
         
 
         self.JCommoner = self.medfont.render('Commoner', False, self.fcolor)
-        self.Jmage = self.medfont.render('Mage', False, self.fcolor)
+        self.JMage = self.medfont.render('Mage', False, self.fcolor)
         self.JFighter = self.medfont.render('Fighter', False, self.fcolor)
         self.JRogue = self.medfont.render('Rogue', False, self.fcolor)
-
+        self.JPriest = self.medfont.render('Cleric', False, self.fcolor)
+        self.JPirate = self.medfont.render('Pirate', False, self.fcolor)
+        self.JBarbarian = self.medfont.render('Barbarian', False, self.fcolor)
+        self.JRanger = self.medfont.render('Ranger', False, self.fcolor)
         #self.Smale = 
         self.Lname = self.medfont.render('Name: ', False, self.fcolor)
         self.Lsex = self.medfont.render('Sex: ', False, self.fcolor)
@@ -42,6 +45,42 @@ class NewPlayerWindow:
         self.selecty = 0
     def blt(self, s, dest):
         self.screen.blit(s, dest)
+    def jobSelected(self, x, y):
+        if(y==0):
+            if x == 0 or x == 1:
+                return self.JCommoner
+            elif x == 2 or x == 3:
+                return self.JFighter
+            elif x == 4 or x == 5:
+                return self.JMage
+            else:
+                return self.JCommoner
+        elif(y==1): #more goth classes
+            if x == 0 or x == 1:
+                return self.JPriest
+            elif x == 2 or x == 3:
+                return self.JRogue
+            elif x == 4 or x == 5:
+                return self.JPirate
+            else:
+                return self.JCommoner
+        elif(y==2):
+            if x == 0 or x == 1:
+                return self.JBarbarian
+            if x == 2 or x == 3:
+                return self.JFighter
+            else: return self.JCommoner
+        elif(y==3):
+            if x == 0 or x == 1:
+                return self.JCommoner
+            elif x == 2 or x == 3:
+                return self.JFighter
+            elif x == 4 or x == 5:
+                return self.JRanger
+            else:
+                return self.JCommoner
+        else:
+            return self.JCommoner
     def raceSelected(self, x, y):
         if y == 0 or y == 1:
             return self.Rgoth
@@ -88,7 +127,11 @@ class NewPlayerWindow:
            self.rendersex = self.LsexFemale
         self.blt(self.rendersex, (380, 50+24) )
         self.blt(self.Lrace, (330, 50 +24*2) )
-        self.blt(self.raceSelected(self.selectx, self.selecty), (380, 50 +24*2) )
+        self.blt(self.raceSelected(self.selectx, \
+                                   self.selecty), \
+                 (380, 50 +24*2) )
+        self.blt(self.jobSelected(self.selectx, \
+                                  self.selecty), (380, 50+ 24*3) )
         self.blt(self.Ljob,  (330, 50 +24*3) )
     def input(self):
         key = pygame.key.get_pressed()

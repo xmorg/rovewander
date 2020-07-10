@@ -1,4 +1,7 @@
-rovewander
+(unnamed game)
+attempt to create a roguelike in pygame, using my own hand drawn textures
+
+rovewander - (old code) in lua/
 ==========
 A roguelike in love
 

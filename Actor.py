@@ -50,9 +50,33 @@ class Actor:
         self.dexterity = d
         self.con       = c
         self.cha       = ch
+    def incr_abilities(self, s,i,w,d,c,ch):
+        self.strength  += s
+        self.intl      += i
+        self.wisdom    += w
+        self.dexterity += d
+        self.con       += c
+        self.cha       += ch
     def set_savingthrows(self, d,w,p,b,s):
         self.save_death = d # death/poison
         self.save_wand  = w # magic from wands
         self.save_para  = p #paralysis/stone
         self.save_breath = b
-        self.save_spell = s 
+        self.save_spell = s
+    def rebuildBaseActor(s, r, j): #sex race job
+        if r == 'Goth':
+            self.set_abilities(5,5,5,5,5,5)
+        elif r == 'Hun':
+            self.set_abilities(7,4,4,5,8,2)
+        elif r == 'Moor':
+            self.set_abilities(5,5,6,6,4,4)
+        elif r == 'Elf':
+            self.set_abilities(4,6,6,7,3,4)
+        elif r == 'Dwarf':
+            self.set_abilities(7,4,6,4,7,4)
+        elif r == 'Gnome':
+            self.set_abilities(2,8,4,7,3,6)
+        else:
+            self.set_abilities(5,5,5,5,5,5)
+
+        

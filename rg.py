@@ -6,50 +6,41 @@ from pygame.locals import *
 #from OpenGL.GL import *
 #from OpenGL.GLU import *
 
-from GameMap import GameMap
+#from GameMap import GameMap
 from NewPlayerWindow import NewPlayerWindow
+from Resources import Resources
+from Scene import Scene
 
-class Resources:
-    def __init__(self, tiles, t):
-        self.tilesize = t
-        self.tiles = pygame.image.load(tiles)
+
 class Game:
     def __init__(self):
         self.tilesize = 32
         self.tilespacing = 0
         self.display = (800,600)
         self.scr = pygame.display.set_mode(self.display, DOUBLEBUF)
-        self.gm = GameMap()
+        #self.gm = GameMap()
+        self.game_state = "playing"
+        self.game_window = "newplayer" #title, newplayer,localmap,worldmap,inventory,charisma
+        self.scene = Scene(self.scr, self.tilesize, None)
 
     def load(self):
-        self.worldtiles = Resources("data/worldtiles.png", self.tilesize)
-        self.localtiles = Resources("data/localtiles.png", self.tilesize)
-        self.charactertiles = Resources("data/characters.png", self.tilesize)
-        self.monstertiles = Resources("data/monsters.png", self.tilesize)
-        self.worldtileset = []
-        self.localtileset = []
-        self.chartileset = []
-        self.monstertileset = []
-        self.newplayerwindow = NewPlayerWindow(self.scr, self.chartileset)
+        self.resources = Resources(self.tilesize)
+        self.scene.setResources(self.resources)
+        self.newplayerwindow = NewPlayerWindow(self.scr, \
+                                               self.resources.chartileset)
         for i in range(0, 38):
-            #+i
             r = (self.tilesize*i +0, 0, self.tilesize,self.tilesize)
-            self.worldtileset.append(self.worldtiles.tiles.subsurface(r))
-            self.localtileset.append(self.localtiles.tiles.subsurface(r))
-            self.chartileset.append(self.charactertiles.tiles.subsurface(r))
-            self.monstertileset.append(self.monstertiles.tiles.subsurface(r))
+            self.resources.loadSpritesToSet(r)
     def blt(self, s, dest):
         self.scr.blit(s, dest)
     def draw(self):
         self.scr.fill( (0,0,0) )
-        t = self.tilesize #16, 32, 64, etc
-        
-        for y in range(0,40):
-            for x in range(0,50):
-                data = self.gm.data[y][x]
-                self.blt(self.worldtileset[data], (x*t, y*t) )
-
-        self.newplayerwindow.draw()
+        if self.game_window == "newplayer":
+            self.newplayerwindow.draw()
+        elif self.game_window == "localmap":
+            self.scene.draw()
+        else:
+            self.scene.draw()
         pygame.display.flip()
         pygame.time.wait(10)
     def input(self):
@@ -67,21 +58,20 @@ def main():
     pygame.init()
     game = Game()
     game.load()
-    game_state = "playing"
-    game_window = "newplayer"
-    while game_state == "playing":
+    
+    while game.game_state == "playing":
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 print("debug: you wanted to quit?")
                 pygame.quit()
             if event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE:
-                game_state = "exit"
+                game.game_state = "exit"
                 #pygame.event.post(pygame.QUIT)
                 pygame.quit()
-        if game_window == "newplayer":
-            game_window = game.newplayerwindow.input()
-        else:
-            game_window = game.input()
+        if game.game_window == "newplayer":
+            game.game_window = game.newplayerwindow.input()
+        #else:
+        #    game.game_window = game.input()
         game.draw()
         #print("game_state = ", game_state, "loop again")
     print("somehow you got to the end of the loop")

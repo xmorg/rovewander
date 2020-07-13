@@ -12,10 +12,10 @@ class NewPlayerWindow:
         pygame.font.init() # you have to call this at the start, 
         # if you want to use this module.
         self.fcolor = (200, 200, 200)
-        self.myfont = pygame.font.SysFont('Comic Sans MS', 30)
+        self.myfont = pygame.font.SysFont('Bitstream Charter', 30)
         self.label0 = self.myfont.render('Select thy personage.', \
                                          False, self.fcolor )
-        self.medfont = pygame.font.SysFont('Comic Sans MS', 24)
+        self.medfont = pygame.font.SysFont('Bitstream Charter', 18)
         
         self.Rgoth  = self.medfont.render('Goth', False, self.fcolor)
         self.Rhun   = self.medfont.render('Hun', False, self.fcolor)
@@ -33,6 +33,7 @@ class NewPlayerWindow:
         self.JPirate = self.medfont.render('Pirate', False, self.fcolor)
         self.JBarbarian = self.medfont.render('Barbarian', False, self.fcolor)
         self.JRanger = self.medfont.render('Ranger', False, self.fcolor)
+        self.JShaman = self.medfont.render('Shaman', False, self.fcolor)
         #self.Smale = 
         self.Lname = self.medfont.render('Name: ', False, self.fcolor)
         self.Lsex = self.medfont.render('Sex: ', False, self.fcolor)
@@ -46,36 +47,28 @@ class NewPlayerWindow:
     def blt(self, s, dest):
         self.screen.blit(s, dest)
     def jobSelected(self, x, y):
-        if(y==0):
-            if x == 0 or x == 1:
-                return self.JCommoner
-            elif x == 2 or x == 3:
-                return self.JFighter
-            elif x == 4 or x == 5:
-                return self.JMage
-            else:
-                return self.JCommoner
-        elif(y==1): #more goth classes
-            if x == 0 or x == 1:
+        if(x==0 or x==1):
+            if y==1:
                 return self.JPriest
-            elif x == 2 or x == 3:
-                return self.JRogue
-            elif x == 4 or x == 5:
-                return self.JPirate
             else:
                 return self.JCommoner
-        elif(y==2):
-            if x == 0 or x == 1:
+        elif(x==2 or x==3): #more goth classes
+            if y==1:
+                return self.JRogue
+            elif y==2:
                 return self.JBarbarian
-            if x == 2 or x == 3:
+            else:
                 return self.JFighter
-            else: return self.JCommoner
-        elif(y==3):
-            if x == 0 or x == 1:
-                return self.JCommoner
-            elif x == 2 or x == 3:
-                return self.JFighter
-            elif x == 4 or x == 5:
+        elif(x==4 or x==5):
+            if y==0:
+                return self.JMage
+            elif y==1:
+                return self.JPirate
+            elif y==2:
+                return self.JShaman
+            elif y==3:
+                return self.JPriest
+            elif y==4:
                 return self.JRanger
             else:
                 return self.JCommoner
@@ -84,13 +77,13 @@ class NewPlayerWindow:
     def raceSelected(self, x, y):
         if y == 0 or y == 1:
             return self.Rgoth
-        elif y == 2 and ( x == 0 or x == 1 ):
+        elif y == 2: # and ( x == 0 or x == 1 ):
             return self.Rhun
-        elif y == 2 and ( x >= 2 ):
+        elif y == 3: # and ( x >= 2 ):
             return self.Rmoor
-        elif y == 3:
-            return self.Relf
         elif y == 4:
+            return self.Relf
+        elif y == 5:
             if x < 4:
                 return self.Rdwarf
             else:
@@ -140,7 +133,7 @@ class NewPlayerWindow:
         if self.selectx > 5: self.selectx = 5
         if self.selecty < 0: self.selecty = 0
         if self.selecty > 5: self.selecty = 5
-        print("selectx = "+str(self.selectx)+" selecty = "+str(self.selecty))
+        #print("selectx = "+str(self.selectx)+" selecty = "+str(self.selecty))
         if key[pygame.K_RIGHT]:# and self.keywaspressed == False:
             if self.selectx < 6:
                 if self.wintimer == self.timertick:
@@ -165,5 +158,7 @@ class NewPlayerWindow:
                     self.selecty += 1
                 self.keywaspressed = True
                 return "newplayer"
+        elif key[pygame.K_p]:
+            return "localmap"
         else:
             return "newplayer"

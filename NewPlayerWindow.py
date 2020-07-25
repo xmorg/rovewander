@@ -5,6 +5,7 @@ playerlist = []
 
 class NewPlayerWindow:
     def __init__(self, screen, t):
+        self.actor = Actor()
         self.tiles = t
         self.screen = screen
         self.keywaspressed = False
@@ -76,19 +77,26 @@ class NewPlayerWindow:
             return self.JCommoner
     def raceSelected(self, x, y):
         if y == 0 or y == 1:
+            self.actor.rebuildBaseActor('None', 'Goth', 'None')
             return self.Rgoth
         elif y == 2: # and ( x == 0 or x == 1 ):
+            self.actor.rebuildBaseActor('None', 'Hun', 'None')
             return self.Rhun
         elif y == 3: # and ( x >= 2 ):
+            self.actor.rebuildBaseActor('None', 'Moor', 'None')
             return self.Rmoor
         elif y == 4:
+            self.actor.rebuildBaseActor('None', 'Elf', 'None')
             return self.Relf
         elif y == 5:
             if x < 4:
+                self.actor.rebuildBaseActor('None', 'Dwarf', 'None')
                 return self.Rdwarf
             else:
+                self.actor.rebuildBaseActor('None', 'Gnome', 'None')
                 return self.Rgnome
         else:
+            self.actor.rebuildBaseActor('None', 'Goth', 'None')
             return self.Rgoth
     def draw(self): #draw the window/screen
         self.wintimer += 1

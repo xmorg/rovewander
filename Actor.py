@@ -57,6 +57,19 @@ class Actor:
         self.dexterity += d
         self.con       += c
         self.cha       += ch
+    def setskills_social(self, s, h, o, i):
+        self.seduce = s #perswade members of the opposite sex
+        self.haggle = h #fast talking and bargening
+        self.oration = o #give a rousing speech.
+        self.intimidate = i
+    def setskills_thief(self, o, t, p, s, c, h, a):
+        self.open_locks = o
+        self.traps      = t
+        self.p_pockets  = p
+        self.stealth    = s
+        self.climbing   = c
+        self.hiding     = h
+        self.awareness  = a
     def set_savingthrows(self, d,w,p,b,s):
         self.save_death = d # death/poison
         self.save_wand  = w # magic from wands
@@ -65,18 +78,40 @@ class Actor:
         self.save_spell = s
     def rebuildBaseActor(s, r, j): #sex race job
         if r == 'Goth':
+            #self.setskills_social( s, h, o, i)
+            #self.setskills_thief(o, t, p, s, c, h, a)
             self.set_abilities(5,5,5,5,5,5)
+            self.set_savingthrows(0,1,0,0,0)
+            self.setskills_social(1, 1, 1, 1)
+            self.setskills_thief(0, 0, 0, 0, 0, 0, 0)
         elif r == 'Hun':
             self.set_abilities(7,4,4,5,8,2)
+            self.set_savingthrows(0,0,0,2,0)
+            self.setskills_social(0, 1, 0, 3)
+            self.setskills_thief(0, 0, 1, 1, 2, 1, 3)
         elif r == 'Moor':
             self.set_abilities(5,5,6,6,4,4)
+            self.set_savingthrows(1,0,0,0,1)
+            self.setskills_social( 1, 2, 0, 1)
+            self.setskills_thief(1, 1, 1, 2, 0, 1, 1)
         elif r == 'Elf':
             self.set_abilities(4,6,6,7,3,4)
+            self.set_savingthrows(0,1,1,0,0)
+            self.setskills_social( 1, 0, 1, 0)
+            self.setskills_thief(0, 1, 0, 2, 1, 2, 3)
         elif r == 'Dwarf':
             self.set_abilities(7,4,6,4,7,4)
+            self.set_savingthrows(1,0,0,1,0)
+            self.setskills_social( 0, 3, 2, 1)
+            self.setskills_thief(1, 3, 1, 0, 0, 0, 0)
         elif r == 'Gnome':
             self.set_abilities(2,8,4,7,3,6)
+            self.set_savingthrows(1,0,0,0,1)
+            self.setskills_social( 0, 2, 1, 0)
+            self.setskills_thief(2, 2, 2, 1, 0, 2, 1)
         else:
             self.set_abilities(5,5,5,5,5,5)
-
+            self.set_savingthrows(0,0,0,0,0)
+            self.setskills_social( 0, 2, 1, 0)
+            self.setskills_thief(2, 2, 2, 1, 0, 2, 1)
         

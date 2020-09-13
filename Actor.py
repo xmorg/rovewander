@@ -62,6 +62,11 @@ class Actor:
         self.haggle = h #fast talking and bargening
         self.oration = o #give a rousing speech.
         self.intimidate = i
+    def incrskills_social(self, s, h, o, i):
+        self.seduce     += s #perswade members of the opposite sex
+        self.haggle     += h #fast talking and bargening
+        self.oration    += o #give a rousing speech.
+        self.intimidate += i
     def setskills_thief(self, o, t, p, s, c, h, a):
         self.open_locks = o
         self.traps      = t
@@ -70,13 +75,27 @@ class Actor:
         self.climbing   = c
         self.hiding     = h
         self.awareness  = a
+    def incrskills_thief(self, o, t, p, s, c, h, a):
+        self.open_locks += o
+        self.traps      += t
+        self.p_pockets  += p
+        self.stealth    += s
+        self.climbing   += c
+        self.hiding     += h
+        self.awareness  += a
     def set_savingthrows(self, d,w,p,b,s):
         self.save_death = d # death/poison
         self.save_wand  = w # magic from wands
         self.save_para  = p #paralysis/stone
         self.save_breath = b
         self.save_spell = s
-    def rebuildBaseActor(s, r, j): #sex race job
+    def incrskills_savingthrows(self, d,w,p,b,s):
+        self.save_death += d # death/poison
+        self.save_wand  += w # magic from wands
+        self.save_para  += p #paralysis/stone
+        self.save_breath += b
+        self.save_spell += s
+    def rebuildBaseActor(self,s, r, j): #sex race job
         if r == 'Goth':
             #self.setskills_social( s, h, o, i)
             #self.setskills_thief(o, t, p, s, c, h, a)
@@ -114,4 +133,23 @@ class Actor:
             self.set_savingthrows(0,0,0,0,0)
             self.setskills_social( 0, 2, 1, 0)
             self.setskills_thief(2, 2, 2, 1, 0, 2, 1)
-        
+        if j == 'Commoner':
+            self.incr_abilities(0,0,0,0,1,1)
+        elif j == 'Mage':
+            self.incr_abilities(0,2,0,0,0,0)
+        elif j == 'Fighter':
+            self.incr_abilities(1,0,0,0,1,0)
+        elif j == 'Rogue':
+            self.incr_abilities(0,0,0,2,0,0)
+        elif j == 'Cleric':
+            self.incr_abilities(0,0,2,0,0,0)
+        elif j == 'Pirate':
+            self.incr_abilities(1,0,0,1,0,0)
+        elif j == 'Barbarian':
+            self.incr_abilities(1,0,0,0,1,0)
+        elif j == 'Ranger':
+            self.incr_abilities(0,0,0,1,1,0)
+        elif j == 'Shaman':
+            self.incr_abilities(0,0,1,0,0,1)
+        else:
+            self.incr_abilities(0,0,0,0,0,0)
